@@ -9,14 +9,14 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-  /*@override
+  @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const LoginPage()));
     });
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +84,15 @@ class _WelcomePageState extends State<WelcomePage> {
               ),
             ),
           ),
-          Center(
-            child: Container(
-              child: Image.asset("assets/AttendMeS.png"),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 160),
+            child: Column(
+              children: [
+                Image.asset("assets/AttendMeS.png"),
+                const CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              ],
             ),
           ),
         ],
