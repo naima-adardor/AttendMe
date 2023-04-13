@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:attend_me/Screens/login_page.dart';
+import 'package:attend_me/Screens/onBoarding_page.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -12,10 +16,25 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const LoginPage()));
-    });
+    _checkIfFirstTime();
+  }
+
+  Future<void> _checkIfFirstTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+    if (isFirstTime) {
+      await prefs.setBool('isFirstTime', false);
+      _navigateToEnboardingPage();
+    } else {
+      Timer(const Duration(seconds: 3), () {
+        _navigateToEnboardingPage();
+      });
+    }
+  }
+
+  void _navigateToEnboardingPage() {
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => const onBoardingPage()));
   }
 
   @override
