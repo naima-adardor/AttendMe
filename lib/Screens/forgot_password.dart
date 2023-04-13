@@ -13,6 +13,27 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor:Color.fromARGB(255, 255, 255, 255), 
+         title: const Padding(
+           padding:  EdgeInsets.only(left: 45),
+           child:  Text(
+            'Forgot Password',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Color.fromARGB(255, 133, 118, 118)
+            ),
+            
+                 ),
+         ),
+        
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+          color: Color.fromARGB(255, 133, 118, 118)),        
+            onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
        body: SingleChildScrollView(
   child: Padding(
@@ -23,7 +44,7 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const Gap(30),
+                const Gap(0),
                 Center(
                   child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 60),
@@ -61,7 +82,8 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                 ),
                  
                 Container(
-  margin: EdgeInsets.all(20), // Set margin on all sides
+  
+   margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5), // Set margin on all sides
   child:const Text(
                   "Please enter your Number Phone to receive a verification code",
                   style: TextStyle(
@@ -73,7 +95,7 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                   textAlign: TextAlign.center,
                 ),
                 ),
-                const Gap(25),
+                const Gap(15),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
