@@ -1,4 +1,3 @@
-import 'package:attend_me/Screens/onBoarding_page.dart';
 import 'package:attend_me/Screens/welcome_page.dart';
 import 'package:flutter/material.dart';
 

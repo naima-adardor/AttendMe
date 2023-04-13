@@ -1,3 +1,4 @@
+import 'package:attend_me/Screens/bottom_bar.dart';
 import 'package:attend_me/Screens/forgot_password.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -197,7 +198,15 @@ class _LoginPage extends State<LoginPage> {
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(35))),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const BottomBar(
+                            initialIndex: 0,
+                          ),
+                        ),
+                      );
+                    },
                     child: const Text(
                       "Login",
                       style: TextStyle(
