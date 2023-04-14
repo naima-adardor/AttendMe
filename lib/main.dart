@@ -1,4 +1,3 @@
-import 'package:attend_me/Screens/change_password2.dart';
 import 'package:attend_me/Screens/welcome_page.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const changePassword2(),
+      home: const WelcomePage(),
     );
   }
 }
