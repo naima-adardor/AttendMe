@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:attend_me/Screens/Login_page.dart';
+
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});
@@ -10,6 +12,8 @@ class ChangePasswordPage extends StatefulWidget {
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final formKey = GlobalKey<FormState>();
+  bool _isTappedPass = false;
+  bool _hideText = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +29,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               children: <Widget>[
                 const Gap(60),
                 const Text(
-                  "Verification Code !  ",
+                  "Change your password ",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -62,7 +66,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                 width: 210,
                                 child: Center(
                                     child: Image.asset(
-                                        "assets/verification.png"))),
+                                        "assets/newPass.png"))),
                           ),
                         ),
                       ],
@@ -73,30 +77,154 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 Column(
                   children: const [
                     Text(
-                      "Please enter the four 4 code sent to  ",
+                      " Your identity has been identified !                     Please set a new password ",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
-                        color: Color.fromARGB(255, 88, 84, 84),
+                        color: Color.fromARGB(255, 163, 158, 158),
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    Text(
-                      " 06 25 67 89 09 ",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Color.fromARGB(255, 88, 84, 84),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                   
                   ],
                 ),
-
+                  Gap(25),
+Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                  child: TextFormField(
+                    onTap: () {
+                      setState(() {
+                        _isTappedPass = true;
+                        
+                      });
+                    },
+                    obscureText: _hideText,
+                    decoration: InputDecoration(
+                      labelText: "New Password",
+                      labelStyle: TextStyle(
+                        color: _isTappedPass
+                            ? const Color(0xFF6096B4)
+                            : const Color.fromARGB(255, 112, 112, 112),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFF6096B4),
+                          width: 2.0,
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFF6096B4),
+                          width: 2.0,
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _hideText ? Icons.visibility_off : Icons.visibility,
+                          color: const Color(0xFF6096B4),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _hideText = !_hideText;
+                          });
+                        },
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.lock,
+                        color: Color(0xFF6096B4),
+                      ),
+                    ),
+                  ),
+                ),
+                                  Gap(20),
+Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                  child: TextFormField(
+                    onTap: () {
+                      setState(() {
+                        _isTappedPass = true;
+                        
+                      });
+                    },
+                    obscureText: _hideText,
+                    decoration: InputDecoration(
+                      labelText: " Confirm New Password",
+                      labelStyle: TextStyle(
+                        color: _isTappedPass
+                            ? const Color(0xFF6096B4)
+                            : const Color.fromARGB(255, 112, 112, 112),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFF6096B4),
+                          width: 2.0,
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFF6096B4),
+                          width: 2.0,
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _hideText ? Icons.visibility_off : Icons.visibility,
+                          color: const Color(0xFF6096B4),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _hideText = !_hideText;
+                          });
+                        },
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.lock,
+                        color: Color(0xFF6096B4),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+                SizedBox(
+                  width: 200,
+                  height: 50,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF6096B4),
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35))),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LoginPage()),
+                      );
+                    },
+                    child: const Text(
+                      "Save",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
+            
           ),
         )
+          
         )
             
     );
