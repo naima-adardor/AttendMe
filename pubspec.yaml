@@ -71,6 +71,8 @@ flutter:
   assets:
     - assets/loginQR.jpg
     - assets/AttendMeS.png
+    - assets/forgotPass.png
+    - assets/verification.png
     - assets/save_time.png
     - assets/real_time_data.png
     - assets/attendance_record.png
