@@ -66,6 +66,7 @@ flutter:
     - assets/loginQR.jpg
     - assets/AttendMeS.png
     - assets/forgotPass.png
+    - assets/verification.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

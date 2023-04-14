@@ -1,3 +1,4 @@
+import 'package:attend_me/Screens/verification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -130,7 +131,12 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                        borderRadius: BorderRadius.circular(35))),
-                    onPressed: () {},
+                    onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => VerificationPage()),
+            );
+          },
                     child: const Text(
                       "Send",
                       style: TextStyle(
