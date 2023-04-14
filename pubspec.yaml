@@ -32,15 +32,21 @@ dependencies:
   flutter:
     sdk: flutter
   gap: 
+  introduction_screen: ^3.1.7
+  fluentui_icons: ^1.0.0
+  shared_preferences: ^2.0.13
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -67,6 +73,9 @@ flutter:
     - assets/AttendMeS.png
     - assets/forgotPass.png
     - assets/verification.png
+    - assets/save_time.png
+    - assets/real_time_data.png
+    - assets/attendance_record.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
