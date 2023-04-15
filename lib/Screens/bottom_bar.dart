@@ -6,6 +6,7 @@ import 'package:attend_me/Screens/profile_page.dart';
 import 'package:attend_me/Screens/scan_page.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:attend_me/Screens/change_password2.dart';
 
 
 class BottomBar extends StatefulWidget {
