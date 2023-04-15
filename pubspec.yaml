@@ -76,6 +76,7 @@ flutter:
     - assets/save_time.png
     - assets/real_time_data.png
     - assets/attendance_record.png
+    - assets/newPass.png
     - assets/profile.jpg
 
 

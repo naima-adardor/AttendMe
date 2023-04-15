@@ -10,13 +10,13 @@ class changePassword2 extends StatefulWidget {
 }
 
 class _changePassword2State extends State<changePassword2> {
- final formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   bool _isTappedPass = false;
   bool _hideText = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
             child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
@@ -36,7 +36,7 @@ class _changePassword2State extends State<changePassword2> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                Gap(5),
+                const Gap(5),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -64,15 +64,14 @@ class _changePassword2State extends State<changePassword2> {
                                 height: 210,
                                 width: 210,
                                 child: Center(
-                                    child: Image.asset(
-                                        "assets/newPass.png"))),
+                                    child: Image.asset("assets/newPass.png"))),
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                Gap(1),
+                const Gap(1),
                 Column(
                   children: const [
                     Text(
@@ -84,18 +83,16 @@ class _changePassword2State extends State<changePassword2> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                   
                   ],
                 ),
-                 Gap(20),
-Padding(
+                const Gap(20),
+                Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                   child: TextFormField(
                     onTap: () {
                       setState(() {
                         _isTappedPass = true;
-                        
                       });
                     },
                     obscureText: _hideText,
@@ -138,15 +135,14 @@ Padding(
                     ),
                   ),
                 ),
-                  Gap(25),
-Padding(
+                const Gap(25),
+                Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                   child: TextFormField(
                     onTap: () {
                       setState(() {
                         _isTappedPass = true;
-                        
                       });
                     },
                     obscureText: _hideText,
@@ -189,15 +185,14 @@ Padding(
                     ),
                   ),
                 ),
-                                  Gap(20),
-Padding(
+                const Gap(20),
+                Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                   child: TextFormField(
                     onTap: () {
                       setState(() {
                         _isTappedPass = true;
-                        
                       });
                     },
                     obscureText: _hideText,
@@ -240,9 +235,7 @@ Padding(
                     ),
                   ),
                 ),
-                
-                
-                SizedBox(
+                const SizedBox(
                   height: 35,
                 ),
                 SizedBox(
@@ -257,8 +250,7 @@ Padding(
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => ProfilePage()),
+                        MaterialPageRoute(builder: (context) => ProfilePage()),
                       );
                     },
                     child: const Text(
@@ -271,14 +263,10 @@ Padding(
                     ),
                   ),
                 ),
+                const Gap(30),
               ],
             ),
-            
           ),
-        )
-          
-        )
-            
-    );
+        )));
   }
 }
