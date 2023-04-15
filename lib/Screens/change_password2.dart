@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:attend_me/Screens/Login_page.dart';
+import 'package:attend_me/Screens/profile_page.dart';
 
-
-class ChangePasswordPage extends StatefulWidget {
-  const ChangePasswordPage({super.key});
+class changePassword2 extends StatefulWidget {
+  const changePassword2({super.key});
 
   @override
-  State<ChangePasswordPage> createState() => _ChangePasswordPageState();
+  State<changePassword2> createState() => _changePassword2State();
 }
 
-class _ChangePasswordPageState extends State<ChangePasswordPage> {
-  final formKey = GlobalKey<FormState>();
+class _changePassword2State extends State<changePassword2> {
+ final formKey = GlobalKey<FormState>();
   bool _isTappedPass = false;
   bool _hideText = true;
   @override
@@ -37,7 +36,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                Gap(20),
+                Gap(5),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -73,11 +72,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     ),
                   ),
                 ),
-                Gap(20),
+                Gap(1),
                 Column(
                   children: const [
                     Text(
-                      " Your identity has been identified !                     Please set a new password ",
+                      " Your new password must be different from previously used password",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -87,6 +86,57 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     ),
                    
                   ],
+                ),
+                 Gap(20),
+Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                  child: TextFormField(
+                    onTap: () {
+                      setState(() {
+                        _isTappedPass = true;
+                        
+                      });
+                    },
+                    obscureText: _hideText,
+                    decoration: InputDecoration(
+                      labelText: " Old Password",
+                      labelStyle: TextStyle(
+                        color: _isTappedPass
+                            ? const Color(0xFF6096B4)
+                            : const Color.fromARGB(255, 112, 112, 112),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFF6096B4),
+                          width: 2.0,
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xFF6096B4),
+                          width: 2.0,
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _hideText ? Icons.visibility_off : Icons.visibility,
+                          color: const Color(0xFF6096B4),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _hideText = !_hideText;
+                          });
+                        },
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.lock,
+                        color: Color(0xFF6096B4),
+                      ),
+                    ),
+                  ),
                 ),
                   Gap(25),
 Padding(
@@ -190,6 +240,8 @@ Padding(
                     ),
                   ),
                 ),
+                
+                
                 SizedBox(
                   height: 35,
                 ),
@@ -206,7 +258,7 @@ Padding(
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => LoginPage()),
+                            builder: (context) => ProfilePage()),
                       );
                     },
                     child: const Text(
