@@ -41,6 +41,7 @@ dependencies:
   
 
 
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -81,6 +82,7 @@ flutter:
     - assets/save_time.png
     - assets/real_time_data.png
     - assets/attendance_record.png
+    - assets/newPass.png
     - assets/profile.jpg
     - assets/newPass.png
     - assets/notification.png

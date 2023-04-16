@@ -1,4 +1,3 @@
-
 import 'package:attend_me/Screens/generated_qrCode.dart';
 import 'package:attend_me/Screens/history_page.dart';
 import 'package:attend_me/Screens/home_page.dart';
@@ -7,7 +6,6 @@ import 'package:attend_me/Screens/scan_page.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:attend_me/Screens/change_password2.dart';
-
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key, this.initialIndex});
@@ -34,7 +32,6 @@ class _BottomBarState extends State<BottomBar> {
     const ScanPage(),
     const HistoryPage(),
     const ProfilePage(),
-    
   ];
 
   void _onItemTapped(int index) {
@@ -92,9 +89,7 @@ class _BottomBarState extends State<BottomBar> {
         onPressed: () {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-              builder: (_) => const BottomBar(
-                initialIndex: 2,
-              ),
+              builder: (_) => const ScanPage(),
             ),
           );
         },

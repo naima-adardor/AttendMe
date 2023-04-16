@@ -15,9 +15,9 @@ class _VerificationPageState extends State<VerificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        body: SingleChildScrollView(
-            child: Padding(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      body: SingleChildScrollView(
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
           child: Form(
             key: formKey,
@@ -35,7 +35,7 @@ class _VerificationPageState extends State<VerificationPage> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                Gap(20),
+                const Gap(20),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -71,7 +71,7 @@ class _VerificationPageState extends State<VerificationPage> {
                     ),
                   ),
                 ),
-                Gap(20),
+                const Gap(20),
                 Column(
                   children: const [
                     Text(
@@ -94,13 +94,13 @@ class _VerificationPageState extends State<VerificationPage> {
                     ),
                   ],
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 0),
                 ),
                 const Gap(10),
                 Container(
-                  padding: EdgeInsets.only(right:60,left:60,top:20,bottom: 20),
+                  padding: const EdgeInsets.only(
+                      right: 60, left: 60, top: 20, bottom: 20),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
@@ -108,20 +108,22 @@ class _VerificationPageState extends State<VerificationPage> {
                   child: Center(
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _textFieldOTP(first: true, last: false),
-                            _textFieldOTP(first: false, last: false),
-                            _textFieldOTP(first: false, last: false),
-                            _textFieldOTP(first: false, last: true),
-                          ],
+                        Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _textFieldOTP(first: true, last: false),
+                              _textFieldOTP(first: false, last: false),
+                              _textFieldOTP(first: false, last: false),
+                              _textFieldOTP(first: false, last: true),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SizedBox(
@@ -137,7 +139,7 @@ class _VerificationPageState extends State<VerificationPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ChangePasswordPage()),
+                            builder: (context) => const ChangePasswordPage()),
                       );
                     },
                     child: const Text(
@@ -150,7 +152,7 @@ class _VerificationPageState extends State<VerificationPage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 18,
                 ),
                 Center(
@@ -173,32 +175,33 @@ class _VerificationPageState extends State<VerificationPage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 18,
                 ),
-                Text(
+                const Text(
                   "Resend New Code",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: const Color(0xFF6096B4),
+                    color: Color(0xFF6096B4),
                   ),
                   textAlign: TextAlign.center,
                 ),
+                const Gap(30),
               ],
             ),
           ),
-        )));
+        ),
+      ),
+    );
   }
 
   Widget _textFieldOTP({required bool first, last}) {
     return Padding(
-      padding: const EdgeInsets.all(2),
-      child: SizedBox
-          (
-      width: 60, // set a smaller width value
-      height: 60,
-       
+      padding: const EdgeInsets.all(0),
+      child: SizedBox(
+        width: 50,
+        height: 60,
         child: AspectRatio(
           aspectRatio: 1.0,
           child: TextField(
@@ -229,8 +232,6 @@ class _VerificationPageState extends State<VerificationPage> {
             ),
           ),
         ),
-         
-      
       ),
     );
   }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:attend_me/Screens/Login_page.dart';
 
-
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});
 
@@ -17,7 +16,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
             child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
@@ -37,7 +36,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                Gap(20),
+                const Gap(20),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -65,15 +64,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                 height: 210,
                                 width: 210,
                                 child: Center(
-                                    child: Image.asset(
-                                        "assets/newPass.png"))),
+                                    child: Image.asset("assets/newPass.png"))),
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                Gap(20),
+                const Gap(20),
                 Column(
                   children: const [
                     Text(
@@ -85,18 +83,16 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                   
                   ],
                 ),
-                  Gap(25),
-Padding(
+                const Gap(25),
+                Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                   child: TextFormField(
                     onTap: () {
                       setState(() {
                         _isTappedPass = true;
-                        
                       });
                     },
                     obscureText: _hideText,
@@ -139,15 +135,14 @@ Padding(
                     ),
                   ),
                 ),
-                                  Gap(20),
-Padding(
+                const Gap(20),
+                Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                   child: TextFormField(
                     onTap: () {
                       setState(() {
                         _isTappedPass = true;
-                        
                       });
                     },
                     obscureText: _hideText,
@@ -190,7 +185,7 @@ Padding(
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 35,
                 ),
                 SizedBox(
@@ -206,7 +201,8 @@ Padding(
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => LoginPage()),
+                          builder: (context) => const LoginPage(),
+                        ),
                       );
                     },
                     child: const Text(
@@ -219,14 +215,10 @@ Padding(
                     ),
                   ),
                 ),
+                const Gap(30),
               ],
             ),
-            
           ),
-        )
-          
-        )
-            
-    );
+        )));
   }
 }
