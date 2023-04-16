@@ -1,4 +1,5 @@
 import 'package:attend_me/Screens/grid_dashbord.dart';
+import 'package:attend_me/Screens/history_page.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -113,13 +114,20 @@ class _HomeScreenState extends State<HomeScreen> {
              
                child: Card(
                  
-            
+             
                  
               color:Color.fromARGB(255, 78, 146, 163),
               elevation: 2,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
               ),
+              child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HistoryPage()),
+            );
+          },
               child: Center(
                 child:Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -159,6 +167,8 @@ class _HomeScreenState extends State<HomeScreen> {
             )
                  ),
          ),
+           ),
+        
            SizedBox(
               height: 160,
               width: 160,
@@ -174,6 +184,13 @@ class _HomeScreenState extends State<HomeScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
               ),
+              child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HistoryPage()),
+            );
+          },
               child: Center(
                 child:Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -214,6 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )
                  ),
          ),
+           ),
            SizedBox(
               height: 160,
               width: 160,
@@ -229,6 +247,13 @@ class _HomeScreenState extends State<HomeScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
               ),
+              child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HistoryPage()),
+            );
+          },
               child: Center(
                 child:Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -268,6 +293,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )
                  ),
          ),
+           ),
            SizedBox(
               height: 160,
               width: 160,
