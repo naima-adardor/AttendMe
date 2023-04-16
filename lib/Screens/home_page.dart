@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
        
         
       
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(255, 144, 191, 216),
       body: Column(
         children: <Widget>[
           SizedBox(
@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       "Adardor Naima",
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(
-                              color: Color.fromARGB(255, 0, 0, 0),
+                              color: Color.fromARGB(255, 24, 94, 133),
                               fontSize: 18,
                               fontWeight: FontWeight.bold)),
                     ),
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       "Welcome !",
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(
-                              color: Color(0xffa29aac),
+                              color: Color.fromARGB(255, 231, 229, 229),
                               fontSize: 14,
                               fontWeight: FontWeight.w600)),
                     ),
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   alignment: Alignment.topCenter,
                   icon: 
                   Icon(Icons.notifications_none,
-                  color: Color.fromARGB(255, 0, 0, 0),
+                  color: Color.fromARGB(255, 24, 94, 133),
                   size: 35,
 
                   ),
@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       "Monthly Presence Summary",
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(
-                              color: Color.fromARGB(255, 116, 110, 110),
+                              color: Color.fromARGB(255, 255, 255, 255),
                               fontSize: 18,
                               fontWeight: FontWeight.bold)),
                     ),
