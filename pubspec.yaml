@@ -35,6 +35,9 @@ dependencies:
   introduction_screen: ^3.1.7
   fluentui_icons: ^1.0.0
   shared_preferences: ^2.0.13
+  google_fonts: ^2.1.0
+
+  
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -78,6 +81,11 @@ flutter:
     - assets/attendance_record.png
     - assets/profile.jpg
     - assets/newPass.png
+    - assets/notification.png
+    - assets/late.png
+    - assets/Absent.png
+    - assets/OnTime.png
+    - assets/WorkingHours.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
