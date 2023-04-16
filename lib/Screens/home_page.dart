@@ -1,4 +1,3 @@
-import 'package:attend_me/Screens/grid_dashbord.dart';
 import 'package:attend_me/Screens/history_page.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -348,10 +347,13 @@ class _HomeScreenState extends State<HomeScreen> {
             )
                  ),
          ),
+         const Gap(30), 
         ]
+        
         )
-         
+      
         ],
+        
       ),
     );
   }
