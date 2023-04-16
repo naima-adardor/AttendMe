@@ -2,6 +2,7 @@ import 'package:attend_me/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+
 //import '../models/test.dart';
 
 
@@ -34,7 +35,7 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Color.fromRGBO(209, 232, 243, 0.878),
      
       body: SingleChildScrollView(
       
@@ -275,70 +276,150 @@ class _HistoryPageState extends State<HistoryPage> {
                       }),
                     ),
                   ),
-                  //SizedBox(height: 3),
+                  SizedBox(height: 0),
                   
                 ],
               ),
             ),
-            Container(
-        child: ListView.builder(
-          scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: 1,
-            itemBuilder: (context , index){
-            return SizedBox(
-                 
-                        height: MediaQuery.of(context).size.height*0.1,
-child:Card(
-             
-              elevation: 6.0,
-              margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(241, 241, 243, 0.89),
-                ),
-                child: ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                  leading: Container(
-                    padding: EdgeInsets.only(right: 12.0),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        right: BorderSide(width: 1.0, color: Colors.white24),
-                      ),
-                    ),
-                    child: Icon(Icons.autorenew,color:darkBlue,),
-                  ),
-                  title: Text("22/12/2020",
-                  style: TextStyle(color: darkBlue, fontWeight: FontWeight.bold),),
-                  subtitle: Row(
-                    children: [
-                      // Icon(Icons.linear_scale, color: Colors.yellowAccent,),
-                      // Text(" Intermediate", style: TextStyle(color: Colors.white),)
-                     
-                      Expanded(
-                        
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 10.0),
-                          child: Text("Late", style: TextStyle(color: Colors.white),),
-                        ),
-                      ),
-                    ],
-                  ),
-                  
-                  onTap: (){
-                         },
-                ),
-              ),
-            )
             
-            ) ;
-          },
+  Container(
+    padding: EdgeInsets.symmetric(horizontal: 3.0),
+    height: 700,
+    child: ListView.builder(
+              scrollDirection: Axis.vertical,
+                shrinkWrap: true,//flexible animation when we scroll
+                itemCount: 20,
+                
+                itemBuilder: (BuildContext context ,int index) => Container(
+                   height: MediaQuery.of(context).size.height*0.1,
+   child:Card(
+              
+                  elevation: 8.0,
+                 
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(255, 255, 255, 0.886),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
+                    child: Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                         crossAxisAlignment: CrossAxisAlignment.center,
+                      // Text("22/12/2020",
+                    //  style: TextStyle(color: darkBlue, fontWeight: FontWeight.bold),),
+                     
+                        children:<Widget> [
+                          // Icon(Icons.linear_scale, color: Colors.yellowAccent,),
+                          // Text(" Intermediate", style: TextStyle(color: Colors.white),)
+                         Container(
+                           width: 100,
+                           height:100 ,
+                         
+                           child: Text("22/12/2020",
+                           style: TextStyle(color: darkBlue, fontWeight: FontWeight.bold,fontSize: 17),),
+                          ),
+                        
+                         /* Expanded(
+                            
+                            child: Padding(
+                              padding:  EdgeInsets.only(right: 50.0),
+   
+   
+                              child: Text("Late",
+                               style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                               textAlign: TextAlign.right,
+                               
+                               
+                               ),
+                            ),
+                          ),*/
+                          SizedBox(width: 10,),
+                          Container(
+                            width: 100,
+                            height: 100,
+                          
+                        /* child:   badges.Badge(
+                          showBadge: true,
+        ignorePointer: false,
+        badgeAnimation: badges.BadgeAnimation.rotation(
+          animationDuration: Duration(seconds: 1),
+          colorChangeAnimationDuration: Duration(seconds: 1),
+          loopAnimation: false,
+          curve: Curves.fastOutSlowIn,
+          colorChangeAnimationCurve: Curves.easeInCubic,
         ),
+        badgeStyle: badges.BadgeStyle(
+          shape: badges.BadgeShape.square,
+          badgeColor: Colors.blue,
+          padding: EdgeInsets.all(5),
+          borderRadius: BorderRadius.circular(4),
+          borderSide: BorderSide(color: Colors.white, width: 2),
+          borderGradient: badges.BadgeGradient.linear(
+              colors: [Colors.red, Colors.black]),
+          badgeGradient: badges.BadgeGradient.linear(
+              colors: [Colors.blue, Colors.yellow],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+          ),
+          elevation: 0,
+        ),*/
+        
+      child: Container(
+    decoration: BoxDecoration(
+      border: Border.all(color: Color.fromARGB(255, 255, 0, 0), width: 2),
+      borderRadius: BorderRadius.circular(10),
+      boxShadow: [
+        BoxShadow(
+          color: Color.fromARGB(255, 255, 0, 0),
+          offset: Offset(0, 0),
+          blurRadius: 0,
+        ),
+      ],
+    ),
+    padding: EdgeInsets.only(left: 24),
+    child: Text(
+      'Absent',
+      
+      style: TextStyle(fontSize: 15,color: Color.fromARGB(255, 255, 255, 255),fontFamily: 'ro',fontWeight: FontWeight.bold),
+    ),
+  ),
+   
+      
       ),
-
+        
+                           
+        
+      
+                            
+                          
+                        ],
+                      ),
+                      
+                      
+                    ),
+                  ),
+                
+                
+                
+                ),
+   ),
+  ),
+            
               ],
       ),
-      ),
+      ),   
+         
+            
+            
+               
+
+
+          
+       
+      
+
+              
+      
+      
       );
 
     
