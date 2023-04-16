@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:attend_me/Screens/profile_page.dart';
 
-class changePassword2 extends StatefulWidget {
-  const changePassword2({super.key});
+class changePassword2Page extends StatefulWidget {
+  const changePassword2Page({super.key});
 
   @override
-  State<changePassword2> createState() => _changePassword2State();
+  State<changePassword2Page> createState() => _changePassword2PageState();
 }
 
-class _changePassword2State extends State<changePassword2> {
+class _changePassword2PageState extends State<changePassword2Page> {
   final formKey = GlobalKey<FormState>();
   bool _isTappedPass = false;
   bool _hideText = true;

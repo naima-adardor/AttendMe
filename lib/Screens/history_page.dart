@@ -403,7 +403,7 @@ class _HistoryPageState extends State<HistoryPage> {
                 ),
    ),
   ),
-            
+            const Gap(30)
               ],
       ),
       ),   
