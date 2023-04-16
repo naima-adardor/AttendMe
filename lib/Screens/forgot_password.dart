@@ -124,12 +124,11 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(35))),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const VerificationPage()),
-                      );
-                    },
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => VerificationPage()),
+            );
+          },
                     child: const Text(
                       "Send",
                       style: TextStyle(
