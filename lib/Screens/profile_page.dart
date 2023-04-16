@@ -1,3 +1,6 @@
+import 'package:attend_me/Screens/change_password2.dart';
+import 'package:attend_me/Screens/edit_profile.dart';
+import 'package:attend_me/Screens/view_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -85,16 +88,46 @@ class _ProfilePageState extends State<ProfilePage> {
               child: ListView.separated(
                 itemCount: items.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    leading: Icon(
-                      icons[index],
-                      color: iconColors[index],
-                    ),
-                    title: Text(
-                      items[index],
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
+                  return InkWell(
+                    onTap: () {
+                      switch (index) {
+                        case 0:
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ViewProfilePage(),
+                            ),
+                          );
+                          break;
+                        case 1:
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const EditProfilePage(),
+                            ),
+                          );
+                          break;
+                        case 2:
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const changePassword2(),
+                            ),
+                          );
+                          break;
+                      }
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        icons[index],
+                        color: iconColors[index],
+                      ),
+                      title: Text(
+                        items[index],
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                        ),
                       ),
                     ),
                   );
