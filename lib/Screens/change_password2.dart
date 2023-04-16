@@ -250,7 +250,8 @@ class _changePassword2State extends State<changePassword2> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ProfilePage()),
+                        MaterialPageRoute(
+                            builder: (context) => const ProfilePage()),
                       );
                     },
                     child: const Text(
