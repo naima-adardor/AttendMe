@@ -32,8 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                  
                 CircleAvatar(
-        radius: 20,
+                  
+        radius: 27,
         backgroundImage: AssetImage('assets/profile.jpg'),
+
+  
       ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,8 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                   alignment: Alignment.topCenter,
                   icon: 
-                  Icon(Icons.notifications_none),
-                  color: Color.fromARGB(255, 0, 0, 0
+                  Icon(Icons.notifications_none,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                  size: 35,
 
                   ),
                   onPressed: (
@@ -83,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           SizedBox(
-            height: 60,
+            height: 100,
           ),
           
                     Text(
