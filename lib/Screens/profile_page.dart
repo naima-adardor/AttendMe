@@ -111,7 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const changePassword2(),
+                              builder: (context) => const changePassword2Page(),
                             ),
                           );
                           break;
