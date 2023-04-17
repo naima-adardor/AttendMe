@@ -29,7 +29,7 @@ class _HistoryPageState extends State<HistoryPage> {
   ];
   //String _selectedDate1 =DateFormat('yMd').format(DateTime.now());
   //String _selectedDate2 =DateFormat('yMd').format(DateTime.now());
-  TextEditingController _dateController = TextEditingController();
+  TextEditingController _dateController = TextEditingController(text: '2022-01-01',);
 late String _selectedDate2;
 
 Future<void> _selectDate(BuildContext context) async {
@@ -74,8 +74,8 @@ Future<void> _selectDate(BuildContext context) async {
     });
   }
 }
-TextEditingController _dateController1 = TextEditingController();
-late String _selectedDate1;
+TextEditingController _dateController1 = TextEditingController(text: '2022-01-01',);
+late String _selectedDate1='2022-01-01';
 
 Future<void> _selectDate1(BuildContext context) async {
   final DateTime? picked = await showDatePicker(
