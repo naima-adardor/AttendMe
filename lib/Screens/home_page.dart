@@ -18,7 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
         
       
       backgroundColor: const Color.fromARGB(255, 144, 191, 216),
-      body: Column(
+      body:SingleChildScrollView(
+        child:Column(
         children: <Widget>[
           SizedBox(
             height: 50,
@@ -86,9 +87,90 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          SizedBox(
-            height: 100,
-          ),
+          Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(top: 32,left:130),
+              child: Text(
+                "Today's Status",
+                 
+                style: TextStyle(
+                  fontFamily: "NexaBold",
+                  fontSize: 18,
+                color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                 
+                
+                ),
+                
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 12, bottom: 32,left: 10,right: 10),
+              height: 80,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 10,
+                    offset: Offset(2, 2),
+                  ),
+                ],
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Check In",
+                          style: TextStyle(
+                            fontFamily: "NexaRegular",
+                            fontSize: 20,
+                            color: Colors.black54,
+                          ),
+                        ),
+                        Text(
+                          "09:00",
+                          style: TextStyle(
+                            fontFamily: "NexaBold",
+                            fontSize:  18,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Check Out",
+                          style: TextStyle(
+                            fontFamily: "NexaRegular",
+                            fontSize: 20,
+                            color: Colors.black54,
+                          ),
+                        ),
+                        Text(
+                          "--/--",
+                          style: TextStyle(
+                            fontFamily: "NexaBold",
+                            fontSize:  18,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           
                     Text(
                       "Monthly Presence Summary",
@@ -354,7 +436,8 @@ class _HomeScreenState extends State<HomeScreen> {
       
         ],
         
-      ),
+      ),)
+       
     );
   }
 }
