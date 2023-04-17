@@ -12,51 +12,53 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  TextEditingController _dateController = TextEditingController( text: '2022-01-01',);
-late String _selectedDate;
-
-Future<void> _selectDate(BuildContext context) async {
-  final DateTime? picked = await showDatePicker(
-    context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime(2022),
-    lastDate: DateTime(2025),
-    builder: (context, child) {
-      return Theme(
-        data: Theme.of(context).copyWith(
-          colorScheme: ColorScheme.light(
-            primary: darkBlue,
-            secondary: lightBlue,
-            onSecondary: Colors.white,
-          ),
-          textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(
-              primary: darkBlue,
-            ),
-          ),
-          textTheme: const TextTheme(
-            headline4: TextStyle(
-              fontFamily: "NexaBold",
-            ),
-            overline: TextStyle(
-              fontFamily: "NexaBold",
-            ),
-            button: TextStyle(
-              fontFamily: "NexaBold",
-            ),
-          ),
-        ),
-        child: child!,
-      );
-    },
+  TextEditingController _dateController = TextEditingController(
+    text: '2003-02-27',
   );
-  if (picked != null) {
-    setState(() {
-      _selectedDate = DateFormat('yMd').format(picked);
-      _dateController.text = _selectedDate;
-    });
+  late String _selectedDate;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1980),
+      lastDate: DateTime(2025),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: darkBlue,
+              secondary: lightBlue,
+              onSecondary: Colors.white,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: darkBlue,
+              ),
+            ),
+            textTheme: const TextTheme(
+              headline4: TextStyle(
+                fontFamily: "NexaBold",
+              ),
+              overline: TextStyle(
+                fontFamily: "NexaBold",
+              ),
+              button: TextStyle(
+                fontFamily: "NexaBold",
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      setState(() {
+        _selectedDate = DateFormat('yMd').format(picked);
+        _dateController.text = _selectedDate;
+      });
+    }
   }
-}
 
   final formKey = GlobalKey<FormState>();
 
@@ -121,9 +123,7 @@ Future<void> _selectDate(BuildContext context) async {
                                 child: IconButton(
                                   icon: const Icon(Icons.edit),
                                   color: Colors.white,
-                                  onPressed: () {
-                                    // Handle edit button press
-                                  },
+                                  onPressed: () {},
                                 ),
                               ),
                             ),
@@ -142,12 +142,12 @@ Future<void> _selectDate(BuildContext context) async {
                       const Gap(27),
                       Column(
                         children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 0, vertical: 0),
-                                child: SizedBox(
+                          SizedBox(
+                            height: 50,
+                            width: 320,
+                            child: Row(
+                              children: [
+                                SizedBox(
                                   height: 50,
                                   width: 155,
                                   child: TextFormField(
@@ -158,8 +158,8 @@ Future<void> _selectDate(BuildContext context) async {
                                     decoration: const InputDecoration(
                                       labelText: "First Name",
                                       labelStyle: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 24, 94, 133)),
+                                        color: Color.fromARGB(255, 24, 94, 133),
+                                      ),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color:
@@ -183,12 +183,8 @@ Future<void> _selectDate(BuildContext context) async {
                                     ),
                                   ),
                                 ),
-                              ),
-                              const Gap(10),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 0, vertical: 0),
-                                child: SizedBox(
+                                const SizedBox(width: 10),
+                                SizedBox(
                                   height: 50,
                                   width: 155,
                                   child: TextFormField(
@@ -199,8 +195,8 @@ Future<void> _selectDate(BuildContext context) async {
                                     decoration: const InputDecoration(
                                       labelText: "Last Name",
                                       labelStyle: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 24, 94, 133)),
+                                        color: Color.fromARGB(255, 24, 94, 133),
+                                      ),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color:
@@ -224,8 +220,8 @@ Future<void> _selectDate(BuildContext context) async {
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           const Gap(17),
                           Padding(
@@ -311,12 +307,9 @@ Future<void> _selectDate(BuildContext context) async {
                               height: 50,
                               width: 320,
                               child: TextFormField(
-                          
                                 controller: _dateController,
-    readOnly: true,
-    onTap: () => _selectDate(context),
-                                
-                               
+                                readOnly: true,
+                                onTap: () => _selectDate(context),
                                 decoration: InputDecoration(
                                   labelText: "Birthday",
                                   labelStyle: const TextStyle(
@@ -341,8 +334,6 @@ Future<void> _selectDate(BuildContext context) async {
                                     color: Color.fromARGB(255, 24, 94, 133),
                                   ),
                                   suffixIcon: GestureDetector(
-                                   
-                                  
                                     child: const Icon(
                                       Icons.calendar_month,
                                       color: Color.fromARGB(255, 24, 94, 133),
