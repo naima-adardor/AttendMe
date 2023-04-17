@@ -180,7 +180,7 @@ packages:
     dependency: "direct main"
     description:
       name: gap
-      sha256: "976fa1e405d7d8249b3d2ec0e18a1eac116f0a86430c29a7485dff6f5326f03a"
+      sha256: "6e35ee60d5bbc61b0bec97cc5ba7ed32f62f1f62449e281ea77677479418a15d"
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
@@ -208,7 +208,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-    version: "3.0.0"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      sha256: a3715e3bc90294e971cb7dc063fbf3cd9ee0ebf8604ffeafabd9e6f16abbdbe6
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.18.0"
   introduction_screen:
     dependency: "direct main"
     description:
@@ -481,4 +488,3 @@ packages:
 sdks:
   dart: ">=2.19.6 <3.0.0"
   flutter: ">=3.3.0"
-  flutter: ">=3.7.0"

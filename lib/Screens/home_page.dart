@@ -1,7 +1,9 @@
 import 'package:attend_me/Screens/history_page.dart';
+import 'package:attend_me/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -87,6 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+         
+          
           Container(
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(top: 32,left:130),
@@ -103,10 +107,80 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 
               ),
+              
             ),
+            
+            Center(
+              child: Container(
+                
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                                         alignment: Alignment.center,
+                                         child: RichText(
+                                  text: TextSpan(
+                                    text: DateTime.now().day.toString(),
+                                    style: TextStyle(
+                                      color:Color.fromARGB(135, 255, 255, 255),
+                                      fontSize:  14,
+                                      fontFamily: "NexaBold",
+                                      fontWeight: FontWeight.bold,
+                                    
+                                    ),
+                                   
+                                    children: [
+                                      TextSpan(
+                                        text: DateFormat(' MMMM yyyy').format(DateTime.now()),
+                                        style: TextStyle(
+                                          color: Color.fromARGB(135, 255, 255, 255),
+                                          fontSize: 14,
+                                          fontFamily: "NexaBold",
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                         )
+                                       ),
+                      ],
+                    ),
+                 SizedBox(width:10),
+                      
+                Column(
+                  children: [
+                    StreamBuilder(
+                      stream: Stream.periodic(const Duration(seconds: 1)),
+                      builder: (context, snapshot) {
+                        return Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            DateFormat('hh:mm:ss a').format(DateTime.now()),
+                            style: TextStyle(
+                              fontFamily: "NexaRegular",
+                              fontSize:  14,
+                              color: Color.fromARGB(135, 255, 255, 255),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        );
+                      },
+                         
+                          ),
+                  ],
+                ),
+                 ],
+                ),
+              ),
+            ),
+            
             Container(
               margin: const EdgeInsets.only(top: 12, bottom: 32,left: 10,right: 10),
               height: 80,
+              
               decoration: const BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -118,10 +192,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
                 borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
+            
+                  
+                     
+                   
+               
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+              
+                 
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -133,13 +214,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontFamily: "NexaRegular",
                             fontSize: 20,
                             color: Colors.black54,
+                            fontWeight: FontWeight.bold,
                           ),
+
                         ),
                         Text(
                           "09:00",
                           style: TextStyle(
                             fontFamily: "NexaBold",
                             fontSize:  18,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
@@ -156,6 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontFamily: "NexaRegular",
                             fontSize: 20,
                             color: Colors.black54,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
@@ -163,6 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: TextStyle(
                             fontFamily: "NexaBold",
                             fontSize:  18,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
@@ -171,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-          
+            
                     Text(
                       "Monthly Presence Summary",
                       style: GoogleFonts.openSans(
