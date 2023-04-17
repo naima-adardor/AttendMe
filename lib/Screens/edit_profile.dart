@@ -1,6 +1,8 @@
 import 'package:attend_me/Screens/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
+import 'package:attend_me/constants/colors.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -10,7 +12,51 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  DateTime? _selectedDate;
+  TextEditingController _dateController = TextEditingController( text: '2022-01-01',);
+late String _selectedDate;
+
+Future<void> _selectDate(BuildContext context) async {
+  final DateTime? picked = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2022),
+    lastDate: DateTime(2025),
+    builder: (context, child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: darkBlue,
+            secondary: lightBlue,
+            onSecondary: Colors.white,
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              primary: darkBlue,
+            ),
+          ),
+          textTheme: const TextTheme(
+            headline4: TextStyle(
+              fontFamily: "NexaBold",
+            ),
+            overline: TextStyle(
+              fontFamily: "NexaBold",
+            ),
+            button: TextStyle(
+              fontFamily: "NexaBold",
+            ),
+          ),
+        ),
+        child: child!,
+      );
+    },
+  );
+  if (picked != null) {
+    setState(() {
+      _selectedDate = DateFormat('yMd').format(picked);
+      _dateController.text = _selectedDate;
+    });
+  }
+}
 
   final formKey = GlobalKey<FormState>();
 
@@ -265,10 +311,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               height: 50,
                               width: 320,
                               child: TextFormField(
-                                initialValue: _selectedDate != null
-                                    ? "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}"
-                                    : "27/02/2003",
-                                onTap: () {},
+                          
+                                controller: _dateController,
+    readOnly: true,
+    onTap: () => _selectDate(context),
+                                
+                               
                                 decoration: InputDecoration(
                                   labelText: "Birthday",
                                   labelStyle: const TextStyle(
@@ -293,20 +341,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     color: Color.fromARGB(255, 24, 94, 133),
                                   ),
                                   suffixIcon: GestureDetector(
-                                    onTap: () async {
-                                      final DateTime? picked =
-                                          await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(1970),
-                                        lastDate: DateTime(2025),
-                                      );
-                                      if (picked != null) {
-                                        setState(() {
-                                          _selectedDate = picked;
-                                        });
-                                      }
-                                    },
+                                   
+                                  
                                     child: const Icon(
                                       Icons.calendar_month,
                                       color: Color.fromARGB(255, 24, 94, 133),

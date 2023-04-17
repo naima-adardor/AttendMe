@@ -1,6 +1,7 @@
 import 'package:attend_me/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 
 
 //import '../models/test.dart';
@@ -26,12 +27,107 @@ class _HistoryPageState extends State<HistoryPage> {
     ['burger', 'omlet', 'grilled wings', 'Grilled ribs'],
     ['pancake', 'egg', 'banana', 'egg'],
   ];
-  @override
-  void initState() {
-    // TODO: implement initState
-   // lessons = getLessons();
-    super.initState();
+  //String _selectedDate1 =DateFormat('yMd').format(DateTime.now());
+  //String _selectedDate2 =DateFormat('yMd').format(DateTime.now());
+  TextEditingController _dateController = TextEditingController();
+late String _selectedDate2;
+
+Future<void> _selectDate(BuildContext context) async {
+  final DateTime? picked = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2022),
+    lastDate: DateTime(2025),
+    builder: (context, child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: darkBlue,
+            secondary: lightBlue,
+            onSecondary: Colors.white,
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              primary: darkBlue,
+            ),
+          ),
+          textTheme: const TextTheme(
+            headline4: TextStyle(
+              fontFamily: "NexaBold",
+            ),
+            overline: TextStyle(
+              fontFamily: "NexaBold",
+            ),
+            button: TextStyle(
+              fontFamily: "NexaBold",
+            ),
+          ),
+        ),
+        child: child!,
+      );
+    },
+  );
+  if (picked != null) {
+    setState(() {
+      _selectedDate2 = DateFormat('yMd').format(picked);
+      _dateController.text = _selectedDate2;
+    });
   }
+}
+TextEditingController _dateController1 = TextEditingController();
+late String _selectedDate1;
+
+Future<void> _selectDate1(BuildContext context) async {
+  final DateTime? picked = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2022),
+    lastDate: DateTime(2025),
+    builder: (context, child) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: darkBlue,
+            secondary: lightBlue,
+            onSecondary: Colors.white,
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              primary: darkBlue,
+            ),
+          ),
+          textTheme: const TextTheme(
+            headline4: TextStyle(
+              fontFamily: "NexaBold",
+            ),
+            overline: TextStyle(
+              fontFamily: "NexaBold",
+            ),
+            button: TextStyle(
+              fontFamily: "NexaBold",
+            ),
+          ),
+        ),
+        child: child!,
+      );
+    },
+  );
+  if (picked != null) {
+    setState(() {
+      _selectedDate1 = DateFormat('yMd').format(picked);
+      _dateController1.text = _selectedDate1;
+    });
+  }
+}
+@override
+void initState() {
+  super.initState();
+  if (_selectedDate1 == null) {
+    _selectedDate1 = DateFormat('yMd').format(DateTime.now());
+    _dateController1.text = _selectedDate1;
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,36 +152,21 @@ class _HistoryPageState extends State<HistoryPage> {
                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
     
                child: TextFormField(
-    
-                 onTap: () {
-    
-                   setState(() {});
-    
-                 },
-    
-                 decoration: InputDecoration(
-    
-                   labelText: "From",
-    
-                   labelStyle: TextStyle(
-    
-                     color: const Color(0xFF6096B4),
-    
-                   ),
-    
-                   enabledBorder: const OutlineInputBorder(
-    
-                     borderSide: BorderSide(
-    
-                       color: Color(0xFF6096B4),
-    
-                       width: 2.0,
-    
-                       style: BorderStyle.solid,
-    
-                     ),
-    
-                   ),
+    controller: _dateController1,
+    readOnly: true,
+    onTap: () => _selectDate1(context),
+    decoration: InputDecoration(
+      labelText: "From",
+      labelStyle: TextStyle(
+        color: const Color(0xFF6096B4),
+      ),
+      enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color(0xFF6096B4),
+          width: 2.0,
+          style: BorderStyle.solid,
+        ),
+      ),
     
                    focusedBorder: const OutlineInputBorder(
     
@@ -101,13 +182,15 @@ class _HistoryPageState extends State<HistoryPage> {
     
                    ),
     
-                   prefixIcon: const Icon(
-    
-                     Icons.date_range,
-    
-                     color: Color(0xFF6096B4),
-    
-                   ),
+                    suffixIcon: GestureDetector(
+                                   
+                                  
+                                    child: const Icon(
+                                      Icons.calendar_month,
+                                      color: Color.fromARGB(255, 24, 94, 133),
+                                    ),
+                                  ),
+                                  
     
                  ),
     
@@ -124,36 +207,21 @@ class _HistoryPageState extends State<HistoryPage> {
                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
     
                child: TextFormField(
-    
-                 onTap: () {
-    
-                   setState(() {});
-    
-                 },
-    
-                 decoration: InputDecoration(
-    
-                   labelText: "To",
-    
-                   labelStyle: TextStyle(
-    
-                     color: const Color(0xFF6096B4),
-    
-                   ),
-    
-                   enabledBorder: const OutlineInputBorder(
-    
-                     borderSide: BorderSide(
-    
-                       color: Color(0xFF6096B4),
-    
-                       width: 2.0,
-    
-                       style: BorderStyle.solid,
-    
-                     ),
-    
-                   ),
+    controller: _dateController,
+    readOnly: true,
+    onTap: () => _selectDate(context),
+    decoration: InputDecoration(
+      labelText: "To",
+      labelStyle: TextStyle(
+        color: const Color(0xFF6096B4),
+      ),
+      enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color(0xFF6096B4),
+          width: 2.0,
+          style: BorderStyle.solid,
+        ),
+      ),
     
                    focusedBorder: const OutlineInputBorder(
     
@@ -169,21 +237,26 @@ class _HistoryPageState extends State<HistoryPage> {
     
                    ),
     
-                   prefixIcon: const Icon(
-    
-                     Icons.date_range,
-    
-                     color: Color(0xFF6096B4),
-    
-                   ),
+                    suffixIcon: GestureDetector(
+                                   
+                                  
+                                    child: const Icon(
+                                      Icons.calendar_month,
+                                      color: Color.fromARGB(255, 24, 94, 133),
+                                    ),
+                                  ),
+                                  
     
                  ),
     
                ),
+              
     
              ),
+             
     
            ),
+            
     
          ],
     ),
