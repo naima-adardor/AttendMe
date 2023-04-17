@@ -187,7 +187,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ),
                           Gap(10),
                           Text(
-                            "27/02/2003 ",
+                            "2003-02-27 ",
                             style: TextStyle(
                               color: Color.fromARGB(255, 0, 0, 0),
                               fontSize: 16,
