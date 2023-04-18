@@ -24,7 +24,7 @@ class _QrCodeGeneratedPageState extends State<QrCodeGeneratedPage> {
                 child: Container(
                   margin: const EdgeInsets.only(
                       top: 12, bottom: 32, left: 10, right: 10),
-                  height: 70,
+                  height: 60,
                   width: 320,
                   decoration: const BoxDecoration(
                     color: Color.fromARGB(255, 230, 229, 229),
@@ -56,7 +56,7 @@ class _QrCodeGeneratedPageState extends State<QrCodeGeneratedPage> {
                   ),
                 ),
               ),
-              const Gap(5),
+              const Gap(15),
               const Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: 40,
@@ -72,9 +72,9 @@ class _QrCodeGeneratedPageState extends State<QrCodeGeneratedPage> {
                   ),
                 ),
               ),
-              const Gap(25),
+              const Gap(35),
               Image.asset("assets/scan.png"),
-              const Gap(25),
+              const Gap(40),
               Padding(
                 padding: const EdgeInsets.only(
                   right: 20,
