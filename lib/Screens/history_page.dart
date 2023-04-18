@@ -120,9 +120,13 @@ class _HistoryPageState extends State<HistoryPage> {
       _dateController1.text = _selectedDate1;
     }
   }
+  double screenHeight = 0;
+  double screenWidth = 0;
 
   @override
   Widget build(BuildContext context) {
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(209, 232, 243, 0.878),
       body: SingleChildScrollView(
@@ -272,7 +276,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                             child: Text(
                                               category[index],
                                               style: TextStyle(
-                                                fontSize: 16,
+                                                fontSize: screenWidth / 21,
                                                 color: indexx == index
                                                     ? Colors.white
                                                     : darkBlue,
@@ -321,12 +325,14 @@ class _HistoryPageState extends State<HistoryPage> {
                             Container(
                               width: 100,
                               height: 100,
-                              child: Text(
-                                "2020-12-22",
-                                style: TextStyle(
-                                    color: darkBlue,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17),
+                              child: Center(
+                                child: Text(
+                                  "2020-12-22",
+                                  style: TextStyle(
+                                      color: darkBlue,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: screenWidth / 24),
+                                ),
                               ),
                             ),
                             const SizedBox(
@@ -350,14 +356,18 @@ class _HistoryPageState extends State<HistoryPage> {
                                     ),
                                   ],
                                 ),
-                                padding: const EdgeInsets.only(left: 24),
-                                child: const Text(
-                                  'Absent',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                      fontFamily: 'ro',
-                                      fontWeight: FontWeight.bold),
+                               
+                                child: Center(
+                                  child: const Text(
+                                    'Absent',
+                                    style: TextStyle(
+                                       
+                                        color: Color.fromARGB(255, 255, 255, 255),
+                                        fontFamily: 'ro',
+                                        fontWeight: FontWeight.bold,
+                                         fontSize: 15,),
+                                         textAlign: TextAlign.center,
+                                  ),
                                 ),
                               ),
                             ),
