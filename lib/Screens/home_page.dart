@@ -1,3 +1,4 @@
+import 'package:attend_me/Screens/bottom_bar.dart';
 import 'package:attend_me/Screens/history_page.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -252,7 +253,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const HistoryPage()),
+                            builder: (context) => const BottomBar(
+                              initialIndex: 3,
+                            ),
+                          ),
                         );
                       },
                       child: Center(
@@ -307,7 +311,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const HistoryPage()),
+                            builder: (context) => const BottomBar(
+                              initialIndex: 3,
+                            ),
+                          ),
                         );
                       },
                       child: Center(
@@ -366,7 +373,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const HistoryPage(),
+                            builder: (context) => const BottomBar(
+                              initialIndex: 3,
+                            ),
                           ),
                         );
                       },
@@ -421,42 +430,54 @@ class _HomeScreenState extends State<HomeScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            const Gap(12),
-                            Image.asset(
-                              "assets/OnTime.png",
-                              height: 50,
-                              width: 50,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const BottomBar(
+                              initialIndex: 3,
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "OnTime",
-                              style: GoogleFonts.openSans(
-                                textStyle: const TextStyle(
-                                    color: Color.fromARGB(255, 255, 255, 255),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600),
+                          ),
+                        );
+                      },
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              const Gap(12),
+                              Image.asset(
+                                "assets/OnTime.png",
+                                height: 50,
+                                width: 50,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              "19 times",
-                              style: GoogleFonts.openSans(
-                                textStyle: const TextStyle(
-                                    color: Color.fromARGB(255, 207, 196, 196),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
+                              const SizedBox(
+                                height: 10,
                               ),
-                            ),
-                          ],
+                              Text(
+                                "OnTime",
+                                style: GoogleFonts.openSans(
+                                  textStyle: const TextStyle(
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                "19 times",
+                                style: GoogleFonts.openSans(
+                                  textStyle: const TextStyle(
+                                      color: Color.fromARGB(255, 207, 196, 196),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
