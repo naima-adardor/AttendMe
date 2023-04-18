@@ -6,6 +6,7 @@ import 'package:attend_me/Screens/scan_page.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:attend_me/Screens/change_password2.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key, this.initialIndex});
@@ -39,7 +40,9 @@ class _BottomBarState extends State<BottomBar> {
       _selectedIndex = index;
     });
   }
-
+ 
+  
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,11 +90,8 @@ class _BottomBarState extends State<BottomBar> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (_) => const ScanPage(),
-            ),
-          );
+         // scanQr();
+         Navigator.push(context, MaterialPageRoute(builder: (context)=>ScanPage()));
         },
         child: Icon(Icons.qr_code_scanner),
         backgroundColor: const Color(0xFF6096B4),
@@ -99,4 +99,5 @@ class _BottomBarState extends State<BottomBar> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
+  
 }
