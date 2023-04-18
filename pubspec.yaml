@@ -96,6 +96,7 @@ flutter:
     - assets/check.png
     - assets/alert.png
     - assets/exit.png
+    - assets/scan.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
