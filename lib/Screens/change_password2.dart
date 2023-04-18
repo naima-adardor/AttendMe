@@ -50,7 +50,7 @@ class _changePassword2PageState extends State<changePassword2Page> {
                               color: const Color(0xFF6096B4),
                               shape: BoxShape.circle,
                               border: Border.all(
-                                width: 100,
+                                width: 80,
                                 color: Colors.transparent,
                               ),
                             ),
@@ -59,7 +59,7 @@ class _changePassword2PageState extends State<changePassword2Page> {
                         Center(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 5, vertical: 20),
+                                horizontal: 5, vertical: 4),
                             child: Container(
                                 height: 210,
                                 width: 210,
@@ -185,7 +185,7 @@ class _changePassword2PageState extends State<changePassword2Page> {
                     ),
                   ),
                 ),
-                const Gap(20),
+                const Gap(25),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
