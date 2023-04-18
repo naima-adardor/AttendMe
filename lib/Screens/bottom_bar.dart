@@ -40,25 +40,9 @@ class _BottomBarState extends State<BottomBar> {
       _selectedIndex = index;
     });
   }
- String scanResult = " ";
-    Future<void> scanQRandCheck() async {
-    String result = " ";
-
-    try {
-      result = await FlutterBarcodeScanner.scanBarcode(
-        "#ffffff",
-        "Cancel",
-        false,
-        ScanMode.QR,
-      );
-    } catch(e) {
-      print("error");
-    }
-
-    setState(() {
-      scanResult = result;
-  });
-    }
+ 
+  
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,19 +90,8 @@ class _BottomBarState extends State<BottomBar> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushReplacement(
-            
-              
-              //builder: (_) => const ScanPage(),
-              
-                MaterialPageRoute(
-    builder: (_) => const ScanPage(),
-  ),
-            
-                
-              
-            
-          );
+         // scanQr();
+         Navigator.push(context, MaterialPageRoute(builder: (context)=>ScanPage()));
         },
         child: Icon(Icons.qr_code_scanner),
         backgroundColor: const Color(0xFF6096B4),
@@ -126,4 +99,5 @@ class _BottomBarState extends State<BottomBar> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
+  
 }
