@@ -76,7 +76,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ),
                         ],
                       ),
-                      const Gap(10),
+                      const Gap(15),
                       Container(
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -89,7 +89,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ],
                         ),
                       ),
-                      const Gap(10),
+                      const Gap(15),
                       Row(
                         children: const [
                           Icon(
@@ -116,7 +116,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ),
                         ],
                       ),
-                      const Gap(10),
+                      const Gap(15),
                       Container(
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -129,7 +129,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ],
                         ),
                       ),
-                      const Gap(10),
+                      const Gap(15),
                       Row(
                         children: const [
                           Icon(
@@ -156,7 +156,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ),
                         ],
                       ),
-                      const Gap(10),
+                      const Gap(15),
                       Container(
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -169,7 +169,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ],
                         ),
                       ),
-                      const Gap(10),
+                      const Gap(15),
                       Row(
                         children: const [
                           Icon(
@@ -196,7 +196,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ),
                         ],
                       ),
-                      const Gap(10),
+                      const Gap(15),
                       Container(
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -209,7 +209,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ],
                         ),
                       ),
-                      const Gap(10),
+                      const Gap(15),
                       Row(
                         children: const [
                           Icon(
@@ -236,7 +236,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ),
                         ],
                       ),
-                      const Gap(10),
+                      const Gap(15),
                       Container(
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -249,7 +249,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ],
                         ),
                       ),
-                      const Gap(10),
+                      const Gap(15),
                     ],
                   ),
                 ),

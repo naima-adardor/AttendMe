@@ -91,6 +91,7 @@ flutter:
     - assets/Absent.png
     - assets/OnTime.png
     - assets/WorkingHours.png
+    - assets/scan.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
