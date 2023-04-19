@@ -15,16 +15,21 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 144, 191, 216),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            const SizedBox(
-              height: 50,
+            SizedBox(
+              height: screenSize.height * 0.05,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16),
+              padding: EdgeInsets.only(
+                left: screenSize.width * 0.06,
+                right: screenSize.width * 0.05,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -38,10 +43,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         "Adardor Naima",
                         style: GoogleFonts.openSans(
-                            textStyle: const TextStyle(
-                                color: Color.fromARGB(255, 24, 94, 133),
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold)),
+                          textStyle: TextStyle(
+                            color: const Color.fromARGB(255, 24, 94, 133),
+                            fontSize: screenSize.width * 0.05,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                       const SizedBox(
                         height: 4,
@@ -49,19 +56,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         "Welcome !",
                         style: GoogleFonts.openSans(
-                            textStyle: const TextStyle(
-                                color: Color.fromARGB(255, 231, 229, 229),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700)),
+                          textStyle: TextStyle(
+                            color: const Color.fromARGB(255, 231, 229, 229),
+                            fontSize: screenSize.width * 0.034,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                       ),
                     ],
                   ),
                   IconButton(
                     alignment: Alignment.topCenter,
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.notifications_none,
-                      color: Color.fromARGB(255, 24, 94, 133),
-                      size: 35,
+                      color: const Color.fromARGB(255, 24, 94, 133),
+                      size: screenSize.height * 0.05,
                     ),
                     onPressed: () {
                       // Navigator.push(
@@ -76,13 +85,16 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(top: 32, left: 130),
-              child: const Text(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(
+                top: screenSize.height * 0.04,
+                left: screenSize.width * 0,
+              ),
+              child: Text(
                 "Today's Status",
                 style: TextStyle(
                   fontFamily: "NexaBold",
-                  fontSize: 18,
+                  fontSize: screenSize.width * 0.05,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
@@ -96,15 +108,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Column(
                       children: [
-                        const Gap(6),
+                        Gap(screenSize.height * 0.01),
                         Container(
                             alignment: Alignment.center,
                             child: RichText(
                               text: TextSpan(
                                 text: DateTime.now().day.toString(),
-                                style: const TextStyle(
-                                  color: Color.fromARGB(135, 255, 255, 255),
-                                  fontSize: 14,
+                                style: TextStyle(
+                                  color:
+                                      const Color.fromARGB(135, 255, 255, 255),
+                                  fontSize: screenSize.width * 0.04,
                                   fontFamily: "NexaBold",
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -112,9 +125,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   TextSpan(
                                     text: DateFormat(' MMMM yyyy')
                                         .format(DateTime.now()),
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(135, 255, 255, 255),
-                                      fontSize: 14,
+                                    style: TextStyle(
+                                      color: const Color.fromARGB(
+                                          135, 255, 255, 255),
+                                      fontSize: screenSize.width * 0.04,
                                       fontFamily: "NexaBold",
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -124,10 +138,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             )),
                       ],
                     ),
-                    const SizedBox(width: 10),
+                    SizedBox(width: screenSize.width * 0.02),
                     Column(
                       children: [
-                        const Gap(6),
+                        Gap(screenSize.height * 0.01),
                         StreamBuilder(
                           stream: Stream.periodic(const Duration(seconds: 1)),
                           builder: (context, snapshot) {
@@ -135,10 +149,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               alignment: Alignment.center,
                               child: Text(
                                 DateFormat('hh:mm:ss a').format(DateTime.now()),
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontFamily: "NexaRegular",
-                                  fontSize: 14,
-                                  color: Color.fromARGB(135, 255, 255, 255),
+                                  fontSize: screenSize.width * 0.04,
+                                  color:
+                                      const Color.fromARGB(135, 255, 255, 255),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -152,10 +167,14 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(
-                  top: 12, bottom: 32, left: 10, right: 10),
-              height: 70,
-              width: 320,
+              margin: EdgeInsets.only(
+                top: screenSize.height * 0.025,
+                bottom: screenSize.height * 0.025,
+                left: screenSize.width * 0.04,
+                right: screenSize.width * 0.04,
+              ),
+              height: screenSize.height * 0.09,
+              width: screenSize.width * 0.73,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -175,12 +194,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
                           "Check In",
                           style: TextStyle(
                             fontFamily: "NexaRegular",
-                            fontSize: 20,
+                            fontSize: screenSize.width * 0.05,
                             color: Colors.black54,
                             fontWeight: FontWeight.bold,
                           ),
@@ -189,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           "09:00",
                           style: TextStyle(
                             fontFamily: "NexaBold",
-                            fontSize: 18,
+                            fontSize: screenSize.width * 0.05,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -200,12 +219,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
                           "Check Out",
                           style: TextStyle(
                             fontFamily: "NexaRegular",
-                            fontSize: 20,
+                            fontSize: screenSize.width * 0.05,
                             color: Colors.black54,
                             fontWeight: FontWeight.bold,
                           ),
@@ -214,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           "--/--",
                           style: TextStyle(
                             fontFamily: "NexaBold",
-                            fontSize: 18,
+                            fontSize: screenSize.width * 0.05,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -227,21 +246,23 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               "Monthly Presence Summary",
               style: GoogleFonts.openSans(
-                  textStyle: const TextStyle(
-                      color: Color.fromARGB(255, 255, 255, 255),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold)),
+                textStyle: TextStyle(
+                  color: const Color.fromARGB(255, 255, 255, 255),
+                  fontSize: screenSize.width * 0.045,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-            const SizedBox(
-              height: 30,
+            SizedBox(
+              height: screenSize.height * 0.03,
             ),
             Wrap(
-              spacing: 10.0,
-              runSpacing: 10.0,
+              spacing: screenSize.width * 0.02,
+              runSpacing: screenSize.height * 0.015,
               children: [
                 SizedBox(
-                  height: 150,
-                  width: 150,
+                  height: 140,
+                  width: 140,
                   child: Card(
                     color: const Color.fromARGB(255, 78, 146, 163),
                     elevation: 2,
@@ -267,26 +288,26 @@ class _HomeScreenState extends State<HomeScreen> {
                               const Gap(12),
                               Image.asset("assets/late.png"),
                               const SizedBox(
-                                height: 10,
+                                height: 8,
                               ),
                               Text(
                                 "Late",
                                 style: GoogleFonts.openSans(
                                   textStyle: const TextStyle(
                                       color: Color.fromARGB(255, 255, 255, 255),
-                                      fontSize: 18,
+                                      fontSize: 17,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
                               const SizedBox(
-                                height: 4,
+                                height: 3,
                               ),
                               Text(
                                 "12 times",
                                 style: GoogleFonts.openSans(
                                   textStyle: const TextStyle(
                                       color: Color.fromARGB(255, 207, 196, 196),
-                                      fontSize: 16,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -298,8 +319,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 150,
-                  width: 150,
+                  height: 140,
+                  width: 140,
                   child: Card(
                     color: const Color.fromARGB(255, 199, 34, 136),
                     elevation: 2,
@@ -329,26 +350,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                 width: 50,
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 8,
                               ),
                               Text(
                                 "Absent",
                                 style: GoogleFonts.openSans(
                                   textStyle: const TextStyle(
                                       color: Color.fromARGB(255, 255, 255, 255),
-                                      fontSize: 18,
+                                      fontSize: 17,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
                               const SizedBox(
-                                height: 4,
+                                height: 3,
                               ),
                               Text(
                                 "2 times",
                                 style: GoogleFonts.openSans(
                                   textStyle: const TextStyle(
                                       color: Color.fromARGB(255, 207, 196, 196),
-                                      fontSize: 16,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -360,8 +381,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 150,
-                  width: 150,
+                  height: 140,
+                  width: 140,
                   child: Card(
                     color: const Color.fromARGB(255, 158, 80, 182),
                     elevation: 2,
@@ -391,7 +412,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 width: 50,
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 8,
                               ),
                               Text(
                                 "Working Hours",
@@ -403,14 +424,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 4,
+                                height: 3,
                               ),
                               Text(
                                 "20:45:00",
                                 style: GoogleFonts.openSans(
                                   textStyle: const TextStyle(
                                       color: Color.fromARGB(255, 207, 196, 196),
-                                      fontSize: 16,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -422,8 +443,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 150,
-                  width: 150,
+                  height: 140,
+                  width: 140,
                   child: Card(
                     color: const Color.fromARGB(255, 231, 89, 23),
                     elevation: 2,
@@ -453,26 +474,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                 width: 50,
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 8,
                               ),
                               Text(
                                 "OnTime",
                                 style: GoogleFonts.openSans(
                                   textStyle: const TextStyle(
                                       color: Color.fromARGB(255, 255, 255, 255),
-                                      fontSize: 18,
+                                      fontSize: 17,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
                               const SizedBox(
-                                height: 4,
+                                height: 3,
                               ),
                               Text(
                                 "19 times",
                                 style: GoogleFonts.openSans(
                                   textStyle: const TextStyle(
                                       color: Color.fromARGB(255, 207, 196, 196),
-                                      fontSize: 16,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -484,9 +505,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ],
-            ),
-            const SizedBox(
-              height: 40,
             ),
           ],
         ),
