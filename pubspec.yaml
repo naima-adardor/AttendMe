@@ -50,7 +50,8 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
  
   barcode_widget: ^2.0.1
- 
+  mobile_scanner: ^2.1.0
+  qr_flutter: ^4.0.0
   
 
 

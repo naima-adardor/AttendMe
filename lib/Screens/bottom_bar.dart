@@ -3,6 +3,7 @@ import 'package:attend_me/Screens/history_page.dart';
 import 'package:attend_me/Screens/home_page.dart';
 import 'package:attend_me/Screens/profile_page.dart';
 import 'package:attend_me/Screens/scan_page.dart';
+import 'package:attend_me/Screens/success_checkin_page.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:attend_me/Screens/change_password2.dart';
@@ -12,6 +13,8 @@ class BottomBar extends StatefulWidget {
   const BottomBar({super.key, this.initialIndex});
 
   final int? initialIndex;
+
+  get result => null;
 
   @override
   State<BottomBar> createState() => _BottomBarState();
@@ -40,8 +43,9 @@ class _BottomBarState extends State<BottomBar> {
       _selectedIndex = index;
     });
   }
- 
+ // var qrstr = "Have a nice day ! \n It's check-in time punch in your attendance to mark your presence for the day.";
   
+  String result = "";
   
   @override
   Widget build(BuildContext context) {
@@ -90,14 +94,24 @@ class _BottomBarState extends State<BottomBar> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-         // scanQr();
-         Navigator.push(context, MaterialPageRoute(builder: (context)=>ScanPage()));
+          //scanQr();
+       Navigator.push(context, MaterialPageRoute(builder: (context)=>ScanPage()));
         },
         child: Icon(Icons.qr_code_scanner),
         backgroundColor: const Color(0xFF6096B4),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
+  }
+  Future <void>scanQr()async{
+    
+    try{
+      FlutterBarcodeScanner.scanBarcode('#2A99CF', 'cancel', false, ScanMode.QR);
+    }catch(e){
+    print("ERROR");
+    }
+    
+    //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SucessCheckinPage(scanResult: result,)));
   }
   
 }
