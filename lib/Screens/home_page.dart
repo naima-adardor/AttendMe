@@ -1,5 +1,4 @@
 import 'package:attend_me/Screens/bottom_bar.dart';
-import 'package:attend_me/Screens/history_page.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -261,8 +260,8 @@ class _HomeScreenState extends State<HomeScreen> {
               runSpacing: screenSize.height * 0.015,
               children: [
                 SizedBox(
-                  height: 140,
-                  width: 140,
+                  height: screenSize.height * 0.205,
+                  width: screenSize.height * 0.2,
                   child: Card(
                     color: const Color.fromARGB(255, 78, 146, 163),
                     elevation: 2,
@@ -285,29 +284,31 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              const Gap(12),
+                              Gap(screenSize.height * 0.01),
                               Image.asset("assets/late.png"),
-                              const SizedBox(
-                                height: 8,
+                              SizedBox(
+                                height: screenSize.height * 0.01,
                               ),
                               Text(
                                 "Late",
                                 style: GoogleFonts.openSans(
-                                  textStyle: const TextStyle(
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                      fontSize: 17,
+                                  textStyle: TextStyle(
+                                      color: const Color.fromARGB(
+                                          255, 255, 255, 255),
+                                      fontSize: screenSize.width * 0.04,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 3,
+                              SizedBox(
+                                height: screenSize.height * 0.003,
                               ),
                               Text(
                                 "12 times",
                                 style: GoogleFonts.openSans(
-                                  textStyle: const TextStyle(
-                                      color: Color.fromARGB(255, 207, 196, 196),
-                                      fontSize: 15,
+                                  textStyle: TextStyle(
+                                      color: const Color.fromARGB(
+                                          255, 207, 196, 196),
+                                      fontSize: screenSize.width * 0.04,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -319,8 +320,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 140,
-                  width: 140,
+                  height: screenSize.height * 0.205,
+                  width: screenSize.height * 0.2,
                   child: Card(
                     color: const Color.fromARGB(255, 199, 34, 136),
                     elevation: 2,
@@ -343,33 +344,35 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              const Gap(12),
+                              Gap(screenSize.height * 0.01),
                               Image.asset(
                                 "assets/Absent.png",
-                                height: 50,
-                                width: 50,
+                                height: screenSize.height * 0.07,
+                                width: screenSize.width * 0.11,
                               ),
-                              const SizedBox(
-                                height: 8,
+                              SizedBox(
+                                height: screenSize.height * 0.01,
                               ),
                               Text(
                                 "Absent",
                                 style: GoogleFonts.openSans(
-                                  textStyle: const TextStyle(
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                      fontSize: 17,
+                                  textStyle: TextStyle(
+                                      color: const Color.fromARGB(
+                                          255, 255, 255, 255),
+                                      fontSize: screenSize.width * 0.04,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 3,
+                              SizedBox(
+                                height: screenSize.height * 0.003,
                               ),
                               Text(
                                 "2 times",
                                 style: GoogleFonts.openSans(
-                                  textStyle: const TextStyle(
-                                      color: Color.fromARGB(255, 207, 196, 196),
-                                      fontSize: 15,
+                                  textStyle: TextStyle(
+                                      color: const Color.fromARGB(
+                                          255, 207, 196, 196),
+                                      fontSize: screenSize.width * 0.04,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -381,8 +384,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 140,
-                  width: 140,
+                  height: screenSize.height * 0.205,
+                  width: screenSize.height * 0.2,
                   child: Card(
                     color: const Color.fromARGB(255, 158, 80, 182),
                     elevation: 2,
@@ -405,33 +408,35 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              const Gap(12),
+                              Gap(screenSize.height * 0.01),
                               Image.asset(
                                 "assets/WorkingHours.png",
-                                height: 50,
-                                width: 50,
+                                height: screenSize.height * 0.07,
+                                width: screenSize.width * 0.13,
                               ),
-                              const SizedBox(
-                                height: 8,
+                              SizedBox(
+                                height: screenSize.height * 0.01,
                               ),
                               Text(
                                 "Working Hours",
                                 style: GoogleFonts.openSans(
-                                  textStyle: const TextStyle(
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                      fontSize: 16,
+                                  textStyle: TextStyle(
+                                      color: const Color.fromARGB(
+                                          255, 255, 255, 255),
+                                      fontSize: screenSize.width * 0.037,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 3,
+                              SizedBox(
+                                height: screenSize.height * 0.003,
                               ),
                               Text(
                                 "20:45:00",
                                 style: GoogleFonts.openSans(
-                                  textStyle: const TextStyle(
-                                      color: Color.fromARGB(255, 207, 196, 196),
-                                      fontSize: 15,
+                                  textStyle: TextStyle(
+                                      color: const Color.fromARGB(
+                                          255, 207, 196, 196),
+                                      fontSize: screenSize.width * 0.04,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -443,8 +448,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 140,
-                  width: 140,
+                  height: screenSize.height * 0.205,
+                  width: screenSize.height * 0.2,
                   child: Card(
                     color: const Color.fromARGB(255, 231, 89, 23),
                     elevation: 2,
@@ -467,33 +472,35 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              const Gap(12),
+                              Gap(screenSize.height * 0.01),
                               Image.asset(
                                 "assets/OnTime.png",
-                                height: 50,
-                                width: 50,
+                                height: screenSize.height * 0.07,
+                                width: screenSize.width * 0.13,
                               ),
-                              const SizedBox(
-                                height: 8,
+                              SizedBox(
+                                height: screenSize.height * 0.01,
                               ),
                               Text(
                                 "OnTime",
                                 style: GoogleFonts.openSans(
-                                  textStyle: const TextStyle(
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                      fontSize: 17,
+                                  textStyle: TextStyle(
+                                      color: const Color.fromARGB(
+                                          255, 255, 255, 255),
+                                      fontSize: screenSize.width * 0.04,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
-                              const SizedBox(
-                                height: 3,
+                              SizedBox(
+                                height: screenSize.height * 0.003,
                               ),
                               Text(
                                 "19 times",
                                 style: GoogleFonts.openSans(
-                                  textStyle: const TextStyle(
-                                      color: Color.fromARGB(255, 207, 196, 196),
-                                      fontSize: 15,
+                                  textStyle: TextStyle(
+                                      color: const Color.fromARGB(
+                                          255, 207, 196, 196),
+                                      fontSize: screenSize.width * 0.04,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
