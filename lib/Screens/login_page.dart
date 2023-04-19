@@ -34,7 +34,7 @@ class _LoginPage extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const Gap(30),
+                Gap(screenSize.height * 0.05),
                 Container(
                   height: screenSize.height * 0.4,
                   width: screenSize.width * 0.8,
@@ -46,15 +46,15 @@ class _LoginPage extends State<LoginPage> {
                     ),
                   ),
                 ),
-                const Text(
+                Text(
                   "Welcome !",
                   style: TextStyle(
-                    fontSize: 23,
+                    fontSize: screenSize.width * 0.07,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF6096B4),
+                    color: const Color(0xFF6096B4),
                   ),
                 ),
-                const Gap(30),
+                Gap(screenSize.height * 0.06),
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: screenSize.width * 0.07, vertical: 0),
@@ -144,10 +144,10 @@ class _LoginPage extends State<LoginPage> {
                     ),
                   ),
                 ),
-                const Gap(12),
+                Gap(screenSize.height * 0.01),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: screenSize.width * 0.07, vertical: 0),
+                      horizontal: screenSize.width * 0.08, vertical: 0),
                   child: Row(
                     children: [
                       Checkbox(
@@ -191,7 +191,7 @@ class _LoginPage extends State<LoginPage> {
                     ],
                   ),
                 ),
-                const Gap(25),
+                Gap(screenSize.height * 0.04),
                 SizedBox(
                   width: screenSize.width * 0.5,
                   height: screenSize.width * 0.13,
@@ -210,17 +210,16 @@ class _LoginPage extends State<LoginPage> {
                         ),
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       "Login",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: screenSize.width * 0.055,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-                const Gap(30),
               ],
             ),
           ),
