@@ -306,17 +306,23 @@ class _HistoryPageState extends State<HistoryPage> {
             ),
             Gap(screenSize.height * 0.01),
             Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: screenSize.width * 0.03,
-                vertical: screenSize.height * 0,
+              padding: EdgeInsets.only(
+                top: 0,
+                left: screenSize.width * 0.03,
+                right: screenSize.width * 0.03,
+                bottom: screenSize.height * 0.01,
               ),
-              height: screenSize.height * 1.1,
+              height: screenSize.height * 0.658,
               child: ListView.builder(
+                padding: const EdgeInsets.only(
+                  top: 0,
+                ),
+                itemExtent: screenSize.height * 0.11,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemCount: 20,
                 itemBuilder: (BuildContext context, int index) => Container(
-                  height: MediaQuery.of(context).size.height * 0.113,
+                  height: screenSize.height * 0.11,
                   child: Card(
                     elevation: 6.0,
                     child: Container(
