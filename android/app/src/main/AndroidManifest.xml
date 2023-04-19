@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.attendme.attend_me">
+    <uses-permission android:name="android.permission.CAMERA" />
    <application
         android:label="attend_me"
         android:name="${applicationName}"
