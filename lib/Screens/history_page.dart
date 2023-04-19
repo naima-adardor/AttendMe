@@ -120,13 +120,11 @@ class _HistoryPageState extends State<HistoryPage> {
       _dateController1.text = _selectedDate1;
     }
   }
-  double screenHeight = 0;
-  double screenWidth = 0;
 
   @override
   Widget build(BuildContext context) {
-    screenHeight = MediaQuery.of(context).size.height;
-    screenWidth = MediaQuery.of(context).size.width;
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: const Color.fromRGBO(209, 232, 243, 0.878),
       body: SingleChildScrollView(
@@ -134,13 +132,14 @@ class _HistoryPageState extends State<HistoryPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const Gap(60),
+            Gap(screenSize.height * 0.07),
             Row(
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
+                    padding: EdgeInsets.only(
+                      left: screenSize.width * 0.06,
+                    ),
                     child: TextFormField(
                       controller: _dateController1,
                       readOnly: true,
@@ -174,10 +173,12 @@ class _HistoryPageState extends State<HistoryPage> {
                     ),
                   ),
                 ),
+                Gap(screenSize.width * 0.03),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
+                    padding: EdgeInsets.only(
+                      right: screenSize.width * 0.06,
+                    ),
                     child: TextFormField(
                       controller: _dateController,
                       readOnly: true,
@@ -213,75 +214,79 @@ class _HistoryPageState extends State<HistoryPage> {
                 ),
               ],
             ),
-            const Gap(10),
+            Gap(screenSize.height * 0.02),
             Center(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Center(
-                  child: Column(
-                    children: [
-                      Center(
-                        child: Container(
-                          height: 60,
-                          width: 350,
-                          child: ListView.builder(
-                            itemCount: 4,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: ((context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 10),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      indexx = index;
-                                    });
-                                  },
-                                  child: Center(
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenSize.width * 0.07,
+                ),
+                child: Column(
+                  children: [
+                    Center(
+                      child: Container(
+                        height: screenSize.height * 0.08,
+                        width: screenSize.width * 1,
+                        child: ListView.builder(
+                          itemCount: 4,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: ((context, index) {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                right: index == 3
+                                    ? screenSize.width * 0
+                                    : screenSize.width * 0.03,
+                              ),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    indexx = index;
+                                  });
+                                },
+                                child: Center(
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                      top: 5,
+                                      bottom: 5,
+                                      left: index == 0 ? 4 : 0,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: indexx == index
+                                          ? lightBlue
+                                          : Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: indexx == index
+                                              ? maincolor
+                                              : Colors.transparent,
+                                          offset: indexx == index
+                                              ? Offset(1, 1)
+                                              : Offset(0, 0),
+                                          blurRadius: indexx == index ? 2 : 0,
+                                        )
+                                      ],
+                                    ),
                                     child: Container(
-                                      margin: EdgeInsets.only(
-                                        top: 5,
-                                        bottom: 5,
-                                        left: index == 0 ? 4 : 0,
-                                      ),
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: indexx == index
-                                            ? lightBlue
-                                            : Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: indexx == index
-                                                ? maincolor
-                                                : Colors.transparent,
-                                            offset: indexx == index
-                                                ? Offset(1, 1)
-                                                : Offset(0, 0),
-                                            blurRadius: indexx == index ? 2 : 0,
-                                          )
-                                        ],
-                                      ),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: lightBlue,
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                                        border: Border.all(
+                                          color: lightBlue,
+                                          width: 1,
                                         ),
-                                        child: Center(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 14),
-                                            child: Text(
-                                              category[index],
-                                              style: TextStyle(
-                                                fontSize: screenWidth / 21,
-                                                color: indexx == index
-                                                    ? Colors.white
-                                                    : darkBlue,
-                                                fontFamily: 'ro',
-                                              ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Center(
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal:
+                                                  screenSize.width * 0.04),
+                                          child: Text(
+                                            category[index],
+                                            style: TextStyle(
+                                              fontSize: screenSize.width * 0.04,
+                                              color: indexx == index
+                                                  ? Colors.white
+                                                  : darkBlue,
+                                              fontFamily: 'ro',
                                             ),
                                           ),
                                         ),
@@ -289,58 +294,63 @@ class _HistoryPageState extends State<HistoryPage> {
                                     ),
                                   ),
                                 ),
-                              );
-                            }),
-                          ),
+                              ),
+                            );
+                          }),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            const Gap(15),
+            Gap(screenSize.height * 0.01),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 3.0),
-              height: 600,
+              padding: EdgeInsets.symmetric(
+                horizontal: screenSize.width * 0.03,
+                vertical: screenSize.height * 0,
+              ),
+              height: screenSize.height * 1.1,
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemCount: 20,
                 itemBuilder: (BuildContext context, int index) => Container(
-                  height: MediaQuery.of(context).size.height * 0.115,
+                  height: MediaQuery.of(context).size.height * 0.113,
                   child: Card(
                     elevation: 6.0,
                     child: Container(
                       decoration: const BoxDecoration(
                         color: Color.fromRGBO(255, 255, 255, 0.886),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 25.0),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenSize.width * 0.06,
+                        vertical: screenSize.height * 0.026,
+                      ),
                       child: SizedBox(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Container(
-                              width: 100,
-                              height: 100,
+                              width: screenSize.width * 0.25,
+                              height: screenSize.height * 0.03,
                               child: Center(
                                 child: Text(
                                   "2020-12-22",
                                   style: TextStyle(
                                       color: darkBlue,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: screenWidth / 24),
+                                      fontSize: screenSize.width * 0.044),
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                              width: 10,
+                            SizedBox(
+                              width: screenSize.width * 0.2,
                             ),
                             Container(
-                              width: 100,
-                              height: 100,
+                              width: screenSize.width * 0.25,
+                              height: screenSize.height * 0.1,
                               child: Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -356,17 +366,16 @@ class _HistoryPageState extends State<HistoryPage> {
                                     ),
                                   ],
                                 ),
-                               
                                 child: Center(
-                                  child: const Text(
+                                  child: Text(
                                     'Absent',
                                     style: TextStyle(
-                                       
-                                        color: Color.fromARGB(255, 255, 255, 255),
-                                        fontFamily: 'ro',
-                                        fontWeight: FontWeight.bold,
-                                         fontSize: 15,),
-                                         textAlign: TextAlign.center,
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      fontFamily: 'ro',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: screenSize.width * 0.043,
+                                    ),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                               ),
@@ -379,7 +388,6 @@ class _HistoryPageState extends State<HistoryPage> {
                 ),
               ),
             ),
-            const Gap(30),
           ],
         ),
       ),
