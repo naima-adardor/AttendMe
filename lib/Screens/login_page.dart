@@ -20,12 +20,14 @@ class _LoginPage extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-     
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          padding: EdgeInsets.symmetric(
+              horizontal: screenSize.width * 0,
+              vertical: screenSize.height * 0),
           child: Form(
             key: formKey,
             child: Column(
@@ -34,8 +36,8 @@ class _LoginPage extends State<LoginPage> {
               children: <Widget>[
                 const Gap(30),
                 Container(
-                  height: 350,
-                  width: 400,
+                  height: screenSize.height * 0.4,
+                  width: screenSize.width * 0.8,
                   child: Center(
                     child: Stack(
                       children: [
@@ -54,8 +56,8 @@ class _LoginPage extends State<LoginPage> {
                 ),
                 const Gap(30),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenSize.width * 0.07, vertical: 0),
                   child: TextFormField(
                     onTap: () {
                       setState(() {
@@ -93,8 +95,8 @@ class _LoginPage extends State<LoginPage> {
                 ),
                 const Gap(15),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenSize.width * 0.07, vertical: 0),
                   child: TextFormField(
                     onTap: () {
                       setState(() {
@@ -144,8 +146,8 @@ class _LoginPage extends State<LoginPage> {
                 ),
                 const Gap(12),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenSize.width * 0.07, vertical: 0),
                   child: Row(
                     children: [
                       Checkbox(
@@ -191,8 +193,8 @@ class _LoginPage extends State<LoginPage> {
                 ),
                 const Gap(25),
                 SizedBox(
-                  width: 200,
-                  height: 50,
+                  width: screenSize.width * 0.5,
+                  height: screenSize.width * 0.13,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF6096B4),
