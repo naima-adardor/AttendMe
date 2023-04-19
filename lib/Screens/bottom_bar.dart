@@ -3,7 +3,9 @@ import 'package:attend_me/Screens/history_page.dart';
 import 'package:attend_me/Screens/home_page.dart';
 import 'package:attend_me/Screens/profile_page.dart';
 import 'package:attend_me/Screens/scan_page.dart';
+import 'package:attend_me/Screens/show_camera.dart';
 import 'package:attend_me/Screens/success_checkin_page.dart';
+import 'package:camera/camera.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:attend_me/Screens/change_password2.dart';
@@ -93,10 +95,16 @@ class _BottomBarState extends State<BottomBar> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //scanQr();
-       Navigator.push(context, MaterialPageRoute(builder: (context)=>ScanPage()));
-        },
+        onPressed: () async {
+            await availableCameras().then(
+              (value) => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CameraPage(cameras: value,),
+                ),
+              ),
+            );
+          },
         child: Icon(Icons.qr_code_scanner),
         backgroundColor: const Color(0xFF6096B4),
       ),
