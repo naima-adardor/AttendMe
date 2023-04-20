@@ -77,14 +77,20 @@ class _changePassword2PageState extends State<changePassword2Page> {
                 Gap(screenSize.height * 0),
                 Column(
                   children: [
-                    Text(
-                      " Your new password must be different from previously used password",
-                      style: TextStyle(
-                        fontSize: screenSize.width * 0.05,
-                        fontWeight: FontWeight.w500,
-                        color: const Color.fromARGB(255, 163, 158, 158),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: screenSize.width * 0.02,
+                          right: screenSize.width * 0.02,
+                          bottom: screenSize.height * 0.01),
+                      child: Text(
+                        " Your new password must be different from previously used password",
+                        style: TextStyle(
+                          fontSize: screenSize.width * 0.05,
+                          fontWeight: FontWeight.w500,
+                          color: const Color.fromARGB(255, 163, 158, 158),
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
