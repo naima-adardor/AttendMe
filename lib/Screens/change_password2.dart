@@ -15,6 +15,8 @@ class _changePassword2PageState extends State<changePassword2Page> {
   bool _hideText = true;
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
@@ -26,26 +28,27 @@ class _changePassword2PageState extends State<changePassword2Page> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const Gap(60),
-                const Text(
+                Gap(screenSize.height * 0.07),
+                Text(
                   "Change your password ",
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: screenSize.width * 0.05,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 110, 110, 110),
+                    color: const Color.fromARGB(255, 110, 110, 110),
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const Gap(5),
+                Gap(screenSize.height * 0),
                 Center(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 25),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: screenSize.width * 0.03,
+                        vertical: screenSize.height * 0.03),
                     child: Stack(
                       children: [
                         Positioned(
                           child: Container(
-                            padding: const EdgeInsets.all(30),
+                            padding: EdgeInsets.all(screenSize.height * 0.035),
                             decoration: BoxDecoration(
                               color: const Color(0xFF6096B4),
                               shape: BoxShape.circle,
@@ -61,8 +64,8 @@ class _changePassword2PageState extends State<changePassword2Page> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 5, vertical: 4),
                             child: Container(
-                                height: 210,
-                                width: 210,
+                                height: 200,
+                                width: 200,
                                 child: Center(
                                     child: Image.asset("assets/newPass.png"))),
                           ),
@@ -71,21 +74,21 @@ class _changePassword2PageState extends State<changePassword2Page> {
                     ),
                   ),
                 ),
-                const Gap(1),
+                Gap(screenSize.height * 0),
                 Column(
-                  children: const [
+                  children: [
                     Text(
                       " Your new password must be different from previously used password",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: screenSize.width * 0.05,
                         fontWeight: FontWeight.w500,
-                        color: Color.fromARGB(255, 163, 158, 158),
+                        color: const Color.fromARGB(255, 163, 158, 158),
                       ),
                       textAlign: TextAlign.center,
                     ),
                   ],
                 ),
-                const Gap(20),
+                Gap(screenSize.height * 0.02),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
@@ -135,7 +138,7 @@ class _changePassword2PageState extends State<changePassword2Page> {
                     ),
                   ),
                 ),
-                const Gap(25),
+                Gap(screenSize.height * 0.02),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
@@ -185,7 +188,7 @@ class _changePassword2PageState extends State<changePassword2Page> {
                     ),
                   ),
                 ),
-                const Gap(25),
+                Gap(screenSize.height * 0.02),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
@@ -235,12 +238,12 @@ class _changePassword2PageState extends State<changePassword2Page> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 35,
+                SizedBox(
+                  height: screenSize.height * 0.03,
                 ),
                 SizedBox(
-                  width: 200,
-                  height: 50,
+                  width: screenSize.width * 0.5,
+                  height: screenSize.height * 0.07,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF6096B4),
@@ -254,17 +257,16 @@ class _changePassword2PageState extends State<changePassword2Page> {
                             builder: (context) => const ProfilePage()),
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       "Save",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: screenSize.width * 0.05,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-                const Gap(30),
               ],
             ),
           ),

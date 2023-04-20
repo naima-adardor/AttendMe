@@ -14,6 +14,8 @@ class _VerificationPageState extends State<VerificationPage> {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SingleChildScrollView(
@@ -25,26 +27,27 @@ class _VerificationPageState extends State<VerificationPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const Gap(60),
-                const Text(
+                Gap(screenSize.height * 0.086),
+                Text(
                   "Verification Code !  ",
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: screenSize.width * 0.05,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 110, 110, 110),
+                    color: const Color.fromARGB(255, 110, 110, 110),
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const Gap(20),
+                Gap(screenSize.height * 0.01),
                 Center(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 25),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: screenSize.width * 0.02,
+                        vertical: screenSize.height * 0.02),
                     child: Stack(
                       children: [
                         Positioned(
                           child: Container(
-                            padding: const EdgeInsets.all(30),
+                            padding: EdgeInsets.all(screenSize.height * 0.03),
                             decoration: BoxDecoration(
                               color: const Color(0xFF6096B4),
                               shape: BoxShape.circle,
@@ -71,64 +74,71 @@ class _VerificationPageState extends State<VerificationPage> {
                     ),
                   ),
                 ),
-                const Gap(20),
+                Gap(screenSize.height * 0.01),
                 Column(
-                  children: const [
+                  children: [
                     Text(
                       "Please enter the four 4 code sent to  ",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: screenSize.width * 0.048,
                         fontWeight: FontWeight.w500,
-                        color: Color.fromARGB(255, 88, 84, 84),
+                        color: const Color.fromARGB(255, 88, 84, 84),
                       ),
                       textAlign: TextAlign.center,
                     ),
                     Text(
                       " 06 25 67 89 09 ",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: screenSize.width * 0.046,
                         fontWeight: FontWeight.w500,
-                        color: Color.fromARGB(255, 88, 84, 84),
+                        color: const Color.fromARGB(255, 88, 84, 84),
                       ),
                       textAlign: TextAlign.center,
                     ),
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 0),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenSize.width * 0.03,
+                      vertical: screenSize.height * 0),
                 ),
-                const Gap(10),
-                Container(
-                  padding: const EdgeInsets.only(
-                      right: 60, left: 60, top: 20, bottom: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              _textFieldOTP(first: true, last: false),
-                              _textFieldOTP(first: false, last: false),
-                              _textFieldOTP(first: false, last: false),
-                              _textFieldOTP(first: false, last: true),
-                            ],
+                Gap(screenSize.height * 0),
+                Center(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                        right: screenSize.width * 0.15,
+                        left: screenSize.width * 0.15,
+                        top: screenSize.height * 0.03,
+                        bottom: screenSize.height * 0.01),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                _textFieldOTP(first: true, last: false),
+                                _textFieldOTP(first: false, last: false),
+                                _textFieldOTP(first: false, last: false),
+                                _textFieldOTP(first: false, last: true),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: screenSize.height * 0.02,
                 ),
                 SizedBox(
-                  width: 200,
-                  height: 50,
+                  width: screenSize.width * 0.5,
+                  height: screenSize.height * 0.072,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF6096B4),
@@ -142,18 +152,18 @@ class _VerificationPageState extends State<VerificationPage> {
                             builder: (context) => const ChangePasswordPage()),
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       "Verify",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: screenSize.width * 0.05,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 18,
+                SizedBox(
+                  height: screenSize.height * 0.025,
                 ),
                 Center(
                   child: GestureDetector(
@@ -165,29 +175,28 @@ class _VerificationPageState extends State<VerificationPage> {
                         ),
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       "Change Number",
                       style: TextStyle(
                         decoration: TextDecoration.underline,
-                        color: Color.fromARGB(255, 148, 148, 148),
-                        fontSize: 16,
+                        color: const Color.fromARGB(255, 148, 148, 148),
+                        fontSize: screenSize.width * 0.04,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 18,
+                SizedBox(
+                  height: screenSize.height * 0.02,
                 ),
-                const Text(
+                Text(
                   "Resend New Code",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: screenSize.width * 0.045,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF6096B4),
+                    color: const Color(0xFF6096B4),
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const Gap(30),
               ],
             ),
           ),
