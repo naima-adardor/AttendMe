@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:attend_me/Screens/login_page.dart';
 import 'package:attend_me/Screens/onBoarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,6 +38,8 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: const Color(0xFF6096B4),
       body: Stack(
@@ -104,7 +105,10 @@ class _WelcomePageState extends State<WelcomePage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 160),
+            padding: EdgeInsets.symmetric(
+              horizontal: screenSize.width * 0.07,
+              vertical: screenSize.height * 0.19,
+            ),
             child: Column(
               children: [
                 Image.asset("assets/AttendMeS.png"),
