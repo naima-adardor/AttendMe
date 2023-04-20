@@ -133,6 +133,7 @@ class _AttendanceRegulationState extends State<AttendanceRegulation> {
                       color: Color.fromARGB(255, 144, 191, 216),
                       boxShadow: [
                         BoxShadow(
+                       
                           color: Color.fromARGB(255, 144, 191, 216),
                           blurRadius: 5,
                           offset: Offset(2, 2),

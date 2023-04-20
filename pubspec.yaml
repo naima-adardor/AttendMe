@@ -53,6 +53,7 @@ dependencies:
   barcode_widget: ^2.0.1
   mobile_scanner: ^2.1.0
   qr_flutter: ^4.0.0
+  camera: ^0.10.4
   
 
 
@@ -101,6 +102,8 @@ flutter:
     - assets/alert.png
     - assets/exit.png
     - assets/scan.png
+    - assets/done.png
+    - assets/close.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
