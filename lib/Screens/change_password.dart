@@ -15,6 +15,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   bool _hideText = true;
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
@@ -26,26 +28,27 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const Gap(60),
-                const Text(
+                Gap(screenSize.height * 0.07),
+                Text(
                   "Change your password ",
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: screenSize.width * 0.05,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 110, 110, 110),
+                    color: const Color.fromARGB(255, 110, 110, 110),
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const Gap(20),
+                Gap(screenSize.height * 0.01),
                 Center(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 25),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: screenSize.width * 0.03,
+                        vertical: screenSize.height * 0.03),
                     child: Stack(
                       children: [
                         Positioned(
                           child: Container(
-                            padding: const EdgeInsets.all(30),
+                            padding: EdgeInsets.all(screenSize.height * 0.043),
                             decoration: BoxDecoration(
                               color: const Color(0xFF6096B4),
                               shape: BoxShape.circle,
@@ -71,22 +74,21 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     ),
                   ),
                 ),
-                const Gap(20),
+                Gap(screenSize.height * 0.01),
                 Column(
-                  children: const [
+                  children: [
                     Text(
                       " Your identity has been identified !                     Please set a new password ",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: screenSize.width * 0.05,
                         fontWeight: FontWeight.w500,
-                        color: Color.fromARGB(255, 163, 158, 158),
+                        color: const Color.fromARGB(255, 163, 158, 158),
                       ),
-                      
                       textAlign: TextAlign.center,
                     ),
                   ],
                 ),
-                const Gap(25),
+                Gap(screenSize.height * 0.03),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
@@ -136,7 +138,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     ),
                   ),
                 ),
-                const Gap(25),
+                Gap(screenSize.height * 0.02),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
@@ -186,12 +188,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 35,
+                SizedBox(
+                  height: screenSize.height * 0.04,
                 ),
                 SizedBox(
-                  width: 200,
-                  height: 50,
+                  width: screenSize.width * 0.5,
+                  height: screenSize.height * 0.07,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF6096B4),
@@ -206,17 +208,16 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         ),
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       "Save",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: screenSize.width * 0.05,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-                const Gap(30),
               ],
             ),
           ),
