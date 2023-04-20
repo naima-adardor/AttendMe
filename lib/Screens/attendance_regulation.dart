@@ -1,7 +1,6 @@
 import 'package:attend_me/Screens/attendance_issue.dart';
 import 'package:attend_me/Screens/sanitary_issue.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 class AttendanceRegulation extends StatefulWidget {
   const AttendanceRegulation({super.key});
@@ -13,15 +12,28 @@ class AttendanceRegulation extends StatefulWidget {
 class _AttendanceRegulationState extends State<AttendanceRegulation> {
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        title: const Padding(
-          padding: EdgeInsets.only(left: 25),
+        title: Padding(
+          padding: EdgeInsets.only(
+            left: screenSize.width * 0.08,
+            right: screenSize.width * 0.08,
+          ),
           child: Text(
             'Attendance Regulation',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Color.fromARGB(255, 133, 118, 118)),
+            style: TextStyle(
+              fontSize: screenSize.width * 0.05,
+              color: const Color.fromARGB(
+                255,
+                133,
+                118,
+                118,
+              ),
+            ),
           ),
         ),
         leading: IconButton(
@@ -39,17 +51,17 @@ class _AttendanceRegulationState extends State<AttendanceRegulation> {
         child: Center(
           child: Column(
             children: [
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(
-                  top: 40,
-                  left: 10,
-                  right: 10,
+                  top: screenSize.height * 0.06,
+                  left: screenSize.width * 0.06,
+                  right: screenSize.width * 0.06,
                 ),
                 child: Text(
                   "Please select the Issue \n That applies to your situation !",
                   style: TextStyle(
-                    color: Color(0xFF6096B4),
-                    fontSize: 18,
+                    color: const Color(0xFF6096B4),
+                    fontSize: screenSize.width * 0.052,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
@@ -65,14 +77,18 @@ class _AttendanceRegulationState extends State<AttendanceRegulation> {
                   );
                 },
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 40,
+                  padding: EdgeInsets.only(
+                    top: screenSize.height * 0.05,
                   ),
                   child: Container(
-                    margin: const EdgeInsets.only(
-                        top: 12, bottom: 32, left: 10, right: 10),
-                    height: 150,
-                    width: 320,
+                    margin: EdgeInsets.only(
+                      top: screenSize.height * 0.015,
+                      bottom: screenSize.height * 0.01,
+                      left: screenSize.width * 0.06,
+                      right: screenSize.width * 0.06,
+                    ),
+                    height: screenSize.height * 0.19,
+                    width: screenSize.width * 0.9,
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 144, 191, 216),
                       boxShadow: [
@@ -85,23 +101,23 @@ class _AttendanceRegulationState extends State<AttendanceRegulation> {
                       borderRadius: BorderRadius.all(Radius.circular(35)),
                     ),
                     child: Row(
-                      children: const [
+                      children: [
                         SizedBox(
-                          width: 20,
+                          width: screenSize.width * 0.06,
                         ),
                         Icon(
                           Icons.warning,
-                          size: 70,
+                          size: screenSize.width * 0.2,
                           color: Colors.white,
                         ),
                         SizedBox(
-                          width: 20,
+                          width: screenSize.width * 0.05,
                         ),
                         Text(
                           "You forgot to punch \n Or \n Technical problems",
                           style: TextStyle(
-                            color: Color.fromARGB(255, 24, 94, 133),
-                            fontSize: 19,
+                            color: const Color.fromARGB(255, 24, 94, 133),
+                            fontSize: screenSize.width * 0.05,
                             fontWeight: FontWeight.bold,
                           ),
                           textAlign: TextAlign.center,
@@ -121,14 +137,18 @@ class _AttendanceRegulationState extends State<AttendanceRegulation> {
                   );
                 },
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 40,
+                  padding: EdgeInsets.only(
+                    bottom: screenSize.height * 0.05,
                   ),
                   child: Container(
-                    margin: const EdgeInsets.only(
-                        top: 12, bottom: 32, left: 10, right: 10),
-                    height: 150,
-                    width: 320,
+                    margin: EdgeInsets.only(
+                      top: screenSize.height * 0.025,
+                      bottom: screenSize.height * 0.015,
+                      left: screenSize.width * 0.06,
+                      right: screenSize.width * 0.06,
+                    ),
+                    height: screenSize.height * 0.19,
+                    width: screenSize.width * 0.9,
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 144, 191, 216),
                       boxShadow: [
@@ -141,23 +161,23 @@ class _AttendanceRegulationState extends State<AttendanceRegulation> {
                       borderRadius: BorderRadius.all(Radius.circular(35)),
                     ),
                     child: Row(
-                      children: const [
+                      children: [
                         SizedBox(
-                          width: 20,
+                          width: screenSize.width * 0.04,
                         ),
                         Icon(
                           Icons.sick_rounded,
-                          size: 70,
+                          size: screenSize.width * 0.2,
                           color: Colors.white,
                         ),
                         SizedBox(
-                          width: 15,
+                          width: screenSize.width * 0.05,
                         ),
                         Text(
                           "You're absent because \n Of \n Illness",
                           style: TextStyle(
-                            color: Color.fromARGB(255, 24, 94, 133),
-                            fontSize: 19,
+                            color: const Color.fromARGB(255, 24, 94, 133),
+                            fontSize: screenSize.width * 0.05,
                             fontWeight: FontWeight.bold,
                           ),
                           textAlign: TextAlign.center,
