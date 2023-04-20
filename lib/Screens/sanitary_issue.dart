@@ -1,5 +1,3 @@
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -15,15 +13,20 @@ class _SanitaryPageState extends State<SanitaryPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 144, 191, 216),
-        title: const Padding(
-          padding: EdgeInsets.only(left: 50),
+        title: Padding(
+          padding: EdgeInsets.only(left: screenSize.width * 0.14),
           child: Text(
             'Sanitary Issues',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+            style: TextStyle(
+              color: const Color.fromARGB(255, 255, 255, 255),
+              fontSize: screenSize.width * 0.05,
+            ),
           ),
         ),
         leading: IconButton(
@@ -43,15 +46,15 @@ class _SanitaryPageState extends State<SanitaryPage> {
             key: formKey,
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 50,
-                  bottom: 50,
+                padding: EdgeInsets.only(
+                  top: screenSize.height * 0.06,
+                  bottom: screenSize.height * 0.05,
                 ),
                 child: Column(
                   children: [
                     Container(
-                      height: 200,
-                      width: 320,
+                      height: screenSize.height * 0.3,
+                      width: screenSize.width * 0.9,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: const Color.fromARGB(195, 255, 255, 255),
@@ -67,21 +70,21 @@ class _SanitaryPageState extends State<SanitaryPage> {
                       ),
                       child: Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 3,
+                          padding: EdgeInsets.symmetric(
+                            vertical: screenSize.height * 0.01,
+                            horizontal: screenSize.width * 0.06,
                           ),
                           child: TextFormField(
                             onTap: () {
                               setState(() {});
                             },
                             maxLines: null,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               hintText: "Write Your Report Here !",
                               hintStyle: TextStyle(
-                                color: Color.fromARGB(255, 124, 124, 124),
+                                color: const Color.fromARGB(255, 124, 124, 124),
                                 fontWeight: FontWeight.bold,
-                                fontSize: 17,
+                                fontSize: screenSize.width * 0.045,
                               ),
                               border: InputBorder.none,
                             ),
@@ -89,25 +92,25 @@ class _SanitaryPageState extends State<SanitaryPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    const Padding(
+                    SizedBox(height: screenSize.height * 0.03),
+                    Padding(
                       padding: EdgeInsets.only(
-                        right: 80,
+                        right: screenSize.width * 0.24,
                       ),
                       child: Text(
                         "Upload Your medical certificte",
                         style: TextStyle(
-                          color: Color.fromARGB(255, 66, 66, 66),
-                          fontSize: 16,
+                          color: const Color.fromARGB(255, 66, 66, 66),
+                          fontSize: screenSize.width * 0.045,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.left,
                       ),
                     ),
-                    const Gap(20),
+                    Gap(screenSize.height * 0.03),
                     Container(
-                      height: 60,
-                      width: 320,
+                      height: screenSize.height * 0.08,
+                      width: screenSize.width * 0.9,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: const Color.fromARGB(195, 255, 255, 255),
@@ -123,19 +126,20 @@ class _SanitaryPageState extends State<SanitaryPage> {
                       ),
                       child: Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 3,
+                          padding: EdgeInsets.symmetric(
+                            vertical: screenSize.height * 0.01,
+                            horizontal: screenSize.width * 0.06,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
+                              Text(
                                 "No file selected !",
                                 style: TextStyle(
-                                  color: Color.fromARGB(255, 124, 124, 124),
+                                  color:
+                                      const Color.fromARGB(255, 124, 124, 124),
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 17,
+                                  fontSize: screenSize.width * 0.045,
                                 ),
                               ),
                               ElevatedButton(
@@ -146,11 +150,11 @@ class _SanitaryPageState extends State<SanitaryPage> {
                                         borderRadius:
                                             BorderRadius.circular(35))),
                                 onPressed: () {},
-                                child: const Text(
+                                child: Text(
                                   "Upload",
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 18,
+                                    fontSize: screenSize.width * 0.045,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -160,10 +164,10 @@ class _SanitaryPageState extends State<SanitaryPage> {
                         ),
                       ),
                     ),
-                    const Gap(30),
+                    Gap(screenSize.height * 0.05),
                     SizedBox(
-                      height: 56,
-                      width: 180,
+                      height: screenSize.height * 0.08,
+                      width: screenSize.width * 0.5,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF6096B4),
@@ -171,11 +175,11 @@ class _SanitaryPageState extends State<SanitaryPage> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(35))),
                         onPressed: () {},
-                        child: const Text(
+                        child: Text(
                           "Submit",
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: screenSize.width * 0.045,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
