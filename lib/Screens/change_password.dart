@@ -81,6 +81,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         fontWeight: FontWeight.w500,
                         color: Color.fromARGB(255, 163, 158, 158),
                       ),
+                      
                       textAlign: TextAlign.center,
                     ),
                   ],

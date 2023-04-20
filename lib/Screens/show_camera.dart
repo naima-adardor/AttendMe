@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:attend_me/Screens/display_selfie.dart';
 import 'package:attend_me/Screens/qr_scanner_overlay.dart';
+import 'package:attend_me/Screens/scan_page.dart';
 import 'package:attend_me/constants/colors.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -105,11 +107,14 @@ class _CameraPageState extends State<CameraPage> {
           padding: const EdgeInsets.all(8.0),
     
           child: Center(
+            
             child: SizedBox(
               height: 400,
               width: 400,
-              child: CameraPreview(controller,
-              ),
+             child: pictureFile != null 
+        ? Image.file(File(pictureFile!.path))
+         // if image is not null, show it
+        : CameraPreview(controller), 
             ),
           ),
         ),
@@ -145,18 +150,13 @@ class _CameraPageState extends State<CameraPage> {
               SizedBox(width:20),
               Padding(
               padding: const EdgeInsets.all(8.0),
-              
-
-    
-             child: GestureDetector(
-               
-    
-  
-                
-    onTap: () async {
-               pictureFile = await controller.takePicture();
+              child: GestureDetector(            
+              onTap: () async {
+              pictureFile = await controller.takePicture();
                   setState(() {});
-                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DisplaySelfie(pictureFile!)));
+                   Timer(Duration(seconds: 2), () {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScanPage()));
+  });
               
                 },
       // Handle image tap
