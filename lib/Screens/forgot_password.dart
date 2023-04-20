@@ -60,7 +60,7 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                       children: [
                         Positioned(
                           child: Container(
-                            padding: const EdgeInsets.all(30),
+                            padding: EdgeInsets.all(screenSize.height * 0.03),
                             decoration: BoxDecoration(
                               color: const Color(0xFF6096B4),
                               shape: BoxShape.circle,
@@ -74,10 +74,10 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                         Center(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 40),
+                                horizontal: 20, vertical: 30),
                             child: Container(
-                                height: 180,
-                                width: 180,
+                                height: 179,
+                                width: 170,
                                 child: Center(
                                     child:
                                         Image.asset("assets/forgotPass.png"))),
