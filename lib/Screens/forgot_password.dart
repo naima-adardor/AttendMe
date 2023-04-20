@@ -11,17 +11,23 @@ class ForgotPassPage extends StatefulWidget {
 
 class _ForgotPassPageState extends State<ForgotPassPage> {
   final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-          title: const Padding(
-            padding: EdgeInsets.only(left: 45),
+          title: Padding(
+            padding: EdgeInsets.only(left: screenSize.width * 0.15),
             child: Text(
               'Forgot Password',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Color.fromARGB(255, 133, 118, 118)),
+              style: TextStyle(
+                color: const Color.fromARGB(255, 133, 118, 118),
+                fontSize: screenSize.width * 0.05,
+              ),
             ),
           ),
           leading: IconButton(
@@ -35,23 +41,26 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
             child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          padding: EdgeInsets.symmetric(
+              horizontal: screenSize.width * 0,
+              vertical: screenSize.height * 0),
           child: Form(
             key: formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const Gap(0),
+                Gap(screenSize.height * 0),
                 Center(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 60),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: screenSize.width * 0.05,
+                        vertical: screenSize.height * 0.05),
                     child: Stack(
                       children: [
                         Positioned(
                           child: Container(
-                            padding: const EdgeInsets.all(30),
+                            padding: EdgeInsets.all(screenSize.height * 0.03),
                             decoration: BoxDecoration(
                               color: const Color(0xFF6096B4),
                               shape: BoxShape.circle,
@@ -65,10 +74,10 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                         Center(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 40),
+                                horizontal: 20, vertical: 30),
                             child: Container(
-                                height: 180,
-                                width: 180,
+                                height: 179,
+                                width: 170,
                                 child: Center(
                                     child:
                                         Image.asset("assets/forgotPass.png"))),
@@ -79,22 +88,23 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 5), // Set margin on all sides
-                  child: const Text(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: screenSize.width * 0.07,
+                      vertical: screenSize.height * 0.01),
+                  child: Text(
                     "Please enter your Number Phone to receive a verification code",
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: screenSize.width * 0.045,
                       fontWeight: FontWeight.w500,
-                      color: Color.fromARGB(255, 88, 84, 84),
+                      color: const Color.fromARGB(255, 88, 84, 84),
                     ),
                     textAlign: TextAlign.center,
                   ),
                 ),
-                const Gap(15),
+                Gap(screenSize.height * 0.02),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenSize.width * 0.05, vertical: 0),
                   child: TextFormField(
                     decoration: const InputDecoration(
                       labelText: "Phone Number",
@@ -113,10 +123,10 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                     ),
                   ),
                 ),
-                const Gap(55),
+                Gap(screenSize.height * 0.06),
                 SizedBox(
-                  width: 200,
-                  height: 50,
+                  width: screenSize.width * 0.5,
+                  height: screenSize.height * 0.07,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF6096B4),
@@ -124,22 +134,22 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(35))),
                     onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => VerificationPage()),
-            );
-          },
-                    child: const Text(
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const VerificationPage()),
+                      );
+                    },
+                    child: Text(
                       "Send",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: screenSize.width * 0.05,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-                const Gap(30),
               ],
             ),
           ),
