@@ -60,14 +60,16 @@ class _CameraPageState extends State<CameraPage> {
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       drawer: const Drawer(),
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        title: const Padding(
-          padding: EdgeInsets.only(left: 20),
+        title: Padding(
+          padding: EdgeInsets.only(left: screenSize.height * 0.09),
           child: Text(
             'Taking a selfie',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Color.fromARGB(255, 133, 118, 118)),
+            style: TextStyle(
+                color: const Color.fromARGB(255, 133, 118, 118),
+                fontSize: screenSize.width * 0.05),
           ),
         ),
         leading: IconButton(
@@ -81,16 +83,16 @@ class _CameraPageState extends State<CameraPage> {
       ),
       body: Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(25),
+        padding: EdgeInsets.all(screenSize.height * 0.02),
         child: Column(
           children: [
             Center(
               child: Padding(
-                padding: const EdgeInsets.only(top: 30),
+                padding: EdgeInsets.only(top: screenSize.height * 0.03),
                 child: Text(
                   "Place your face inside the frame",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: screenSize.width * 0.05,
                     fontWeight: FontWeight.w500,
                     color: maincolor,
                   ),
@@ -98,41 +100,36 @@ class _CameraPageState extends State<CameraPage> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
-
+            SizedBox(height: screenSize.height * 0.025),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(screenSize.height * 0.04),
               child: Center(
                 child: SizedBox(
-                  height: 400,
-                  width: 400,
+                  height: screenSize.height * 0.5,
+                  width: screenSize.width * 0.7,
                   child: pictureFile != null
                       ? Image.file(File(pictureFile!.path))
-                      // if image is not null, show it
                       : CameraPreview(controller),
                 ),
               ),
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(screenSize.height * 0.01),
                   child: GestureDetector(
                     onTap: () async {
                       setState(() {});
                       Navigator.pop(context);
                     },
-                    // Handle image tap
-
                     child: Image.asset(
                       'assets/close.png',
                     ),
                   ),
                 ),
-                SizedBox(width: 20),
+                SizedBox(width: screenSize.width * 0.02),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
@@ -141,11 +138,9 @@ class _CameraPageState extends State<CameraPage> {
                       setState(() {});
                       Timer(Duration(seconds: 2), () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ScanPage()));
+                            builder: (context) => const ScanPage()));
                       });
                     },
-                    // Handle image tap
-
                     child: Image.asset(
                       'assets/done.png',
                     ),
@@ -153,9 +148,6 @@ class _CameraPageState extends State<CameraPage> {
                 ),
               ],
             ),
-
-            //Android/iOS
-            // Image.file(File(pictureFile!.path)))
           ],
         ),
       ),
