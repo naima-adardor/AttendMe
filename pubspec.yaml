@@ -61,12 +61,13 @@ dependencies:
   #latlong: ^0.6.1
   #positioned_tap_detector_2: ^1.0.4
   #transparent_image: ^2.0.1
-  #async: ^2.10.0
-  #flutter_image: ^4.1.5
+    #flutter_image: ^4.1.5
   #vector_math: ^2.1.4
   #proj4dart: ^2.1.0
    #meta: ^1.8.0
   #collection: ^1.17.0
+  async: ^2.10.0
+
   google_maps_flutter: ^2.2.5
   geolocator: ^9.0.2
   
