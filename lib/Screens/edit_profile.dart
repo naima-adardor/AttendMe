@@ -64,16 +64,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 144, 191, 216),
-        title: const Padding(
-          padding: EdgeInsets.only(left: 65),
+        title: Padding(
+          padding: EdgeInsets.only(
+            left: screenSize.width * 0.2,
+            right: screenSize.width * 0.2,
+          ),
           child: Text(
             'Edit Profile',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Color.fromARGB(255, 255, 255, 255),
+              fontSize: screenSize.width * 0.05,
+              color: const Color.fromARGB(255, 255, 255, 255),
             ),
           ),
         ),
@@ -88,7 +94,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
       backgroundColor: const Color.fromARGB(255, 144, 191, 216),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: EdgeInsets.symmetric(
+            horizontal: screenSize.width * 0.021,
+            vertical: screenSize.height * 0.021,
+          ),
           child: Form(
             key: formKey,
             child: Column(
@@ -98,7 +107,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 Center(
                   child: Column(
                     children: [
-                      const Gap(10),
+                      Gap(screenSize.height * 0),
                       Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
@@ -109,9 +118,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ),
                         child: Stack(
                           children: [
-                            const CircleAvatar(
-                              radius: 70,
-                              backgroundImage: AssetImage("assets/profile.jpg"),
+                            CircleAvatar(
+                              radius: screenSize.width * 0.16,
+                              backgroundImage:
+                                  const AssetImage("assets/profile.jpg"),
                             ),
                             Positioned(
                               bottom: 0,
@@ -130,106 +140,114 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ],
                         ),
                       ),
-                      const Gap(20),
-                      const Text(
+                      Gap(screenSize.height * 0.015),
+                      Text(
                         "Naima ELJID",
                         style: TextStyle(
-                          color: Color.fromARGB(255, 24, 94, 133),
+                          color: const Color.fromARGB(255, 24, 94, 133),
                           fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          fontSize: screenSize.width * 0.05,
                         ),
                       ),
-                      const Gap(27),
+                      Gap(screenSize.height * 0.03),
                       Column(
                         children: [
-                          SizedBox(
-                            height: 50,
-                            width: 320,
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  height: 50,
-                                  width: 155,
-                                  child: TextFormField(
-                                    initialValue: "Naima",
-                                    onTap: () {
-                                      setState(() {});
-                                    },
-                                    decoration: const InputDecoration(
-                                      labelText: "First Name",
-                                      labelStyle: TextStyle(
-                                        color: Color.fromARGB(255, 24, 94, 133),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color:
-                                              Color.fromARGB(255, 24, 94, 133),
-                                          width: 2.0,
-                                          style: BorderStyle.solid,
+                          Center(
+                            child: SizedBox(
+                              height: screenSize.height * 0.08,
+                              width: screenSize.width * 0.9,
+                              child: Center(
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      height: screenSize.height * 0.08,
+                                      width: screenSize.width * 0.43,
+                                      child: TextFormField(
+                                        initialValue: "Naima",
+                                        onTap: () {
+                                          setState(() {});
+                                        },
+                                        decoration: const InputDecoration(
+                                          labelText: "First Name",
+                                          labelStyle: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 24, 94, 133),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 24, 94, 133),
+                                              width: 2.0,
+                                              style: BorderStyle.solid,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 24, 94, 133),
+                                              width: 2.0,
+                                              style: BorderStyle.solid,
+                                            ),
+                                          ),
+                                          prefixIcon: Icon(
+                                            Icons.person_pin_rounded,
+                                            color: Color.fromARGB(
+                                                255, 24, 94, 133),
+                                          ),
                                         ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color:
-                                              Color.fromARGB(255, 24, 94, 133),
-                                          width: 2.0,
-                                          style: BorderStyle.solid,
-                                        ),
-                                      ),
-                                      prefixIcon: Icon(
-                                        Icons.person_pin_rounded,
-                                        color: Color.fromARGB(255, 24, 94, 133),
                                       ),
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                SizedBox(
-                                  height: 50,
-                                  width: 155,
-                                  child: TextFormField(
-                                    initialValue: "ELJID",
-                                    onTap: () {
-                                      setState(() {});
-                                    },
-                                    decoration: const InputDecoration(
-                                      labelText: "Last Name",
-                                      labelStyle: TextStyle(
-                                        color: Color.fromARGB(255, 24, 94, 133),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color:
-                                              Color.fromARGB(255, 24, 94, 133),
-                                          width: 2.0,
-                                          style: BorderStyle.solid,
+                                    SizedBox(width: screenSize.width * 0.04),
+                                    SizedBox(
+                                      height: screenSize.height * 0.08,
+                                      width: screenSize.width * 0.43,
+                                      child: TextFormField(
+                                        initialValue: "ELJID",
+                                        onTap: () {
+                                          setState(() {});
+                                        },
+                                        decoration: const InputDecoration(
+                                          labelText: "Last Name",
+                                          labelStyle: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 24, 94, 133),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 24, 94, 133),
+                                              width: 2.0,
+                                              style: BorderStyle.solid,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 24, 94, 133),
+                                              width: 2.0,
+                                              style: BorderStyle.solid,
+                                            ),
+                                          ),
+                                          prefixIcon: Icon(
+                                            Icons.person_pin_rounded,
+                                            color: Color.fromARGB(
+                                                255, 24, 94, 133),
+                                          ),
                                         ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color:
-                                              Color.fromARGB(255, 24, 94, 133),
-                                          width: 2.0,
-                                          style: BorderStyle.solid,
-                                        ),
-                                      ),
-                                      prefixIcon: Icon(
-                                        Icons.person_pin_rounded,
-                                        color: Color.fromARGB(255, 24, 94, 133),
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                          const Gap(17),
+                          Gap(screenSize.height * 0.021),
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 0, vertical: 0),
                             child: SizedBox(
-                              height: 50,
-                              width: 320,
+                              height: screenSize.height * 0.08,
+                              width: screenSize.width * 0.9,
                               child: TextFormField(
                                 initialValue: "naima.eljid03@gmail.com",
                                 onTap: () {
@@ -261,13 +279,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               ),
                             ),
                           ),
-                          const Gap(17),
+                          Gap(screenSize.height * 0.021),
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 0, vertical: 0),
                             child: SizedBox(
-                              height: 50,
-                              width: 320,
+                              height: screenSize.height * 0.08,
+                              width: screenSize.width * 0.9,
                               child: TextFormField(
                                 initialValue: "0625678909",
                                 onTap: () {
@@ -299,13 +317,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               ),
                             ),
                           ),
-                          const Gap(17),
+                          Gap(screenSize.height * 0.021),
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 0, vertical: 0),
                             child: SizedBox(
-                              height: 50,
-                              width: 320,
+                              height: screenSize.height * 0.08,
+                              width: screenSize.width * 0.9,
                               child: TextFormField(
                                 controller: _dateController,
                                 readOnly: true,
@@ -343,13 +361,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               ),
                             ),
                           ),
-                          const Gap(17),
+                          Gap(screenSize.height * 0.021),
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 0, vertical: 0),
                             child: SizedBox(
-                              height: 50,
-                              width: 320,
+                              height: screenSize.height * 0.08,
+                              width: screenSize.width * 0.9,
                               child: TextFormField(
                                 initialValue: "Tilila, Agadir, Moroco",
                                 onTap: () {
@@ -381,10 +399,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               ),
                             ),
                           ),
-                          const Gap(30),
+                          Gap(screenSize.height * 0.021),
                           SizedBox(
-                            width: 200,
-                            height: 50,
+                            width: screenSize.width * 0.5,
+                            height: screenSize.height * 0.07,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   backgroundColor:
@@ -399,17 +417,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   ),
                                 );
                               },
-                              child: const Text(
+                              child: Text(
                                 "Edit profile",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 18,
+                                  fontSize: screenSize.width * 0.05,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                           ),
-                          const Gap(20),
                         ],
                       ),
                     ],

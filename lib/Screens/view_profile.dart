@@ -11,15 +11,20 @@ class ViewProfilePage extends StatefulWidget {
 class _ViewProfilePageState extends State<ViewProfilePage> {
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        title: const Padding(
-          padding: EdgeInsets.only(left: 55),
+        title: Padding(
+          padding: EdgeInsets.only(left: screenSize.width * 0.16),
           child: Text(
             'View Profile',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Color.fromARGB(255, 133, 118, 118)),
+            style: TextStyle(
+              color: const Color.fromARGB(255, 133, 118, 118),
+              fontSize: screenSize.width * 0.05,
+            ),
           ),
         ),
         leading: IconButton(
@@ -33,50 +38,54 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: EdgeInsets.symmetric(
+              horizontal: screenSize.width * 0.05,
+              vertical: screenSize.width * 0.02),
           child: Center(
             child: Column(
               children: [
-                const Gap(30),
-                const CircleAvatar(
-                  radius: 70,
-                  backgroundImage: AssetImage("assets/profile.jpg"),
+                Gap(
+                  screenSize.height * 0.04,
                 ),
-                const Gap(15),
+                CircleAvatar(
+                  radius: screenSize.height * 0.13,
+                  backgroundImage: const AssetImage("assets/profile.jpg"),
+                ),
+                Gap(screenSize.height * 0.02),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 40,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenSize.width * 0.02,
+                    vertical: screenSize.height * 0.03,
                   ),
                   child: Column(
                     children: [
                       Row(
-                        children: const [
-                          Icon(
+                        children: [
+                          const Icon(
                             Icons.person_pin_rounded,
                             color: Color(0xFF6096B4),
                           ),
-                          Gap(10),
+                          Gap(screenSize.width * 0.03),
                           Text(
                             "Full Name : ",
                             style: TextStyle(
-                              color: Color(0xFF6096B4),
-                              fontSize: 17,
+                              color: const Color(0xFF6096B4),
+                              fontSize: screenSize.width * 0.045,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          Gap(10),
+                          Gap(screenSize.width * 0.03),
                           Text(
                             "ELJID Naima",
                             style: TextStyle(
-                              color: Color.fromARGB(255, 0, 0, 0),
-                              fontSize: 16,
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                              fontSize: screenSize.width * 0.04,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
                       ),
-                      const Gap(15),
+                      Gap(screenSize.height * 0.02),
                       Container(
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -89,34 +98,34 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ],
                         ),
                       ),
-                      const Gap(15),
+                      Gap(screenSize.height * 0.02),
                       Row(
-                        children: const [
-                          Icon(
+                        children: [
+                          const Icon(
                             Icons.email,
                             color: Color(0xFF6096B4),
                           ),
-                          Gap(10),
+                          Gap(screenSize.width * 0.03),
                           Text(
                             "Email : ",
                             style: TextStyle(
-                              color: Color(0xFF6096B4),
-                              fontSize: 17,
+                              color: const Color(0xFF6096B4),
+                              fontSize: screenSize.width * 0.045,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          Gap(10),
+                          Gap(screenSize.width * 0.03),
                           Text(
                             "naima.eljid03@gmail.com",
                             style: TextStyle(
-                              color: Color.fromARGB(255, 0, 0, 0),
-                              fontSize: 16,
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                              fontSize: screenSize.width * 0.04,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
                       ),
-                      const Gap(15),
+                      Gap(screenSize.height * 0.02),
                       Container(
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -129,34 +138,34 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ],
                         ),
                       ),
-                      const Gap(15),
+                      Gap(screenSize.height * 0.03),
                       Row(
-                        children: const [
-                          Icon(
+                        children: [
+                          const Icon(
                             Icons.phone_rounded,
                             color: Color(0xFF6096B4),
                           ),
-                          Gap(10),
+                          Gap(screenSize.width * 0.03),
                           Text(
                             "Phone number : ",
                             style: TextStyle(
-                              color: Color(0xFF6096B4),
-                              fontSize: 17,
+                              color: const Color(0xFF6096B4),
+                              fontSize: screenSize.width * 0.045,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          Gap(10),
+                          Gap(screenSize.width * 0.03),
                           Text(
                             "06 25 67 89 09 ",
                             style: TextStyle(
-                              color: Color.fromARGB(255, 0, 0, 0),
-                              fontSize: 16,
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                              fontSize: screenSize.width * 0.04,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
                       ),
-                      const Gap(15),
+                      Gap(screenSize.height * 0.02),
                       Container(
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -169,34 +178,34 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ],
                         ),
                       ),
-                      const Gap(15),
+                      Gap(screenSize.height * 0.02),
                       Row(
-                        children: const [
-                          Icon(
+                        children: [
+                          const Icon(
                             Icons.calendar_month,
                             color: Color(0xFF6096B4),
                           ),
-                          Gap(10),
+                          Gap(screenSize.width * 0.03),
                           Text(
                             "Birthday : ",
                             style: TextStyle(
-                              color: Color(0xFF6096B4),
-                              fontSize: 17,
+                              color: const Color(0xFF6096B4),
+                              fontSize: screenSize.width * 0.045,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          Gap(10),
+                          Gap(screenSize.width * 0.03),
                           Text(
                             "2003-02-27 ",
                             style: TextStyle(
-                              color: Color.fromARGB(255, 0, 0, 0),
-                              fontSize: 16,
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                              fontSize: screenSize.width * 0.04,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
                       ),
-                      const Gap(15),
+                      Gap(screenSize.height * 0.02),
                       Container(
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -209,34 +218,34 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ],
                         ),
                       ),
-                      const Gap(15),
+                      Gap(screenSize.height * 0.02),
                       Row(
-                        children: const [
-                          Icon(
+                        children: [
+                          const Icon(
                             Icons.location_on,
                             color: Color(0xFF6096B4),
                           ),
-                          Gap(10),
+                          Gap(screenSize.width * 0.03),
                           Text(
                             "Adress : ",
                             style: TextStyle(
-                              color: Color(0xFF6096B4),
-                              fontSize: 17,
+                              color: const Color(0xFF6096B4),
+                              fontSize: screenSize.width * 0.045,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          Gap(10),
+                          Gap(screenSize.width * 0.03),
                           Text(
                             "Tilila, Agadir, Morocco ",
                             style: TextStyle(
-                              color: Color.fromARGB(255, 0, 0, 0),
-                              fontSize: 16,
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                              fontSize: screenSize.width * 0.04,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
                       ),
-                      const Gap(15),
+                      Gap(screenSize.height * 0.02),
                       Container(
                         decoration: BoxDecoration(
                           boxShadow: [
@@ -249,7 +258,6 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ],
                         ),
                       ),
-                      const Gap(15),
                     ],
                   ),
                 ),

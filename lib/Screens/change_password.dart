@@ -78,7 +78,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 Column(
                   children: [
                     Text(
-                      " Your identity has been identified !                     Please set a new password ",
+                      " Your identity has been identified ! \n Please set a new password ",
                       style: TextStyle(
                         fontSize: screenSize.width * 0.05,
                         fontWeight: FontWeight.w500,
