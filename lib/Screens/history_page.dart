@@ -1,3 +1,4 @@
+import 'package:attend_me/Screens/detail_presence_page.dart';
 import 'package:attend_me/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -317,11 +318,21 @@ class _HistoryPageState extends State<HistoryPage> {
                 padding: const EdgeInsets.only(
                   top: 0,
                 ),
+                
                 itemExtent: screenSize.height * 0.11,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemCount: 20,
-                itemBuilder: (BuildContext context, int index) => Container(
+                itemBuilder: (BuildContext context, int index) => 
+         GestureDetector(
+    onTap: () {
+      // Navigate to another screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MapSample()),
+      );
+    }
+,child:Container(
                   height: screenSize.height * 0.11,
                   child: Card(
                     elevation: 6.0,
@@ -393,6 +404,8 @@ class _HistoryPageState extends State<HistoryPage> {
                   ),
                 ),
               ),
+            ),
+
             ),
           ],
         ),

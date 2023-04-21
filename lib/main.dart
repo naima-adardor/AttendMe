@@ -1,4 +1,5 @@
 
+import 'package:attend_me/Screens/detail_presence_page.dart';
 import 'package:attend_me/Screens/welcome_page.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const WelcomePage(),
+      
     );
   }
 }
