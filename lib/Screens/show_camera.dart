@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:attend_me/Screens/display_selfie.dart';
 import 'package:attend_me/Screens/qr_scanner_overlay.dart';
 import 'package:attend_me/Screens/scan_page.dart';
 import 'package:attend_me/constants/colors.dart';
@@ -23,7 +22,7 @@ class _CameraPageState extends State<CameraPage> {
   @override
   void initState() {
     super.initState();
-     final frontCamera = widget.cameras!.firstWhere(
+    final frontCamera = widget.cameras!.firstWhere(
       (camera) => camera.lensDirection == CameraLensDirection.front,
     );
 
@@ -39,7 +38,6 @@ class _CameraPageState extends State<CameraPage> {
       setState(() {});
     });
   }
-  
 
   @override
   void dispose() {
@@ -49,6 +47,7 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
 
     if (!controller.value.isInitialized) {
       return const SizedBox(
@@ -57,127 +56,109 @@ class _CameraPageState extends State<CameraPage> {
         ),
       );
     }
-     return Scaffold(
+    return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      drawer:const Drawer() ,
+      drawer: const Drawer(),
       appBar: AppBar(
-           iconTheme: IconThemeData(color: Colors.black),
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-          title: const Padding(
-            padding: EdgeInsets.only(left: 20),
-            child: Text(
-              'Taking a selfie',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Color.fromARGB(255, 133, 118, 118)),
-            ),
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        title: const Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Text(
+            'Taking a selfie',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Color.fromARGB(255, 133, 118, 118)),
           ),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back,
-                color: Color.fromARGB(255, 133, 118, 118)),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          elevation: 1,
         ),
-        body: Container(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back,
+              color: Color.fromARGB(255, 133, 118, 118)),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        elevation: 1,
+      ),
+      body: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(25),
-    child:Column(
-      children: [
-         Center(
-           child: Padding(
-            padding: const EdgeInsets.only(top:30),
-            child: 
-                Text(
-                  "Place your face inside the frame",
-               style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                          color: maincolor,
-                        ),
-                        textAlign: TextAlign.center,
-                    ),
-            
-                 ),
-         ),
-        SizedBox(height:20),
-      
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-    
-          child: Center(
-            
-            child: SizedBox(
-              height: 400,
-              width: 400,
-             child: pictureFile != null 
-        ? Image.file(File(pictureFile!.path))
-         // if image is not null, show it
-        : CameraPreview(controller), 
-            ),
-          ),
-        ),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Column(
           children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Text(
+                  "Place your face inside the frame",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: maincolor,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+
             Padding(
               padding: const EdgeInsets.all(8.0),
-              
+              child: Center(
+                child: SizedBox(
+                  height: 400,
+                  width: 400,
+                  child: pictureFile != null
+                      ? Image.file(File(pictureFile!.path))
+                      // if image is not null, show it
+                      : CameraPreview(controller),
+                ),
+              ),
+            ),
 
-    
-             child: GestureDetector(
-               
-    
-  
-                
-    onTap: () async {
-               
-                  setState(() {});
-                  Navigator.pop(context);
-                },
-      // Handle image tap
-    
-    child: Image.asset(
-      'assets/close.png',
-    
-    ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () async {
+                      setState(() {});
+                      Navigator.pop(context);
+                    },
+                    // Handle image tap
+
+                    child: Image.asset(
+                      'assets/close.png',
+                    ),
+                  ),
                 ),
-               
-              ),
-              SizedBox(width:20),
-              Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(            
-              onTap: () async {
-              pictureFile = await controller.takePicture();
-                  setState(() {});
-                   Timer(Duration(seconds: 2), () {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScanPage()));
-  });
-              
-                },
-      // Handle image tap
-    
-    child: Image.asset(
-      'assets/done.png',
-    
-    ),
+                SizedBox(width: 20),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () async {
+                      pictureFile = await controller.takePicture();
+                      setState(() {});
+                      Timer(Duration(seconds: 2), () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ScanPage()));
+                      });
+                    },
+                    // Handle image tap
+
+                    child: Image.asset(
+                      'assets/done.png',
+                    ),
+                  ),
                 ),
-               
-              ),
-            
-           
+              ],
+            ),
+
+            //Android/iOS
+            // Image.file(File(pictureFile!.path)))
           ],
         ),
-       
-          //Android/iOS
-          // Image.file(File(pictureFile!.path)))
-      ],
-    ),
-        ),
+      ),
     );
   }
 }
