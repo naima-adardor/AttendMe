@@ -138,7 +138,7 @@ class _CameraPageState extends State<CameraPage> {
                       setState(() {});
                       Timer(Duration(seconds: 2), () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ScanPage()));
+                            builder: (context) => ScanPage()));
                       });
                     },
                     child: Image.asset(
