@@ -32,6 +32,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Column(
         children: [
@@ -40,12 +42,12 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 Positioned(
                   child: Container(
-                    padding: const EdgeInsets.all(30),
+                    padding: EdgeInsets.all(screenSize.height * 0.1),
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 144, 191, 216),
                       shape: BoxShape.rectangle,
                       border: Border.all(
-                        width: 120,
+                        width: screenSize.height * 0.1,
                         color: Colors.transparent,
                       ),
                     ),
@@ -54,21 +56,22 @@ class _ProfilePageState extends State<ProfilePage> {
                 Center(
                   child: Container(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 110),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: screenSize.width * 0.05),
                       child: Column(
-                        children: const [
-                          Gap(70),
-                          CircleAvatar(
+                        children: [
+                          Gap(screenSize.height * 0.08),
+                          const CircleAvatar(
                             radius: 70,
                             backgroundImage: AssetImage("assets/profile.jpg"),
                           ),
-                          Gap(25),
+                          Gap(screenSize.height * 0.03),
                           Text(
                             "Naima ELJID",
                             style: TextStyle(
-                              color: Color.fromARGB(255, 24, 94, 133),
+                              color: const Color.fromARGB(255, 24, 94, 133),
                               fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                              fontSize: screenSize.width * 0.05,
                             ),
                           ),
                         ],
@@ -80,10 +83,10 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           Container(
-            height: 200,
+            height: screenSize.height * 0.5,
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 57,
+              padding: EdgeInsets.symmetric(
+                horizontal: screenSize.width * 0.15,
               ),
               child: ListView.separated(
                 itemCount: items.length,
@@ -124,9 +127,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       title: Text(
                         items[index],
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 17,
+                          fontSize: screenSize.width * 0.045,
                         ),
                       ),
                     ),
@@ -134,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 },
                 separatorBuilder: (BuildContext context, int index) {
                   return Divider(
-                    height: 1,
+                    height: screenSize.height * 0.01,
                     thickness: 1,
                     color: Colors.grey.withOpacity(0.5),
                   );
