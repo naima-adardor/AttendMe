@@ -1,172 +1,116 @@
-import 'package:attend_me/Screens/bottom_bar.dart';
-import 'package:attend_me/Screens/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:barcode_widget/barcode_widget.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import '../constants/colors.dart';
 
 class SucessCheckinPage extends StatelessWidget {
   final String code;
   final Function() closeScreen;
-  const SucessCheckinPage({super.key,required this.code,required this.closeScreen});
-  //final String scanResult;
+  const SucessCheckinPage(
+      {super.key, required this.code, required this.closeScreen});
 
-
- 
-  
-
-  // bool buildWidgets = false;
-   
- 
-  //get scanResult => BottomBar().result.toString();
-  /*Future<void> checkKey() async {
-    
-
-    String key = "fr.wikipedia.org";
-
-    if(widget.scanResult.toUpperCase() == key) {
-      debugPrint("True");
-      Future.microtask(() {
-        setState(() {
-          buildWidgets = true;
-        });
-      });
-      
-    } else {
-      debugPrint("False");
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
-    }
-  }*/
   @override
   Widget build(BuildContext context) {
-    
+    final Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
-     
-      appBar: AppBar(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-          title: const Padding(
-            padding: EdgeInsets.only(left: 45),
-          
-          ),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back,
-                color: Color.fromARGB(255, 133, 118, 118)),
-            onPressed: () {
-              closeScreen();
-              Navigator.pop(context);
-            },
-          ),
-          elevation: 1,
-        ),
-      body: SingleChildScrollView( 
-      child: Column(
+      body: SingleChildScrollView(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children:  [
-            SizedBox(height: 23),
-            Center(
-             //add image here
-             child: Image.asset('assets/check.png',height: 120,),
+          children: [
+            SizedBox(
+              height: screenSize.height * 0.08,
             ),
-            
-              
-             //add image here
-             
-           
-            SizedBox(height: 30),
-           
+            Center(
+              child: Image.asset(
+                'assets/check.png',
+                height: screenSize.height * 0.2,
+              ),
+            ),
+            SizedBox(height: screenSize.height * 0.04),
             Padding(
-              padding: const EdgeInsets.only(left: 30,right: 30),
-              child:
-             Center(
+              padding: EdgeInsets.only(
+                left: screenSize.width * 0.05,
+                right: screenSize.width * 0.05,
+              ),
+              child: Center(
+                child: Text(
+                  "You have successfully checked-in !",
+                  style: TextStyle(
+                    fontSize: screenSize.width * 0.05,
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(255, 32, 199, 135),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: screenSize.height * 0.02,
+            ),
+            Center(
               child: Text(
-                "You have successfully checked-in !",
+                "You are at elevator $code !",
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: screenSize.width * 0.045,
                   fontWeight: FontWeight.bold,
-                  color:Color.fromARGB(255, 32, 199, 135),
+                  color: const Color.fromARGB(255, 57, 158, 119),
                 ),
                 textAlign: TextAlign.center,
               ),
-              
-             ),
-             
             ),
-            SizedBox(height: 30),
-           Center(
-             child: Text(
-                  "You are at elevator $code !",
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color:Color.fromARGB(255, 57, 158, 119),
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-           ),
-            //show qr code here
-             QrImage(
-              data: code,
-              size:150,
-               version:QrVersions.auto
-               ),
-           
-           
-             Container(
-  
-              margin: EdgeInsets.only(top:60,right: 30,left: 30),
-            child: Row(
-  children: [
-         
-             Image.asset(
-      'assets/alert.png',
-      width: 40,
-      height: 40,
-    ),
-            SizedBox(width: 30),  
-                Flexible(
-                
-                child: Text(
-                  "To complete today's attendance record,please scan your QR code before leaving work .",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color:Color.fromARGB(255, 59, 59, 59),
-                   
-                  ),
-                  textAlign: TextAlign.center,
-                  
-              ),
-               
-                
-              ),
-            
- 
-  ],
+            SizedBox(
+              height: screenSize.height * 0.02,
             ),
-             ),
-             Padding(
-               padding: const EdgeInsets.only(top:70.0,right: 30),
-               child: Align( 
+            QrImage(
+                data: code,
+                size: screenSize.width * 0.4,
+                version: QrVersions.auto),
+            Container(
+              margin: EdgeInsets.only(
+                  top: screenSize.height * 0.06,
+                  right: screenSize.width * 0.07,
+                  left: screenSize.width * 0.07),
+              child: Row(
+                children: [
+                  Image.asset(
+                    'assets/alert.png',
+                    width: screenSize.width * 0.12,
+                    height: screenSize.height * 0.1,
+                  ),
+                  SizedBox(width: screenSize.width * 0.06),
+                  Flexible(
+                    child: Text(
+                      "To complete today's attendance record,please scan your QR code before leaving work .",
+                      style: TextStyle(
+                        fontSize: screenSize.width * 0.038,
+                        fontWeight: FontWeight.bold,
+                        color: const Color.fromARGB(255, 59, 59, 59),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                top: screenSize.height * 0.04,
+                right: screenSize.width * 0.05,
+              ),
+              child: Align(
                 alignment: Alignment.centerRight,
-                 child: InkWell(
-                        
-               onTap: () {
-                 // Navigate to the desired page here
-               },
-               child: Image.asset('assets/exit.png',height: 80,),
-             ),
-               ),
-             ),
-             const Gap(20),
+                child: InkWell(
+                  onTap: () {},
+                  child: Image.asset(
+                    'assets/exit.png',
+                    height: screenSize.height * 0.1,
+                  ),
+                ),
+              ),
+            ),
           ],
-        
         ),
       ),
     );
-  }}
- 
+  }
+}
