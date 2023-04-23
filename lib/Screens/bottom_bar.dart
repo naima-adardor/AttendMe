@@ -2,6 +2,7 @@ import 'package:attend_me/Screens/generated_qrCode.dart';
 import 'package:attend_me/Screens/history_page.dart';
 import 'package:attend_me/Screens/home_page.dart';
 import 'package:attend_me/Screens/profile_page.dart';
+import 'package:attend_me/Screens/qrCode_succes.dart';
 import 'package:attend_me/Screens/scan_page.dart';
 import 'package:attend_me/Screens/show_camera.dart';
 import 'package:attend_me/Screens/success_checkin_page.dart';
@@ -34,7 +35,7 @@ class _BottomBarState extends State<BottomBar> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
-    const QrCodeGeneratedPage(),
+    const GeneratedCodePageSuccess(),
     const ScanPage(),
     const HistoryPage(),
     const ProfilePage(),
@@ -45,10 +46,10 @@ class _BottomBarState extends State<BottomBar> {
       _selectedIndex = index;
     });
   }
- // var qrstr = "Have a nice day ! \n It's check-in time punch in your attendance to mark your presence for the day.";
-  
+  // var qrstr = "Have a nice day ! \n It's check-in time punch in your attendance to mark your presence for the day.";
+
   String result = "";
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,30 +97,32 @@ class _BottomBarState extends State<BottomBar> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-            await availableCameras().then(
-              (value) => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CameraPage(cameras: value,),
+          await availableCameras().then(
+            (value) => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CameraPage(
+                  cameras: value,
                 ),
               ),
-            );
-          },
+            ),
+          );
+        },
         child: Icon(Icons.qr_code_scanner),
         backgroundColor: const Color(0xFF6096B4),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
-  Future <void>scanQr()async{
-    
-    try{
-      FlutterBarcodeScanner.scanBarcode('#2A99CF', 'cancel', false, ScanMode.QR);
-    }catch(e){
-    print("ERROR");
+
+  Future<void> scanQr() async {
+    try {
+      FlutterBarcodeScanner.scanBarcode(
+          '#2A99CF', 'cancel', false, ScanMode.QR);
+    } catch (e) {
+      print("ERROR");
     }
-    
+
     //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SucessCheckinPage(scanResult: result,)));
   }
-  
 }

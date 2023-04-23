@@ -120,6 +120,7 @@ flutter:
     - assets/scan.png
     - assets/done.png
     - assets/close.png
+    - assets/qr_code_gene.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
