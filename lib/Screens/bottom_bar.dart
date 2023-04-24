@@ -2,7 +2,6 @@ import 'package:attend_me/Screens/generated_qrCode.dart';
 import 'package:attend_me/Screens/history_page.dart';
 import 'package:attend_me/Screens/home_page.dart';
 import 'package:attend_me/Screens/profile_page.dart';
-import 'package:attend_me/Screens/qrCode_succes.dart';
 import 'package:attend_me/Screens/scan_page.dart';
 import 'package:attend_me/Screens/show_camera.dart';
 import 'package:attend_me/Screens/success_checkin_page.dart';
@@ -35,7 +34,7 @@ class _BottomBarState extends State<BottomBar> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
-    const GeneratedCodePageSuccess(),
+    const QrCodeGeneratedPage(),
     const ScanPage(),
     const HistoryPage(),
     const ProfilePage(),
@@ -46,7 +45,6 @@ class _BottomBarState extends State<BottomBar> {
       _selectedIndex = index;
     });
   }
-  // var qrstr = "Have a nice day ! \n It's check-in time punch in your attendance to mark your presence for the day.";
 
   String result = "";
 
