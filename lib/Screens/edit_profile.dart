@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:attend_me/Screens/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:attend_me/constants/colors.dart';
 
@@ -12,6 +15,19 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  File? _image;
+  Future<void> _pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
   TextEditingController _dateController = TextEditingController(
     text: '2003-02-27',
   );
@@ -118,10 +134,52 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ),
                         child: Stack(
                           children: [
-                            CircleAvatar(
-                              radius: screenSize.width * 0.16,
-                              backgroundImage:
-                                  const AssetImage("assets/profile.jpg"),
+                            GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Dialog(
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height:
+                                            MediaQuery.of(context).size.width,
+                                        decoration: BoxDecoration(
+                                          image: _image != null
+                                              ? DecorationImage(
+                                                  image: FileImage(_image!),
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : const DecorationImage(
+                                                  image: AssetImage(
+                                                      "assets/profile.jpg"),
+                                                  fit: BoxFit.cover,
+                                                ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: ClipOval(
+                                child: Container(
+                                  width: screenSize.width * 0.3,
+                                  height: screenSize.height * 0.15,
+                                  decoration: BoxDecoration(
+                                    image: _image != null
+                                        ? DecorationImage(
+                                            image: FileImage(_image!),
+                                            fit: BoxFit.cover,
+                                          )
+                                        : const DecorationImage(
+                                            image: AssetImage(
+                                                "assets/profile.jpg"),
+                                            fit: BoxFit.cover,
+                                          ),
+                                  ),
+                                ),
+                              ),
                             ),
                             Positioned(
                               bottom: 0,
@@ -133,7 +191,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 child: IconButton(
                                   icon: const Icon(Icons.edit),
                                   color: Colors.white,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _pickImage();
+                                  },
                                 ),
                               ),
                             ),
