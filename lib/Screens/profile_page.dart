@@ -61,9 +61,31 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Column(
                         children: [
                           Gap(screenSize.height * 0.08),
-                          const CircleAvatar(
-                            radius: 70,
-                            backgroundImage: AssetImage("assets/profile.jpg"),
+                          GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Dialog(
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: MediaQuery.of(context).size.width,
+                                      decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                          image:
+                                              AssetImage("assets/profile.jpg"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: const CircleAvatar(
+                              radius: 70,
+                              backgroundImage: AssetImage("assets/profile.jpg"),
+                            ),
                           ),
                           Gap(screenSize.height * 0.03),
                           Text(
