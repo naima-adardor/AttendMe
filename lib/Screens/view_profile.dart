@@ -47,9 +47,30 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                 Gap(
                   screenSize.height * 0.04,
                 ),
-                CircleAvatar(
-                  radius: screenSize.height * 0.13,
-                  backgroundImage: const AssetImage("assets/profile.jpg"),
+                GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.width,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage("assets/profile.jpg"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: const CircleAvatar(
+                    radius: 70,
+                    backgroundImage: AssetImage("assets/profile.jpg"),
+                  ),
                 ),
                 Gap(screenSize.height * 0.02),
                 Padding(
