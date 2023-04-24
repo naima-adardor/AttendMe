@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -9,6 +10,17 @@ class SanitaryPage extends StatefulWidget {
 }
 
 class _SanitaryPageState extends State<SanitaryPage> {
+  String name = '';
+  void openFiles() async {
+    FilePickerResult? resultfile = await FilePicker.platform.pickFiles();
+    if (resultfile != null) {
+      PlatformFile file = resultfile.files.first;
+      setState(() {
+        name = file.name;
+      });
+    }
+  }
+
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -135,13 +147,22 @@ class _SanitaryPageState extends State<SanitaryPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "No file selected !",
-                                  style: TextStyle(
-                                    color: const Color.fromARGB(
-                                        255, 124, 124, 124),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: screenSize.width * 0.045,
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.5,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Text(
+                                      name.isNotEmpty
+                                          ? name
+                                          : "No file selected !",
+                                      style: TextStyle(
+                                        color: const Color.fromARGB(
+                                            255, 124, 124, 124),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: screenSize.width * 0.045,
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 ElevatedButton(
@@ -151,7 +172,9 @@ class _SanitaryPageState extends State<SanitaryPage> {
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(35))),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    openFiles();
+                                  },
                                   child: Text(
                                     "Upload",
                                     style: TextStyle(
