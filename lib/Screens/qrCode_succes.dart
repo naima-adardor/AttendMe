@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 
@@ -98,6 +99,11 @@ class GeneratedCodePageSuccess extends StatelessWidget {
 
                           if (result != null) {
                             print('Image saved to gallery.');
+                            Fluttertoast.showToast(
+                              msg: 'Image saved!',
+                              gravity: ToastGravity.BOTTOM,
+                              toastLength: Toast.LENGTH_SHORT,
+                            );
                           } else {
                             print('Error saving image to gallery.');
                           }
