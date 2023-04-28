@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 class GeneratedCodePageSuccess extends StatelessWidget {
   const GeneratedCodePageSuccess({super.key});
@@ -7,7 +9,7 @@ class GeneratedCodePageSuccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-
+    const path = "assets/qr_code_gene.png";
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
@@ -71,7 +73,7 @@ class GeneratedCodePageSuccess extends StatelessWidget {
               SizedBox(
                 height: screenSize.height * 0.29,
                 child: Image.asset(
-                  "assets/qr_code_gene.png",
+                  path,
                 ),
               ),
               SizedBox(
@@ -80,9 +82,29 @@ class GeneratedCodePageSuccess extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
+                  Container(
+                    width: screenSize.height * 0.175,
+                    height: screenSize.height * 0.15,
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        try {
+                          // Load the image file from the assets folder
+                          final data = await rootBundle.load(path);
+                          final bytes = data.buffer.asUint8List();
+
+                          // Save the image to the device's gallery
+                          final result =
+                              await ImageGallerySaver.saveImage(bytes);
+
+                          if (result != null) {
+                            print('Image saved to gallery.');
+                          } else {
+                            print('Error saving image to gallery.');
+                          }
+                        } catch (e) {
+                          print('Error: $e');
+                        }
+                      },
                       icon: Icon(
                         Icons.download_for_offline,
                         color: const Color.fromARGB(255, 25, 129, 21),
