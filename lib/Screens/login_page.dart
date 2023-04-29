@@ -1,7 +1,13 @@
 import 'package:attend_me/Screens/bottom_bar.dart';
 import 'package:attend_me/Screens/forgot_password.dart';
+import 'package:attend_me/models/User.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/api-response.dart';
+import '../services/user-services.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,7 +22,46 @@ class _LoginPage extends State<LoginPage> {
   bool _hideText = true;
   bool _rememberMe = false;
 
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  bool loading = false;
+
   final formKey = GlobalKey<FormState>();
+
+  void _loginUser() async {
+    ApiResponse response =
+        await login(_emailController.text, _passwordController.text);
+    if (response.data != null) {
+      _saveAndRedirectToHome(response.data as User);
+    } else {
+      setState(() {
+        loading = false;
+      });
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('${response.error}')));
+    }
+  }
+
+  void _saveAndRedirectToHome(User user) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString('token', user.token ?? '');
+    await pref.setInt('userId', user.id ?? 0);
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const BottomBar()),
+        (route) => false);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +104,9 @@ class _LoginPage extends State<LoginPage> {
                   padding: EdgeInsets.symmetric(
                       horizontal: screenSize.width * 0.07, vertical: 0),
                   child: TextFormField(
+                    controller: _emailController,
+                    validator: (value) =>
+                        value!.isEmpty ? "Please enter a valid email" : null,
                     onTap: () {
                       setState(() {
                         _isTappedEmail = true;
@@ -98,6 +146,9 @@ class _LoginPage extends State<LoginPage> {
                   padding: EdgeInsets.symmetric(
                       horizontal: screenSize.width * 0.07, vertical: 0),
                   child: TextFormField(
+                    controller: _passwordController,
+                    validator: (value) =>
+                        value!.isEmpty ? "Please enter a valid password" : null,
                     onTap: () {
                       setState(() {
                         _isTappedPass = true;
@@ -192,34 +243,37 @@ class _LoginPage extends State<LoginPage> {
                   ),
                 ),
                 Gap(screenSize.height * 0.04),
-                SizedBox(
-                  width: screenSize.width * 0.5,
-                  height: screenSize.width * 0.13,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF6096B4),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(35))),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => const BottomBar(
-                            initialIndex: 0,
+                loading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : SizedBox(
+                        width: screenSize.width * 0.5,
+                        height: screenSize.width * 0.13,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF6096B4),
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(35))),
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              setState(() {
+                                loading = true;
+                                _loginUser();
+                              });
+                            }
+                          },
+                          child: Text(
+                            "Login",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: screenSize.width * 0.055,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      );
-                    },
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: screenSize.width * 0.055,
-                        fontWeight: FontWeight.bold,
                       ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
