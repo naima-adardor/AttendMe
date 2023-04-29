@@ -1,6 +1,8 @@
 import 'package:attend_me/Screens/change_password2.dart';
 import 'package:attend_me/Screens/edit_profile.dart';
+import 'package:attend_me/Screens/login_page.dart';
 import 'package:attend_me/Screens/view_profile.dart';
+import 'package:attend_me/services/user-services.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -16,18 +18,21 @@ class _ProfilePageState extends State<ProfilePage> {
     Icons.info,
     Icons.edit_square,
     Icons.lock,
+    Icons.logout,
   ];
 
   final List<Color> iconColors = [
     Colors.blue,
     Colors.orange,
     Colors.green,
+    Colors.red,
   ];
 
   final List<String> items = [
     'View Informations',
     'Edit Profile',
     'Change Password',
+    'Logout',
   ];
 
   @override
@@ -139,6 +144,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               builder: (context) => const changePassword2Page(),
                             ),
                           );
+                          break;
+                        case 3:
+                          logout().then((value) => Navigator.of(context)
+                              .pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginPage()),
+                                  (route) => false));
                           break;
                       }
                     },
