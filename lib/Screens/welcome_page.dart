@@ -1,6 +1,10 @@
 import 'dart:async';
 
+import 'package:attend_me/Screens/bottom_bar.dart';
 import 'package:attend_me/Screens/onBoarding_page.dart';
+import 'package:attend_me/constants/constants.dart';
+import 'package:attend_me/models/api-response.dart';
+import 'package:attend_me/services/user-services.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +16,30 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  void _loadUserInfo() async {
+    String token = await getToken();
+    if (token == '') {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => onBoardingPage()),
+          (route) => false);
+    } else {
+      ApiResponse response = await getUserDetail();
+      if (response.data != null) {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => BottomBar()),
+            (route) => false);
+      } else if (response.error == unauthorized) {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => onBoardingPage()),
+            (route) => false);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('${response.error}'),
+        ));
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -23,17 +51,12 @@ class _WelcomePageState extends State<WelcomePage> {
     bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
     if (isFirstTime) {
       await prefs.setBool('isFirstTime', false);
-      _navigateToEnboardingPage();
+      _loadUserInfo();
     } else {
       Timer(const Duration(seconds: 3), () {
-        _navigateToEnboardingPage();
+        _loadUserInfo();
       });
     }
-  }
-
-  void _navigateToEnboardingPage() {
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => const onBoardingPage()));
   }
 
   @override

@@ -74,6 +74,8 @@ dependencies:
   geolocator: ^9.0.2
   image_gallery_saver: ^1.7.1
   fluttertoast: ^8.2.1
+  provider: ^6.0.5
+  http: ^0.13.5
   
   
 
