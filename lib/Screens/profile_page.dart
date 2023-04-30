@@ -6,6 +6,10 @@ import 'package:attend_me/services/user-services.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+import '../constants/constants.dart';
+import '../models/User.dart';
+import '../models/api-response.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -34,6 +38,34 @@ class _ProfilePageState extends State<ProfilePage> {
     'Change Password',
     'Logout',
   ];
+  String fullName = "";
+  User? user;
+
+//User Information
+  void getUser() async {
+    ApiResponse response = await getUserDetail();
+    if (response.error == null) {
+      setState(() {
+        user = response.data as User;
+        fullName = "${user!.first_name}" + " " + "${user!.last_name}";
+      });
+    } else if (response.error == unauthorized) {
+      logout().then((value) => {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => LoginPage()),
+                (route) => false)
+          });
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('${response.error}')));
+    }
+  }
+
+  @override
+  void initState() {
+    getUser();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,26 +107,37 @@ class _ProfilePageState extends State<ProfilePage> {
                                     child: Container(
                                       width: MediaQuery.of(context).size.width,
                                       height: MediaQuery.of(context).size.width,
-                                      decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                          image:
-                                              AssetImage("assets/profile.jpg"),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
+                                      decoration: BoxDecoration(
+                                          image: user?.avatar != null
+                                              ? DecorationImage(
+                                                  image: NetworkImage(
+                                                      '${user!.avatar}'),
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : null),
                                     ),
                                   );
                                 },
                               );
                             },
-                            child: const CircleAvatar(
-                              radius: 70,
-                              backgroundImage: AssetImage("assets/profile.jpg"),
+                            child: ClipOval(
+                              child: Container(
+                                width: screenSize.width * 0.45,
+                                height: screenSize.height * 0.22,
+                                decoration: BoxDecoration(
+                                    image: user?.avatar != null
+                                        ? DecorationImage(
+                                            image:
+                                                NetworkImage('${user!.avatar}'),
+                                            fit: BoxFit.cover,
+                                          )
+                                        : null),
+                              ),
                             ),
                           ),
                           Gap(screenSize.height * 0.03),
                           Text(
-                            "Naima ELJID",
+                            fullName,
                             style: TextStyle(
                               color: const Color.fromARGB(255, 24, 94, 133),
                               fontWeight: FontWeight.bold,
