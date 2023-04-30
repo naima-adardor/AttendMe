@@ -6,6 +6,7 @@ class User {
   String? avatar;
   String? phone_number;
   String? cin;
+  String? adress;
   String? token;
   String? birthday;
 
@@ -18,6 +19,7 @@ class User {
     this.phone_number,
     this.birthday,
     this.cin,
+    this.adress,
     this.token,
   });
 
@@ -31,6 +33,7 @@ class User {
       phone_number: json['user']['phone_number'],
       birthday: json['user']['birthday'],
       cin: json['user']['cin'],
+      adress: json['user']['adress'],
       token: json['token'],
     );
   }

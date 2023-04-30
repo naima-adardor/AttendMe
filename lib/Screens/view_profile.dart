@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+import '../constants/constants.dart';
+import '../models/User.dart';
+import '../models/api-response.dart';
+import '../services/user-services.dart';
+import 'Login_page.dart';
+
 class ViewProfilePage extends StatefulWidget {
   const ViewProfilePage({super.key});
 
@@ -9,6 +15,45 @@ class ViewProfilePage extends StatefulWidget {
 }
 
 class _ViewProfilePageState extends State<ViewProfilePage> {
+  String fullName = "";
+  String email = "";
+  String phoneNumber = "";
+  String birthday = "";
+  String adress = "";
+  String CIN = "";
+  User? user;
+
+//User Information
+  void getUser() async {
+    ApiResponse response = await getUserDetail();
+    if (response.error == null) {
+      setState(() {
+        user = response.data as User;
+        fullName = "${user!.first_name}" + " " + "${user!.last_name}";
+        email = user!.email ?? '';
+        phoneNumber = user!.phone_number ?? '';
+        birthday = user!.birthday ?? '';
+        adress = user!.adress ?? '';
+        CIN = user!.cin ?? '';
+      });
+    } else if (response.error == unauthorized) {
+      logout().then((value) => {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => LoginPage()),
+                (route) => false)
+          });
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('${response.error}')));
+    }
+  }
+
+  @override
+  void initState() {
+    getUser();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -56,20 +101,30 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.width,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage("assets/profile.jpg"),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                            decoration: BoxDecoration(
+                                image: user?.avatar != null
+                                    ? DecorationImage(
+                                        image: NetworkImage('${user!.avatar}'),
+                                        fit: BoxFit.cover,
+                                      )
+                                    : null),
                           ),
                         );
                       },
                     );
                   },
-                  child: const CircleAvatar(
-                    radius: 70,
-                    backgroundImage: AssetImage("assets/profile.jpg"),
+                  child: ClipOval(
+                    child: Container(
+                      width: screenSize.width * 0.45,
+                      height: screenSize.height * 0.22,
+                      decoration: BoxDecoration(
+                          image: user?.avatar != null
+                              ? DecorationImage(
+                                  image: NetworkImage('${user!.avatar}'),
+                                  fit: BoxFit.cover,
+                                )
+                              : null),
+                    ),
                   ),
                 ),
                 Gap(screenSize.height * 0.02),
@@ -83,7 +138,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                       Row(
                         children: [
                           const Icon(
-                            Icons.person_pin_rounded,
+                            Icons.person,
                             color: Color(0xFF6096B4),
                           ),
                           Gap(screenSize.width * 0.03),
@@ -97,7 +152,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ),
                           Gap(screenSize.width * 0.03),
                           Text(
-                            "ELJID Naima",
+                            fullName,
                             style: TextStyle(
                               color: const Color.fromARGB(255, 0, 0, 0),
                               fontSize: screenSize.width * 0.04,
@@ -137,7 +192,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ),
                           Gap(screenSize.width * 0.03),
                           Text(
-                            "naima.eljid03@gmail.com",
+                            email,
                             style: TextStyle(
                               color: const Color.fromARGB(255, 0, 0, 0),
                               fontSize: screenSize.width * 0.04,
@@ -177,7 +232,47 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ),
                           Gap(screenSize.width * 0.03),
                           Text(
-                            "06 25 67 89 09 ",
+                            phoneNumber,
+                            style: TextStyle(
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                              fontSize: screenSize.width * 0.04,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Gap(screenSize.height * 0.02),
+                      Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFF6096B4).withOpacity(0.4),
+                              spreadRadius: 1,
+                              blurRadius: 2,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Gap(screenSize.height * 0.02),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.person_pin_rounded,
+                            color: Color(0xFF6096B4),
+                          ),
+                          Gap(screenSize.width * 0.03),
+                          Text(
+                            "CIN : ",
+                            style: TextStyle(
+                              color: const Color(0xFF6096B4),
+                              fontSize: screenSize.width * 0.045,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Gap(screenSize.width * 0.03),
+                          Text(
+                            CIN,
                             style: TextStyle(
                               color: const Color.fromARGB(255, 0, 0, 0),
                               fontSize: screenSize.width * 0.04,
@@ -217,7 +312,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ),
                           Gap(screenSize.width * 0.03),
                           Text(
-                            "2003-02-27 ",
+                            birthday,
                             style: TextStyle(
                               color: const Color.fromARGB(255, 0, 0, 0),
                               fontSize: screenSize.width * 0.04,
@@ -257,7 +352,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                           ),
                           Gap(screenSize.width * 0.03),
                           Text(
-                            "Tilila, Agadir, Morocco ",
+                            adress,
                             style: TextStyle(
                               color: const Color.fromARGB(255, 0, 0, 0),
                               fontSize: screenSize.width * 0.04,
