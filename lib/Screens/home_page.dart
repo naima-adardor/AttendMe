@@ -4,6 +4,12 @@ import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
+import '../constants/constants.dart';
+import '../models/User.dart';
+import '../models/api-response.dart';
+import '../services/user-services.dart';
+import 'Login_page.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -12,6 +18,35 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String fullName = "";
+  User? user;
+
+//User Information
+  void getUser() async {
+    ApiResponse response = await getUserDetail();
+    if (response.error == null) {
+      setState(() {
+        user = response.data as User;
+        fullName = "${user!.first_name}" + " " + "${user!.last_name}";
+      });
+    } else if (response.error == unauthorized) {
+      logout().then((value) => {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => LoginPage()),
+                (route) => false)
+          });
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('${response.error}')));
+    }
+  }
+
+  @override
+  void initState() {
+    getUser();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -32,15 +67,24 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  const CircleAvatar(
-                    radius: 27,
-                    backgroundImage: AssetImage('assets/profile.jpg'),
+                  ClipOval(
+                    child: Container(
+                      width: screenSize.width * 0.16,
+                      height: screenSize.height * 0.08,
+                      decoration: BoxDecoration(
+                          image: user?.avatar != null
+                              ? DecorationImage(
+                                  image: NetworkImage('${user!.avatar}'),
+                                  fit: BoxFit.cover,
+                                )
+                              : null),
+                    ),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Adardor Naima",
+                        fullName,
                         style: GoogleFonts.openSans(
                           textStyle: TextStyle(
                             color: const Color.fromARGB(255, 24, 94, 133),
