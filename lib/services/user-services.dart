@@ -115,39 +115,46 @@ Future<ApiResponse> getUserDetail() async {
 
 // Update user
 Future<ApiResponse> updateUser(
-    String first_name,
-    String last_name,
-    String email,
-    String phone_number,
-    String birthday,
-    String adress,
-    String? image) async {
+  String first_name,
+  String last_name,
+  String email,
+  String phone_number,
+  String birthday,
+  String adress,
+  String image,
+) async {
   ApiResponse apiResponse = ApiResponse();
   try {
     String token = await getToken();
-    final response = await http.put(Uri.parse(userURL),
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $token'
-        },
-        body: image == null
-            ? {
-                'first_name': first_name,
-                'last_name': last_name,
-                'email': email,
-                'phone_number': phone_number,
-                'birthday': birthday,
-                'adress': adress
-              }
-            : {
-                'first_name': first_name,
-                'last_name': last_name,
-                'email': email,
-                'phone_number': phone_number,
-                'birthday': birthday,
-                'adress': adress,
-                'avatar': image
-              });
+    Map<String, dynamic> requestBody;
+    // if (image != null) {
+    requestBody = {
+      'first_name': first_name,
+      'last_name': last_name,
+      'email': email,
+      'phone_number': phone_number,
+      'birthday': birthday,
+      'adress': adress,
+      'avatar': image,
+    };
+    // } else {
+    //   requestBody = {
+    //     'first_name': first_name,
+    //     'last_name': last_name,
+    //     'email': email,
+    //     'phone_number': phone_number,
+    //     'birthday': birthday,
+    //     'adress': adress,
+    //   };
+    // }
+    final response = await http.put(
+      Uri.parse(userURL),
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: requestBody,
+    );
 
     switch (response.statusCode) {
       case 200:

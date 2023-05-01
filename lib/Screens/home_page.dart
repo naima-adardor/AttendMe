@@ -24,26 +24,33 @@ class _HomeScreenState extends State<HomeScreen> {
 //User Information
   void getUser() async {
     ApiResponse response = await getUserDetail();
-    if (response.error == null) {
+    if (response.error == null && mounted) {
       setState(() {
         user = response.data as User;
         fullName = "${user!.first_name}" + " " + "${user!.last_name}";
       });
     } else if (response.error == unauthorized) {
       logout().then((value) => {
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => LoginPage()),
-                (route) => false)
+            if (mounted)
+              {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    (route) => false)
+              }
           });
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('${response.error}')));
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('${response.error}')));
+      }
     }
   }
 
   @override
   void initState() {
-    getUser();
+    setState(() {
+      getUser();
+    });
     super.initState();
   }
 
@@ -72,12 +79,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: screenSize.width * 0.16,
                       height: screenSize.height * 0.08,
                       decoration: BoxDecoration(
-                          image: user?.avatar != null
-                              ? DecorationImage(
-                                  image: NetworkImage('${user!.avatar}'),
-                                  fit: BoxFit.cover,
-                                )
-                              : null),
+                        image: user?.avatar != null
+                            ? DecorationImage(
+                                image: NetworkImage('${user!.avatar}'),
+                                fit: BoxFit.cover,
+                              )
+                            : const DecorationImage(
+                                image: AssetImage('assets/user.png'),
+                                fit: BoxFit.cover,
+                              ),
+                      ),
                     ),
                   ),
                   Column(
