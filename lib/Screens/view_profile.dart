@@ -57,9 +57,9 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
 
   @override
   void initState() {
-    setState(() {
-      getUser();
-    });
+    // setState(() {
+    getUser();
+    // });
     super.initState();
   }
 

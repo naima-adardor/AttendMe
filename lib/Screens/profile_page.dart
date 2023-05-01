@@ -70,10 +70,16 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    setState(() {
-      getUser();
-    });
+    // setState(() {
+    getUser();
+    // });
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    getUser();
   }
 
   @override

@@ -108,7 +108,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     if (response.error == null && mounted) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('${response.data}')));
-      print(getStringImage(_image));
+      getUser();
     } else if (response.error == unauthorized) {
       logout().then((value) => {
             if (mounted)
@@ -187,9 +187,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   void initState() {
-    setState(() {
-      getUser();
-    });
+    // setState(() {
+    getUser();
+    // });
     super.initState();
   }
 
@@ -632,6 +632,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                           loading = true;
                                         });
                                         updateProfile();
+                                        // Navigator.pop(context);
                                       }
                                     },
                                     child: Text(
