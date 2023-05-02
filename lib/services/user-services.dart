@@ -174,6 +174,47 @@ Future<ApiResponse> updateUser(
   return apiResponse;
 }
 
+// Update user
+Future<ApiResponse> changePassword(
+    String old_password, String new_password) async {
+  ApiResponse apiResponse = ApiResponse();
+  try {
+    String token = await getToken();
+    Map<String, dynamic> requestBody;
+    requestBody = {
+      'old_password': old_password,
+      'new_password': new_password,
+    };
+    final response = await http.post(
+      Uri.parse(passwordURL),
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: requestBody,
+    );
+
+    switch (response.statusCode) {
+      case 200:
+        apiResponse.data = jsonDecode(response.body)['message'];
+        break;
+      case 401:
+        apiResponse.error = jsonDecode(response.body)['message'];
+        break;
+      case 422:
+        apiResponse.error = jsonDecode(response.body)['message'];
+        break;
+      default:
+        print(response.body);
+        apiResponse.error = somethingWentWrong;
+        break;
+    }
+  } catch (e) {
+    apiResponse.error = serverError;
+  }
+  return apiResponse;
+}
+
 // get token
 Future<String> getToken() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
