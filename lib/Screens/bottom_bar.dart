@@ -35,7 +35,7 @@ class _BottomBarState extends State<BottomBar> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
-    const GeneratedCodePageSuccess(),
+    const QrCodeGeneratedPage(),
     const ScanPage(),
     const HistoryPage(),
     const ProfilePage(),

@@ -2,6 +2,12 @@ import 'package:attend_me/Screens/attendance_regulation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+import '../constants/constants.dart';
+import '../models/User.dart';
+import '../models/api-response.dart';
+import '../services/user-services.dart';
+import 'Login_page.dart';
+
 class QrCodeGeneratedPage extends StatefulWidget {
   const QrCodeGeneratedPage({super.key});
 
@@ -10,6 +16,42 @@ class QrCodeGeneratedPage extends StatefulWidget {
 }
 
 class _QrCodeGeneratedPageState extends State<QrCodeGeneratedPage> {
+  String fullName = "";
+  User? user;
+
+//User Information
+  void getUser() async {
+    ApiResponse response = await getUserDetail();
+    if (response.error == null && mounted) {
+      setState(() {
+        user = response.data as User;
+        fullName = "${user!.first_name}" + " " + "${user!.last_name}";
+      });
+    } else if (response.error == unauthorized) {
+      logout().then((value) => {
+            if (mounted)
+              {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    (route) => false)
+              }
+          });
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('${response.error}')));
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    setState(() {
+      getUser();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -46,13 +88,26 @@ class _QrCodeGeneratedPageState extends State<QrCodeGeneratedPage> {
                   child: Row(
                     children: [
                       Gap(screenSize.width * 0.04),
-                      const CircleAvatar(
-                        radius: 24,
-                        backgroundImage: AssetImage('assets/profile.jpg'),
+                      ClipOval(
+                        child: Container(
+                          width: screenSize.width * 0.145,
+                          height: screenSize.height * 0.07,
+                          decoration: BoxDecoration(
+                            image: user?.avatar != null
+                                ? DecorationImage(
+                                    image: NetworkImage('${user!.avatar}'),
+                                    fit: BoxFit.cover,
+                                  )
+                                : const DecorationImage(
+                                    image: AssetImage('assets/user.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
+                        ),
                       ),
                       Gap(screenSize.height * 0.04),
                       Text(
-                        "ELJID Naima",
+                        fullName,
                         style: TextStyle(
                             color: const Color.fromARGB(255, 24, 94, 133),
                             fontSize: screenSize.width * 0.05,
