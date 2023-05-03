@@ -7,7 +7,7 @@
 
 
    <application
-        android:label="attend_me"
+        android:label="AttendMe"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"

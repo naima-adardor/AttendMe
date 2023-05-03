@@ -3,6 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 
+import '../constants/constants.dart';
+import '../models/User.dart';
+import '../models/api-response.dart';
+import '../services/attendance_issues_services.dart';
+import '../services/user-services.dart';
+import 'Login_page.dart';
+
 class ForgotPage extends StatefulWidget {
   const ForgotPage({super.key});
 
@@ -14,19 +21,90 @@ class _ForgotPageState extends State<ForgotPage> {
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController1 = TextEditingController();
   TextEditingController _timeController2 = TextEditingController();
+  TextEditingController _report = TextEditingController();
+  TextEditingController _selectedItem = TextEditingController();
 
   late String _selectedTime1;
   late String _selectedTime2;
+  User? user;
+
+//User Information
+  void getUser() async {
+    ApiResponse response = await getUserDetail();
+    if (response.error == null && mounted) {
+      setState(() {
+        user = response.data as User;
+      });
+    } else if (response.error == unauthorized) {
+      logout().then((value) => {
+            if (mounted)
+              {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    (route) => false)
+              }
+          });
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('${response.error}')));
+      }
+    }
+  }
 
   @override
   void initState() {
+    getUser();
+
     super.initState();
     _dateController = TextEditingController(
         text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
-    _timeController1 = TextEditingController(
-        text: DateFormat('HH:mm ').format(DateTime.now()));
-    _timeController2 = TextEditingController(
-        text: DateFormat('HH:mm ').format(DateTime.now()));
+    _timeController1 =
+        TextEditingController(text: DateFormat('HH:mm').format(DateTime.now()));
+    _timeController2 =
+        TextEditingController(text: DateFormat('HH:mm').format(DateTime.now()));
+    _selectedItem = TextEditingController(text: 'Forgot to punch');
+  }
+
+  //Add Attendance Issues
+  void addAttIssue() async {
+    ApiResponse response = await addAttIssues(
+      _timeController1.text,
+      _timeController2.text,
+      DateFormat('yyyy-MM-dd').format(DateTime.parse(_dateController.text)),
+      _selectedItem.text,
+      'Pending',
+      _report.text,
+      user!.id!.toString(),
+    );
+    print(_timeController1.text);
+    print(_timeController2.text);
+    print(
+        DateFormat('yyyy-MM-dd').format(DateTime.parse(_dateController.text)));
+    print(_report.text);
+    print(user!.id!);
+    print(_selectedItem.text);
+
+    if (response.error == null && mounted) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('${response.data}')));
+
+      Navigator.pop(context);
+    } else if (response.error == unauthorized) {
+      logout().then((value) => {
+            if (mounted)
+              {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    (route) => false)
+              }
+          });
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('${response.error}')));
+      }
+    }
   }
 
   Future<void> _selectTime1(BuildContext context) async {
@@ -58,7 +136,7 @@ class _ForgotPageState extends State<ForgotPage> {
   late String _selectedDate;
 
   final formKey = GlobalKey<FormState>();
-  String? _selectedItem = 'Forgot to punch';
+
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -74,7 +152,7 @@ class _ForgotPageState extends State<ForgotPage> {
     );
     if (picked != null) {
       setState(() {
-        _selectedDate = DateFormat('yMd').format(picked);
+        _selectedDate = DateFormat('yyyy-MM-dd').format(picked);
         _dateController.text = _selectedDate;
       });
     }
@@ -148,27 +226,25 @@ class _ForgotPageState extends State<ForgotPage> {
                             vertical: screenSize.height * 0.01,
                           ),
                           child: DropdownButton<String>(
-                            value: _selectedItem,
+                            value: _selectedItem.text,
                             items: _items.map((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      value,
-                                      style: TextStyle(
-                                        fontSize: screenSize.width * 0.05,
-                                      ),
+                                child: Container(
+                                  alignment: Alignment.centerLeft,
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(
+                                      fontSize: screenSize.width * 0.05,
                                     ),
-                                  ],
+                                  ),
                                 ),
                               );
                             }).toList(),
                             onChanged: (String? value) {
                               setState(() {
-                                _selectedItem = value;
+                                _selectedItem.text = value!;
                               });
                             },
                             dropdownColor:
@@ -403,6 +479,7 @@ class _ForgotPageState extends State<ForgotPage> {
                               horizontal: screenSize.width * 0.06,
                             ),
                             child: TextFormField(
+                              controller: _report,
                               onTap: () {
                                 setState(() {});
                               },
@@ -431,7 +508,11 @@ class _ForgotPageState extends State<ForgotPage> {
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(35))),
-                          onPressed: () {},
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              addAttIssue();
+                            }
+                          },
                           child: Text(
                             "Submit",
                             style: TextStyle(

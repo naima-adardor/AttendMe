@@ -1,13 +1,19 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:attend_me/Screens/bottom_bar.dart';
 import 'package:attend_me/Screens/login_page.dart';
 import 'package:attend_me/Screens/profile_page.dart';
 import 'package:attend_me/models/User.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+
 import 'package:attend_me/constants/colors.dart';
 
 import '../constants/constants.dart';
@@ -61,6 +67,27 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
   }
 
+  Future<String> getBase64Image(String? imageUrl) async {
+    if (imageUrl == null) {
+      return ''; // or return null, depending on your use case
+    }
+
+    final response = await http.get(Uri.parse(imageUrl));
+    if (response.statusCode != 200) {
+      return '';
+    }
+
+    final bytes = response.bodyBytes;
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/image.png');
+    await file.writeAsBytes(bytes);
+
+    final imageBytes = await file.readAsBytes();
+    final base64Image = base64Encode(imageBytes);
+
+    return base64Image;
+  }
+
   //Update Profile
   void updateProfile() async {
     ApiResponse response = await updateUser(
@@ -70,22 +97,32 @@ class _EditProfilePageState extends State<EditProfilePage> {
         _phoneNumber.text,
         DateFormat('yyyy-MM-dd').format(DateTime.parse(_dateController.text)),
         _adress.text,
-        getStringImage(_image));
-    setState(() {
-      loading = false;
-    });
-    if (response.error == null) {
+        (getStringImage(_image) ?? await getBase64Image(user!.avatar))
+            as String);
+
+    if (mounted) {
+      setState(() {
+        loading = false;
+      });
+    }
+    if (response.error == null && mounted) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('${response.data}')));
+      getUser();
     } else if (response.error == unauthorized) {
       logout().then((value) => {
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => LoginPage()),
-                (route) => false)
+            if (mounted)
+              {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    (route) => false)
+              }
           });
     } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('${response.error}')));
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('${response.error}')));
+      }
     }
   }
 
@@ -150,7 +187,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   void initState() {
+    // setState(() {
     getUser();
+    // });
     super.initState();
   }
 
@@ -235,7 +274,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                                                 '${user!.avatar}'),
                                                             fit: BoxFit.cover,
                                                           )
-                                                        : null
+                                                        : const DecorationImage(
+                                                            image: AssetImage(
+                                                                'assets/user.png'),
+                                                            fit: BoxFit.cover,
+                                                          )
                                                     : DecorationImage(
                                                         image: FileImage(
                                                             _image ?? File('')),
@@ -258,7 +301,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                                           '${user!.avatar}'),
                                                       fit: BoxFit.cover,
                                                     )
-                                                  : null
+                                                  : const DecorationImage(
+                                                      image: AssetImage(
+                                                          'assets/user.png'),
+                                                      fit: BoxFit.cover,
+                                                    )
                                               : DecorationImage(
                                                   image: FileImage(
                                                       _image ?? File('')),
@@ -585,11 +632,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                           loading = true;
                                         });
                                         updateProfile();
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (_) => const ProfilePage(),
-                                          ),
-                                        );
+                                        // Navigator.pop(context);
                                       }
                                     },
                                     child: Text(
