@@ -127,7 +127,6 @@ Future<ApiResponse> updateUser(
   try {
     String token = await getToken();
     Map<String, dynamic> requestBody;
-    // if (image != null) {
     requestBody = {
       'first_name': first_name,
       'last_name': last_name,
@@ -137,16 +136,6 @@ Future<ApiResponse> updateUser(
       'adress': adress,
       'avatar': image,
     };
-    // } else {
-    //   requestBody = {
-    //     'first_name': first_name,
-    //     'last_name': last_name,
-    //     'email': email,
-    //     'phone_number': phone_number,
-    //     'birthday': birthday,
-    //     'adress': adress,
-    //   };
-    // }
     final response = await http.put(
       Uri.parse(userURL),
       headers: {

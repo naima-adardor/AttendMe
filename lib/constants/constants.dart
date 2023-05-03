@@ -7,6 +7,7 @@ const registerURL = baseURL + '/register';
 const logoutURL = baseURL + '/logout';
 const userURL = baseURL + '/user';
 const passwordURL = baseURL + '/changePassword';
+const addAttIssuesURL = baseURL + '/addAttIssues';
 
 // ----- Errors -----
 const serverError = 'Server error';
