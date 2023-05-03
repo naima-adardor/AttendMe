@@ -163,7 +163,7 @@ Future<ApiResponse> updateUser(
   return apiResponse;
 }
 
-// Update user
+// Update password
 Future<ApiResponse> changePassword(
     String old_password, String new_password) async {
   ApiResponse apiResponse = ApiResponse();
