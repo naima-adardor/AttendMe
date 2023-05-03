@@ -136,10 +136,9 @@ class _CameraPageState extends State<CameraPage> {
                     onTap: () async {
                       pictureFile = await controller.takePicture();
                       setState(() {});
-                      Timer(Duration(seconds: 2), () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ScanPage()));
-                      });
+
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => ScanPage()));
                     },
                     child: Image.asset(
                       'assets/done.png',
