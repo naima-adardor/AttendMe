@@ -9,7 +9,7 @@ const userURL = baseURL + '/user';
 const passwordURL = baseURL + '/changePassword';
 const addAttIssuesURL = baseURL + '/addAttIssues';
 const addSanitaryURL = baseURL + '/addSanitary';
-// const sendOtpURL = baseURL + '/sendOTP';
+const sendOtpURL = baseURL + '/sendOTP';
 
 // ----- Errors -----
 const serverError = 'Server error';

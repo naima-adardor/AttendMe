@@ -204,32 +204,40 @@ Future<ApiResponse> changePassword(
   return apiResponse;
 }
 
-// Future<ApiResponse> sendOtp(String phoneNumber) async {
-//   ApiResponse apiResponse = ApiResponse();
-//   try {
-//     final response = await http.post(
-//       Uri.parse(sendOtpURL),
-//       headers: {'Accept': 'application/json'},
-//       body: {'phone_number': phoneNumber},
-//     );
+//send OTP
+Future<ApiResponse> sendOtp(String email) async {
+  ApiResponse apiResponse = ApiResponse();
+  try {
+    final response = await http.post(
+      Uri.parse(sendOtpURL),
+      headers: {
+        'Accept': 'application/json',
+      },
+      body: {'email': email},
+    );
 
-//     if (response.statusCode == 200) {
-//       // Success
-//       apiResponse.data = jsonDecode(response.body);
-//     } else if (response.statusCode == 400) {
-//       // Invalid phone number
-//       apiResponse.error = 'Invalid phone number';
-//     } else {
-//       // Other errors
-//       apiResponse.error = 'Failed to send OTP code';
-//     }
-//   } catch (e) {
-//     // Network or server error
-//     apiResponse.error = 'Server error';
-//   }
+    switch (response.statusCode) {
+      case 200:
+        apiResponse.data = jsonDecode(response.body)['message'];
+        break;
+      case 401:
+        apiResponse.error = jsonDecode(response.body)['message'];
+        break;
+      case 422:
+        apiResponse.error = jsonDecode(response.body)['message'];
+        break;
+      default:
+        print(response.body);
+        apiResponse.error = somethingWentWrong;
+        break;
+    }
+  } catch (e) {
+    // Network or server error
+    apiResponse.error = 'Server error';
+  }
 
-//   return apiResponse;
-// }
+  return apiResponse;
+}
 
 // get token
 Future<String> getToken() async {

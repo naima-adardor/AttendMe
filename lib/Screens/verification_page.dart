@@ -4,7 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class VerificationPage extends StatefulWidget {
-  const VerificationPage({super.key});
+  final String email;
+
+  const VerificationPage({
+    super.key,
+    required this.email,
+  });
 
   @override
   State<VerificationPage> createState() => _VerificationPageState();
@@ -78,7 +83,7 @@ class _VerificationPageState extends State<VerificationPage> {
                 Column(
                   children: [
                     Text(
-                      "Please enter the four 4 code sent to  ",
+                      "Please enter the 4 code sent to  ",
                       style: TextStyle(
                         fontSize: screenSize.width * 0.048,
                         fontWeight: FontWeight.w500,
@@ -86,11 +91,12 @@ class _VerificationPageState extends State<VerificationPage> {
                       ),
                       textAlign: TextAlign.center,
                     ),
+                    Gap(screenSize.height * 0.006),
                     Text(
-                      " 06 25 67 89 09 ",
+                      widget.email,
                       style: TextStyle(
                         fontSize: screenSize.width * 0.046,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.bold,
                         color: const Color.fromARGB(255, 88, 84, 84),
                       ),
                       textAlign: TextAlign.center,
@@ -168,7 +174,7 @@ class _VerificationPageState extends State<VerificationPage> {
                 Center(
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const ForgotPassPage(),
@@ -176,7 +182,7 @@ class _VerificationPageState extends State<VerificationPage> {
                       );
                     },
                     child: Text(
-                      "Change Number",
+                      "Change Email",
                       style: TextStyle(
                         decoration: TextDecoration.underline,
                         color: const Color.fromARGB(255, 148, 148, 148),
