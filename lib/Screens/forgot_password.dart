@@ -2,6 +2,11 @@ import 'package:attend_me/Screens/verification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+import '../constants/constants.dart';
+import '../models/api-response.dart';
+import '../services/user-services.dart';
+import 'Login_page.dart';
+
 class ForgotPassPage extends StatefulWidget {
   const ForgotPassPage({super.key});
 
@@ -10,7 +15,31 @@ class ForgotPassPage extends StatefulWidget {
 }
 
 class _ForgotPassPageState extends State<ForgotPassPage> {
+  //Send OTP
+  // void sendOTP() async {
+  //   ApiResponse response = await sendOtp(
+  //     _phone.text,
+  //   );
+
+  //   if (response.error == null && mounted) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text('OTP sent')),
+  //     );
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => const VerificationPage()),
+  //     );
+  //   } else {
+  //     if (mounted) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text(response.error ?? 'Unknown error')),
+  //       );
+  //     }
+  //   }
+  // }
+
   final formKey = GlobalKey<FormState>();
+  TextEditingController _phone = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +135,7 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                   padding: EdgeInsets.symmetric(
                       horizontal: screenSize.width * 0.05, vertical: 0),
                   child: TextFormField(
+                    controller: _phone,
                     decoration: const InputDecoration(
                       labelText: "Phone Number",
                       labelStyle: TextStyle(
@@ -134,11 +164,9 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(35))),
                     onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const VerificationPage()),
-                      );
+                      if (formKey.currentState!.validate()) {
+                        // sendOTP();
+                      }
                     },
                     child: Text(
                       "Send",
