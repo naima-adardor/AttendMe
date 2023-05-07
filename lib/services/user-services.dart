@@ -163,7 +163,7 @@ Future<ApiResponse> updateUser(
   return apiResponse;
 }
 
-// Update user
+// Update password
 Future<ApiResponse> changePassword(
     String old_password, String new_password) async {
   ApiResponse apiResponse = ApiResponse();
@@ -204,6 +204,76 @@ Future<ApiResponse> changePassword(
   return apiResponse;
 }
 
+//send OTP
+Future<ApiResponse> sendOtp(String email) async {
+  ApiResponse apiResponse = ApiResponse();
+  try {
+    final response = await http.post(
+      Uri.parse(sendOtpURL),
+      headers: {
+        'Accept': 'application/json',
+      },
+      body: {'email': email},
+    );
+
+    switch (response.statusCode) {
+      case 200:
+        apiResponse.data = jsonDecode(response.body)['message'];
+        break;
+      case 401:
+        apiResponse.error = jsonDecode(response.body)['message'];
+        break;
+      case 422:
+        apiResponse.error = jsonDecode(response.body)['message'];
+        break;
+      default:
+        print(response.body);
+        apiResponse.error = somethingWentWrong;
+        break;
+    }
+  } catch (e) {
+    // Network or server error
+    apiResponse.error = 'Server error';
+  }
+
+  return apiResponse;
+}
+
+//Verify OTP code
+Future<ApiResponse> verifyOtp(String email, String otp) async {
+  ApiResponse apiResponse = ApiResponse();
+  try {
+    final response = await http.post(
+      Uri.parse(verifyOtpURL),
+      headers: {
+        'Accept': 'application/json',
+      },
+      body: {'email': email, 'otp_code': otp},
+    );
+
+    switch (response.statusCode) {
+      case 200:
+        apiResponse.data = jsonDecode(response.body)['message'];
+        break;
+      case 401:
+        apiResponse.error = jsonDecode(response.body)['message'];
+        break;
+      case 422:
+        apiResponse.error = jsonDecode(response.body)['message'];
+        break;
+      default:
+        print(response.body);
+        apiResponse.error = somethingWentWrong;
+        break;
+    }
+  } catch (e) {
+    // Network or server error
+    apiResponse.error = 'Server error';
+  }
+
+  return apiResponse;
+}
+
 // get token
 Future<String> getToken() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
@@ -226,4 +296,39 @@ Future<bool> logout() async {
 String? getStringImage(File? file) {
   if (file == null) return null;
   return base64Encode(file.readAsBytesSync());
+}
+
+//change password 2
+Future<ApiResponse> changePass(String email, String password) async {
+  ApiResponse apiResponse = ApiResponse();
+  try {
+    final response = await http.post(
+      Uri.parse(passwordURL2),
+      headers: {
+        'Accept': 'application/json',
+      },
+      body: {'email': email, 'new_password': password},
+    );
+
+    switch (response.statusCode) {
+      case 200:
+        apiResponse.data = jsonDecode(response.body)['message'];
+        break;
+      case 401:
+        apiResponse.error = jsonDecode(response.body)['message'];
+        break;
+      case 422:
+        apiResponse.error = jsonDecode(response.body)['message'];
+        break;
+      default:
+        print(response.body);
+        apiResponse.error = somethingWentWrong;
+        break;
+    }
+  } catch (e) {
+    // Network or server error
+    apiResponse.error = 'Server error';
+  }
+
+  return apiResponse;
 }

@@ -1,6 +1,15 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+
+import '../constants/constants.dart';
+import '../models/User.dart';
+import '../models/api-response.dart';
+import '../services/sanitary_issues_services.dart';
+import '../services/user-services.dart';
+import 'Login_page.dart';
 
 class SanitaryPage extends StatefulWidget {
   const SanitaryPage({super.key});
@@ -10,18 +19,92 @@ class SanitaryPage extends StatefulWidget {
 }
 
 class _SanitaryPageState extends State<SanitaryPage> {
-  String name = '';
-  void openFiles() async {
-    FilePickerResult? resultfile = await FilePicker.platform.pickFiles();
-    if (resultfile != null) {
-      PlatformFile file = resultfile.files.first;
+  User? user;
+
+//User Information
+  void getUser() async {
+    ApiResponse response = await getUserDetail();
+    if (response.error == null && mounted) {
       setState(() {
+        user = response.data as User;
+      });
+    } else if (response.error == unauthorized) {
+      logout().then((value) => {
+            if (mounted)
+              {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    (route) => false)
+              }
+          });
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('${response.error}')));
+      }
+    }
+  }
+
+//Add Attendance Issues
+  void addSanitaryIssue() async {
+    if (certificate == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Please select a certificate file.')));
+      return;
+    }
+
+    ApiResponse response = await addSanitary(user!.id!.toString(), _report.text,
+        getStringImage(certificate), extension);
+    print(_report.text);
+    print(user!.id!);
+    print(certificate);
+
+    if (response.error == null && mounted) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('${response.data}')));
+
+      Navigator.pop(context);
+    } else if (response.error == unauthorized) {
+      logout().then((value) => {
+            if (mounted)
+              {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    (route) => false)
+              }
+          });
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('${response.error}')));
+      }
+    }
+  }
+
+  String extension = "";
+  String name = '';
+  File? certificate;
+
+  void openFiles() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      setState(() {
+        certificate = File(file.path!);
         name = file.name;
+        extension = file.extension!;
       });
     }
   }
 
+  @override
+  void initState() {
+    getUser();
+    super.initState();
+  }
+
   final formKey = GlobalKey<FormState>();
+  TextEditingController _report = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +171,7 @@ class _SanitaryPageState extends State<SanitaryPage> {
                               horizontal: screenSize.width * 0.06,
                             ),
                             child: TextFormField(
+                              controller: _report,
                               onTap: () {
                                 setState(() {});
                               },
@@ -199,7 +283,11 @@ class _SanitaryPageState extends State<SanitaryPage> {
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(35))),
-                          onPressed: () {},
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              addSanitaryIssue();
+                            }
+                          },
                           child: Text(
                             "Submit",
                             style: TextStyle(

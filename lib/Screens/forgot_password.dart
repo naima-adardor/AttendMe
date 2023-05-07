@@ -2,6 +2,11 @@ import 'package:attend_me/Screens/verification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+import '../constants/constants.dart';
+import '../models/api-response.dart';
+import '../services/user-services.dart';
+import 'Login_page.dart';
+
 class ForgotPassPage extends StatefulWidget {
   const ForgotPassPage({super.key});
 
@@ -10,7 +15,32 @@ class ForgotPassPage extends StatefulWidget {
 }
 
 class _ForgotPassPageState extends State<ForgotPassPage> {
+  //Send OTP
+  void sendOTP() async {
+    ApiResponse response = await sendOtp(
+      _email.text,
+    );
+
+    if (response.error == null && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${response.data}')),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => VerificationPage(email: _email.text)),
+      );
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('${response.error}')),
+        );
+      }
+    }
+  }
+
   final formKey = GlobalKey<FormState>();
+  TextEditingController _email = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +122,7 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                       horizontal: screenSize.width * 0.07,
                       vertical: screenSize.height * 0.01),
                   child: Text(
-                    "Please enter your Number Phone to receive a verification code",
+                    "Please enter your Email to receive a verification code",
                     style: TextStyle(
                       fontSize: screenSize.width * 0.045,
                       fontWeight: FontWeight.w500,
@@ -106,8 +136,11 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                   padding: EdgeInsets.symmetric(
                       horizontal: screenSize.width * 0.05, vertical: 0),
                   child: TextFormField(
+                    controller: _email,
+                    validator: (value) =>
+                        value!.isEmpty ? "Please write your email" : null,
                     decoration: const InputDecoration(
-                      labelText: "Phone Number",
+                      labelText: "Email",
                       labelStyle: TextStyle(
                         color: Color.fromARGB(255, 112, 112, 112),
                       ),
@@ -134,11 +167,9 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(35))),
                     onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const VerificationPage()),
-                      );
+                      if (formKey.currentState!.validate()) {
+                        sendOTP();
+                      }
                     },
                     child: Text(
                       "Send",
