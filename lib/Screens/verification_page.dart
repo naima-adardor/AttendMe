@@ -19,6 +19,25 @@ class VerificationPage extends StatefulWidget {
 }
 
 class _VerificationPageState extends State<VerificationPage> {
+  //resend otp code
+  void sendOTP() async {
+    ApiResponse response = await sendOtp(
+      widget.email,
+    );
+
+    if (response.error == null && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${response.data}')),
+      );
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('${response.error}')),
+        );
+      }
+    }
+  }
+
   //verify OTP
   void verify() async {
     ApiResponse response = await verifyOtp(widget.email, _otp);
@@ -248,14 +267,19 @@ class _VerificationPageState extends State<VerificationPage> {
                 SizedBox(
                   height: screenSize.height * 0.02,
                 ),
-                Text(
-                  "Resend New Code",
-                  style: TextStyle(
-                    fontSize: screenSize.width * 0.045,
-                    fontWeight: FontWeight.bold,
-                    color: const Color(0xFF6096B4),
+                GestureDetector(
+                  onTap: () {
+                    sendOTP();
+                  },
+                  child: Text(
+                    "Resend New Code",
+                    style: TextStyle(
+                      fontSize: screenSize.width * 0.045,
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFF6096B4),
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ],
             ),
