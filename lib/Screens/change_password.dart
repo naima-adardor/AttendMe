@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:attend_me/Screens/Login_page.dart';
 
+import '../models/api-response.dart';
+import '../services/user-services.dart';
+
 class ChangePasswordPage extends StatefulWidget {
   final String email;
 
@@ -15,9 +18,33 @@ class ChangePasswordPage extends StatefulWidget {
 }
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
+  TextEditingController _new_password = TextEditingController();
+  TextEditingController _confirmation_password = TextEditingController();
+
+  //change password
+  void changePassw() async {
+    ApiResponse response = await changePass(widget.email, _new_password.text);
+
+    if (response.error == null && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${response.data}')),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('${response.error}')),
+        );
+      }
+    }
+  }
+
   final formKey = GlobalKey<FormState>();
-  bool _isTappedPass = false;
   bool _hideText = true;
+  bool _hideText2 = true;
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -98,19 +125,18 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                   child: TextFormField(
+                    controller: _new_password,
+                    validator: (value) =>
+                        value!.isEmpty ? "Please enter a valid password" : null,
                     onTap: () {
-                      setState(() {
-                        _isTappedPass = true;
-                      });
+                      // setState(() {
+                      //   _isTappedPass = true;
+                      // });
                     },
                     obscureText: _hideText,
                     decoration: InputDecoration(
                       labelText: "New Password",
-                      labelStyle: TextStyle(
-                        color: _isTappedPass
-                            ? const Color(0xFF6096B4)
-                            : const Color.fromARGB(255, 112, 112, 112),
-                      ),
+                      labelStyle: const TextStyle(color: Color(0xFF6096B4)),
                       enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Color(0xFF6096B4),
@@ -148,19 +174,21 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                   child: TextFormField(
+                    controller: _confirmation_password,
+                    validator: (value) => value!.isEmpty
+                        ? "Please confirm your password"
+                        : (value != _new_password.text)
+                            ? 'Passwords do not match'
+                            : null,
                     onTap: () {
-                      setState(() {
-                        _isTappedPass = true;
-                      });
+                      // setState(() {
+                      //   _isTappedPass = true;
+                      // });
                     },
-                    obscureText: _hideText,
+                    obscureText: _hideText2,
                     decoration: InputDecoration(
                       labelText: " Confirm New Password",
-                      labelStyle: TextStyle(
-                        color: _isTappedPass
-                            ? const Color(0xFF6096B4)
-                            : const Color.fromARGB(255, 112, 112, 112),
-                      ),
+                      labelStyle: const TextStyle(color: Color(0xFF6096B4)),
                       enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Color(0xFF6096B4),
@@ -177,12 +205,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       ),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _hideText ? Icons.visibility_off : Icons.visibility,
+                          _hideText2 ? Icons.visibility_off : Icons.visibility,
                           color: const Color(0xFF6096B4),
                         ),
                         onPressed: () {
                           setState(() {
-                            _hideText = !_hideText;
+                            _hideText2 = !_hideText2;
                           });
                         },
                       ),
@@ -206,12 +234,15 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(35))),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginPage(),
-                        ),
-                      );
+                      if (formKey.currentState!.validate()) {
+                        changePassw();
+                      }
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const LoginPage(),
+                      //   ),
+                      // );
                     },
                     child: Text(
                       "Save",

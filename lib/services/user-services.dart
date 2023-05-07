@@ -297,3 +297,38 @@ String? getStringImage(File? file) {
   if (file == null) return null;
   return base64Encode(file.readAsBytesSync());
 }
+
+//change password 2
+Future<ApiResponse> changePass(String email, String password) async {
+  ApiResponse apiResponse = ApiResponse();
+  try {
+    final response = await http.post(
+      Uri.parse(passwordURL2),
+      headers: {
+        'Accept': 'application/json',
+      },
+      body: {'email': email, 'new_password': password},
+    );
+
+    switch (response.statusCode) {
+      case 200:
+        apiResponse.data = jsonDecode(response.body)['message'];
+        break;
+      case 401:
+        apiResponse.error = jsonDecode(response.body)['message'];
+        break;
+      case 422:
+        apiResponse.error = jsonDecode(response.body)['message'];
+        break;
+      default:
+        print(response.body);
+        apiResponse.error = somethingWentWrong;
+        break;
+    }
+  } catch (e) {
+    // Network or server error
+    apiResponse.error = 'Server error';
+  }
+
+  return apiResponse;
+}
