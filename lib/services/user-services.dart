@@ -239,6 +239,41 @@ Future<ApiResponse> sendOtp(String email) async {
   return apiResponse;
 }
 
+//Verify OTP code
+Future<ApiResponse> verifyOtp(String email, String otp) async {
+  ApiResponse apiResponse = ApiResponse();
+  try {
+    final response = await http.post(
+      Uri.parse(verifyOtpURL),
+      headers: {
+        'Accept': 'application/json',
+      },
+      body: {'email': email, 'otp_code': otp},
+    );
+
+    switch (response.statusCode) {
+      case 200:
+        apiResponse.data = jsonDecode(response.body)['message'];
+        break;
+      case 401:
+        apiResponse.error = jsonDecode(response.body)['message'];
+        break;
+      case 422:
+        apiResponse.error = jsonDecode(response.body)['message'];
+        break;
+      default:
+        print(response.body);
+        apiResponse.error = somethingWentWrong;
+        break;
+    }
+  } catch (e) {
+    // Network or server error
+    apiResponse.error = 'Server error';
+  }
+
+  return apiResponse;
+}
+
 // get token
 Future<String> getToken() async {
   SharedPreferences pref = await SharedPreferences.getInstance();

@@ -3,7 +3,12 @@ import 'package:gap/gap.dart';
 import 'package:attend_me/Screens/Login_page.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  const ChangePasswordPage({super.key});
+  final String email;
+
+  const ChangePasswordPage({
+    super.key,
+    required this.email,
+  });
 
   @override
   State<ChangePasswordPage> createState() => _ChangePasswordPageState();

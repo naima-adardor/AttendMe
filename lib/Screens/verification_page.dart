@@ -3,6 +3,9 @@ import 'package:attend_me/Screens/forgot_password.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+import '../models/api-response.dart';
+import '../services/user-services.dart';
+
 class VerificationPage extends StatefulWidget {
   final String email;
 
@@ -16,6 +19,47 @@ class VerificationPage extends StatefulWidget {
 }
 
 class _VerificationPageState extends State<VerificationPage> {
+  //verify OTP
+  void verify() async {
+    ApiResponse response = await verifyOtp(widget.email, _otp);
+
+    if (response.error == null && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${response.data}')),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ChangePasswordPage(email: widget.email)),
+      );
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('${response.error}')),
+        );
+      }
+    }
+  }
+
+  late String _otp = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _otpController1 = TextEditingController();
+    _otpController2 = TextEditingController();
+    _otpController3 = TextEditingController();
+    _otpController4 = TextEditingController();
+  }
+
+  late final TextEditingController _otpController1;
+  late final TextEditingController _otpController2;
+  late final TextEditingController _otpController3;
+  late final TextEditingController _otpController4;
+
+  // final _otp =
+  // '${_otpController1.text}${_otpController2.text}${_otpController3.text}${_otpController4.text}';
+
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -127,10 +171,22 @@ class _VerificationPageState extends State<VerificationPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                _textFieldOTP(first: true, last: false),
-                                _textFieldOTP(first: false, last: false),
-                                _textFieldOTP(first: false, last: false),
-                                _textFieldOTP(first: false, last: true),
+                                _textFieldOTP(
+                                    controller: _otpController1,
+                                    first: true,
+                                    last: false),
+                                _textFieldOTP(
+                                    controller: _otpController2,
+                                    first: false,
+                                    last: false),
+                                _textFieldOTP(
+                                    controller: _otpController3,
+                                    first: false,
+                                    last: false),
+                                _textFieldOTP(
+                                    controller: _otpController4,
+                                    first: false,
+                                    last: true),
                               ],
                             ),
                           ),
@@ -152,11 +208,9 @@ class _VerificationPageState extends State<VerificationPage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(35))),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ChangePasswordPage()),
-                      );
+                      if (formKey.currentState!.validate()) {
+                        verify();
+                      }
                     },
                     child: Text(
                       "Verify",
@@ -211,7 +265,12 @@ class _VerificationPageState extends State<VerificationPage> {
     );
   }
 
-  Widget _textFieldOTP({required bool first, last}) {
+  // final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
+
+  Widget _textFieldOTP(
+      {required TextEditingController controller,
+      required bool first,
+      required bool last}) {
     return Padding(
       padding: const EdgeInsets.all(0),
       child: SizedBox(
@@ -220,6 +279,7 @@ class _VerificationPageState extends State<VerificationPage> {
         child: AspectRatio(
           aspectRatio: 1.0,
           child: TextField(
+            controller: controller,
             autofocus: true,
             onChanged: (value) {
               if (value.length == 1 && last == false) {
@@ -228,6 +288,12 @@ class _VerificationPageState extends State<VerificationPage> {
               if (value.length == 0 && first == false) {
                 FocusScope.of(context).previousFocus();
               }
+              setState(() {
+                _otp = _otpController1.text +
+                    _otpController2.text +
+                    _otpController3.text +
+                    _otpController4.text;
+              });
             },
             showCursor: false,
             readOnly: false,

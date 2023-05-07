@@ -10,6 +10,7 @@ const passwordURL = baseURL + '/changePassword';
 const addAttIssuesURL = baseURL + '/addAttIssues';
 const addSanitaryURL = baseURL + '/addSanitary';
 const sendOtpURL = baseURL + '/sendOTP';
+const verifyOtpURL = baseURL + '/verifyOTP';
 
 // ----- Errors -----
 const serverError = 'Server error';
