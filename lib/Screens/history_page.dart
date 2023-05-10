@@ -6,9 +6,11 @@ import 'package:intl/intl.dart';
 
 import '../constants/constants.dart';
 import '../models/Assignment.dart';
+import '../models/Presence.dart';
 import '../models/User.dart';
 import '../models/api-response.dart';
 import '../services/assignment_services.dart';
+import '../services/presence_services.dart';
 import '../services/user-services.dart';
 import 'Login_page.dart';
 
@@ -24,6 +26,7 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   User? user;
   late List<Assignment> assignment;
+  late List<Presence> presence = [];
 
   //User Information
   void getUser() async {
@@ -35,6 +38,7 @@ class _HistoryPageState extends State<HistoryPage> {
       });
 
       getAssignment();
+      getPre();
     } else if (response.error == unauthorized) {
       logout().then((value) => {
             if (mounted)
@@ -114,6 +118,59 @@ class _HistoryPageState extends State<HistoryPage> {
         );
       }
     }
+  }
+
+  //Presence Information
+  void getPre() async {
+    ApiResponse response = await getPresences(user!.id!);
+    if (response.error == null && mounted) {
+      setState(() {
+        presence = response.data as List<Presence>;
+      });
+    } else if (response.error == unauthorized) {
+      logout().then((value) => {
+            if (mounted)
+              {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    (route) => false)
+              }
+          });
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('${response.error}')));
+      }
+    }
+  }
+
+  //check
+  String checkAttendance(DateTime date) {
+    String attendanceStatus = '';
+    for (Assignment assign in assignment) {
+      if (date.isAfter(assign.end_date!) || date.isBefore(assign.start_date!)) {
+        continue;
+      }
+      bool isPresent = false;
+      for (Presence pres in presence) {
+        if (pres.attendance_day!.isAtSameMomentAs(date)) {
+          isPresent = true;
+
+          DateTime assignTime = DateTime.parse("2000-12-10 " + assign.time_in!);
+          DateTime presTime = DateTime.parse("2000-12-10 " + pres.check_in!);
+          if (assignTime.isBefore(presTime)) {
+            attendanceStatus += 'Late';
+          } else {
+            attendanceStatus += 'On time';
+          }
+          break;
+        }
+      }
+      if (!isPresent) {
+        attendanceStatus += 'Absent';
+      }
+    }
+    return attendanceStatus;
   }
 
   int indexx = 0;
@@ -449,6 +506,8 @@ class _HistoryPageState extends State<HistoryPage> {
                   // Calculate the date for this row
                   DateTime date = currentAssignment.start_date!
                       .add(Duration(days: index - currentCount));
+                  // Find the status of the employee for the current date
+                  String? status = checkAttendance(date);
 
                   return GestureDetector(
                     onTap: () {
@@ -497,13 +556,26 @@ class _HistoryPageState extends State<HistoryPage> {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                          color: const Color.fromARGB(
-                                              255, 255, 0, 0),
+                                          color: status == 'Absent'
+                                              ? const Color.fromARGB(
+                                                  255, 255, 0, 0)
+                                              : status == 'Late'
+                                                  ? const Color.fromARGB(
+                                                      255, 255, 137, 3)
+                                                  : const Color.fromARGB(
+                                                      255, 0, 175, 9),
                                           width: 2),
                                       borderRadius: BorderRadius.circular(10),
-                                      boxShadow: const [
+                                      boxShadow: [
                                         BoxShadow(
-                                          color: Color.fromARGB(255, 255, 0, 0),
+                                          color: status == 'Absent'
+                                              ? const Color.fromARGB(
+                                                  255, 255, 0, 0)
+                                              : status == 'Late'
+                                                  ? const Color.fromARGB(
+                                                      255, 255, 137, 3)
+                                                  : const Color.fromARGB(
+                                                      255, 0, 175, 9),
                                           offset: Offset(0, 0),
                                           blurRadius: 0,
                                         ),
@@ -511,7 +583,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     ),
                                     child: Center(
                                       child: Text(
-                                        'Absent',
+                                        status, // Use the status if available, otherwise default to 'Absent'
                                         style: TextStyle(
                                           color: Color.fromARGB(
                                               255, 255, 255, 255),
