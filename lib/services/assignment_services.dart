@@ -1,62 +1,55 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:attend_me/services/user-services.dart';
 
 import '../constants/constants.dart';
+import '../models/Assignment.dart';
 import '../models/api-response.dart';
-
 import 'package:http/http.dart' as http;
 
-// add Sanitary Issues
-Future<ApiResponse> addSanitary(
-  String id_employee,
-  String report,
-  String? certificate,
-  String extension,
-) async {
+//get Assignment
+Future<ApiResponse> getAssignments(int id_employee) async {
   ApiResponse apiResponse = ApiResponse();
+  print("hey");
   try {
+    print("try");
     String token = await getToken();
+    print("token");
     Map<String, dynamic> requestBody;
-
+    print("map");
     requestBody = {
-      'id_employee': id_employee,
-      'report': report,
-      'certificate': certificate,
-      'extension': extension,
+      'id_employee': id_employee.toString(),
     };
-
+    print("api");
     final response = await http.post(
-      Uri.parse(addSanitaryURL),
+      Uri.parse(assignmentURL),
       headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },
       body: requestBody,
     );
+    print("requestBody");
 
     switch (response.statusCode) {
       case 200:
-        print("200");
-        apiResponse.data = jsonDecode(response.body)['message'];
+        List<dynamic> data = jsonDecode(response.body)['assignments'];
+        List<Assignment> assignments =
+            data.map((e) => Assignment.fromJson(e)).toList();
+        apiResponse.data = assignments;
         break;
-      case 422:
-        print("422");
-        final errors = jsonDecode(response.body)['errors'];
-        apiResponse.error = errors[errors.keys.elementAt(0)][0];
+      case 401:
+        apiResponse.error = unauthorized;
         break;
       default:
         apiResponse.error = somethingWentWrong;
         break;
     }
-
-    print('Response body: ${response.body}');
-    print('Status code: ${response.statusCode}');
   } catch (e) {
+    print("catch");
     print(e);
+
     apiResponse.error = serverError;
   }
-
   return apiResponse;
 }

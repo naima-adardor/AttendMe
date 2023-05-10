@@ -5,8 +5,10 @@ import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 
 import '../constants/constants.dart';
+import '../models/Assignment.dart';
 import '../models/User.dart';
 import '../models/api-response.dart';
+import '../services/assignment_services.dart';
 import '../services/user-services.dart';
 import 'Login_page.dart';
 
@@ -21,6 +23,7 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
   User? user;
+  late List<Assignment> assignment;
 
   //User Information
   void getUser() async {
@@ -28,7 +31,10 @@ class _HistoryPageState extends State<HistoryPage> {
     if (response.error == null && mounted) {
       setState(() {
         user = response.data as User;
+        print(user!.id);
       });
+
+      getAssignment();
     } else if (response.error == unauthorized) {
       logout().then((value) => {
             if (mounted)
@@ -42,6 +48,43 @@ class _HistoryPageState extends State<HistoryPage> {
       if (mounted) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('${response.error}')));
+      }
+    }
+  }
+
+  int count = 0;
+
+  // Assignment Information
+  Future<void> getAssignment() async {
+    ApiResponse response = await getAssignments(user!.id!);
+
+    if (response.error == null && mounted) {
+      setState(() {
+        assignment = response.data as List<Assignment>;
+        count = 0;
+
+        for (Assignment assignments in assignment) {
+          int daysCount =
+              assignments.end_date!.difference(assignments.start_date!).inDays +
+                  1;
+          count += daysCount;
+        }
+      });
+    } else if (response.error == unauthorized) {
+      logout().then((value) => {
+            if (mounted)
+              {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  (route) => false,
+                )
+              }
+          });
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('${response.error}')),
+        );
       }
     }
   }
@@ -147,6 +190,10 @@ class _HistoryPageState extends State<HistoryPage> {
 
   @override
   void initState() {
+    setState(() {
+      getUser();
+    });
+
     super.initState();
     if (_selectedDate1 == null) {
       _selectedDate1 = DateFormat('yMd').format(DateTime.now());
@@ -353,89 +400,111 @@ class _HistoryPageState extends State<HistoryPage> {
                 itemExtent: screenSize.height * 0.11,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
-                itemCount: 20,
-                itemBuilder: (BuildContext context, int index) =>
-                    GestureDetector(
-                  onTap: () {
-                    // Navigate to another screen
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MapSample()),
-                    );
-                  },
-                  child: Container(
-                    height: screenSize.height * 0.11,
-                    child: Card(
-                      elevation: 6.0,
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: Color.fromRGBO(255, 255, 255, 0.886),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: screenSize.width * 0.06,
-                          vertical: screenSize.height * 0.026,
-                        ),
-                        child: SizedBox(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                width: screenSize.width * 0.25,
-                                height: screenSize.height * 0.03,
-                                child: Center(
-                                  child: Text(
-                                    "2020-12-22",
-                                    style: TextStyle(
-                                        color: darkBlue,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: screenSize.width * 0.044),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: screenSize.width * 0.2,
-                              ),
-                              Container(
-                                width: screenSize.width * 0.25,
-                                height: screenSize.height * 0.1,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: const Color.fromARGB(
-                                            255, 255, 0, 0),
-                                        width: 2),
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Color.fromARGB(255, 255, 0, 0),
-                                        offset: Offset(0, 0),
-                                        blurRadius: 0,
-                                      ),
-                                    ],
-                                  ),
+                itemCount: count,
+                itemBuilder: (BuildContext context, int index) {
+                  // Find the Assignment object that corresponds to this row
+                  int currentCount = 0;
+                  late Assignment currentAssignment;
+                  for (int i = 0; i < assignment.length; i++) {
+                    int daysCount = assignment[i]
+                            .end_date!
+                            .difference(assignment[i].start_date!)
+                            .inDays +
+                        1;
+                    if (index < currentCount + daysCount) {
+                      currentAssignment = assignment[i];
+                      break;
+                    } else {
+                      currentCount += daysCount;
+                    }
+                  }
+
+                  // Calculate the date for this row
+                  DateTime date = currentAssignment.start_date!
+                      .add(Duration(days: index - currentCount));
+
+                  return GestureDetector(
+                    onTap: () {
+                      // Navigate to another screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MapSample()),
+                      );
+                    },
+                    child: Container(
+                      height: screenSize.height * 0.11,
+                      child: Card(
+                        elevation: 6.0,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: Color.fromRGBO(255, 255, 255, 0.886),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenSize.width * 0.06,
+                            vertical: screenSize.height * 0.026,
+                          ),
+                          child: SizedBox(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  width: screenSize.width * 0.25,
+                                  height: screenSize.height * 0.03,
                                   child: Center(
                                     child: Text(
-                                      'Absent',
+                                      DateFormat('yyyy-MM-dd').format(date),
                                       style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255),
-                                        fontFamily: 'ro',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: screenSize.width * 0.043,
-                                      ),
-                                      textAlign: TextAlign.center,
+                                          color: darkBlue,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: screenSize.width * 0.044),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  width: screenSize.width * 0.2,
+                                ),
+                                Container(
+                                  width: screenSize.width * 0.25,
+                                  height: screenSize.height * 0.1,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: const Color.fromARGB(
+                                              255, 255, 0, 0),
+                                          width: 2),
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: Color.fromARGB(255, 255, 0, 0),
+                                          offset: Offset(0, 0),
+                                          blurRadius: 0,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Absent',
+                                        style: TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 255, 255, 255),
+                                          fontFamily: 'ro',
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: screenSize.width * 0.043,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
               ),
             ),
           ],
