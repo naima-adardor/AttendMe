@@ -59,8 +59,35 @@ class _HistoryPageState extends State<HistoryPage> {
     ApiResponse response = await getAssignments(user!.id!);
 
     if (response.error == null && mounted) {
+      DateTime today = DateTime.now();
+      List<Assignment> allAssignments = response.data as List<Assignment>;
+      List<Assignment> filteredAssignments = [];
+
+      for (Assignment assignment in allAssignments) {
+        if (assignment.start_date!.isBefore(today) &&
+            assignment.end_date!.isBefore(today)) {
+          filteredAssignments.add(assignment);
+        } else if (assignment.start_date!.isBefore(today) &&
+            assignment.end_date!.isAfter(today)) {
+          int daysCount = today.difference(assignment.start_date!).inDays + 1;
+          Assignment updatedAssignment = Assignment(
+            id_assignment_elevator: assignment.id_assignment_elevator,
+            id_elevator: assignment.id_elevator,
+            id_employee: assignment.id_employee,
+            time_in: assignment.time_in,
+            time_out: assignment.time_out,
+            start_date: assignment.start_date,
+            end_date: today.subtract(Duration(days: 1)),
+          );
+          filteredAssignments.add(updatedAssignment);
+          count += daysCount;
+        }
+      }
+
+      filteredAssignments.sort((a, b) => a.end_date!.compareTo(b.end_date!));
+
       setState(() {
-        assignment = response.data as List<Assignment>;
+        assignment = filteredAssignments;
         count = 0;
 
         for (Assignment assignments in assignment) {
