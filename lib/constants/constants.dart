@@ -13,6 +13,7 @@ const addSanitaryURL = baseURL + '/addSanitary';
 const sendOtpURL = baseURL + '/sendOTP';
 const verifyOtpURL = baseURL + '/verifyOTP';
 const assignmentURL = baseURL + '/getAssignmentElevator';
+const PresenceURL = baseURL + '/getPresence';
 
 // ----- Errors -----
 const serverError = 'Server error';
