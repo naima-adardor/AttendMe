@@ -14,6 +14,9 @@ const sendOtpURL = baseURL + '/sendOTP';
 const verifyOtpURL = baseURL + '/verifyOTP';
 const assignmentURL = baseURL + '/getAssignmentElevator';
 const PresenceURL = baseURL + '/getPresence';
+const addPresence = baseURL + '/addPresence';
+const updatePresence = baseURL + '/updatePresence';
+const getIdPresence = baseURL + '/getIdPresence';
 
 // ----- Errors -----
 const serverError = 'Server error';
