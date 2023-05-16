@@ -27,7 +27,7 @@ class _HistoryPageState extends State<HistoryPage> {
   User? user;
   late List<Assignment> assignment;
   late List<Presence> presence = [];
-  
+
   //User Information
   void getUser() async {
     ApiResponse response = await getUserDetail();
@@ -540,7 +540,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                       style: TextStyle(
                                           color: darkBlue,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: screenSize.width * 0.044),
+                                          fontSize: screenSize.width * 0.039),
                                     ),
                                   ),
                                 ),

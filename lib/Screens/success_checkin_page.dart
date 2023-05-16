@@ -49,7 +49,6 @@ class _SucessCheckinPage extends State<SucessCheckinPage> {
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setString('status', "checkOut");
-      prefs.setString('code', widget.code);
     });
 
     // Call the async function using then()

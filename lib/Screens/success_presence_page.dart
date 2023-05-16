@@ -113,6 +113,7 @@ class _SuccessPresencePageState extends State<SuccessPresencePage> {
   Future<void> setSessionVariables(SharedPreferences prefs) async {
     await prefs.setString(
         'check_out', DateFormat('HH:mm').format(DateTime.now()).toString());
+    prefs.setString('status', "checkIn");
   }
 
   @override
