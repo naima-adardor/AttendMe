@@ -142,7 +142,7 @@ class _ScanPageState extends State<ScanPage> {
 
                           if (qrCodeIdNew != null &&
                               qrCodeIdOld == qrCodeIdNew) {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>

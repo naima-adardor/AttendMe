@@ -58,14 +58,15 @@ class _CameraPageState extends State<CameraPage> {
         SharedPreferences.getInstance().then((prefs) {
           prefs.setInt('user_id', user!.id!);
           prefs.setString('status', "checkIn");
+          prefs.setString('getQrCode', "no");
         });
       });
 
       SharedPreferences.getInstance().then((prefs) {
         int? userId = prefs.getInt('user_id');
-        String? status = prefs.getString('status');
-        print(userId);
-        print(status);
+        // String? status = prefs.getString('status');
+        // print(userId);
+        // print(status);
       });
     } else if (response.error == unauthorized) {
       logout().then((value) => {
