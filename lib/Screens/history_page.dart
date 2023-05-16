@@ -27,7 +27,7 @@ class _HistoryPageState extends State<HistoryPage> {
   User? user;
   late List<Assignment> assignment;
   late List<Presence> presence = [];
-
+  
   //User Information
   void getUser() async {
     ApiResponse response = await getUserDetail();
@@ -174,60 +174,10 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   int indexx = 0;
-  List category = ['All', 'Late', 'Absent', 'On Time'];
+  List category = ['All', 'Late', 'Absent', 'On time'];
 
-  TextEditingController _dateController = TextEditingController(
-    text: '2022-01-01',
-  );
-  late String _selectedDate2;
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2022),
-      lastDate: DateTime(2025),
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
-              primary: darkBlue,
-              secondary: lightBlue,
-              onSecondary: Colors.white,
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                primary: darkBlue,
-              ),
-            ),
-            textTheme: const TextTheme(
-              headline4: TextStyle(
-                fontFamily: "NexaBold",
-              ),
-              overline: TextStyle(
-                fontFamily: "NexaBold",
-              ),
-              button: TextStyle(
-                fontFamily: "NexaBold",
-              ),
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
-    if (picked != null) {
-      setState(() {
-        _selectedDate2 = DateFormat('yMd').format(picked);
-        _dateController.text = _selectedDate2;
-      });
-    }
-  }
-
-  TextEditingController _dateController1 = TextEditingController(
-    text: '2022-01-01',
-  );
-  late String _selectedDate1 = '2022-01-01';
+  TextEditingController _dateController1 = TextEditingController();
+  late String _selectedDate1;
 
   Future<void> _selectDate1(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -266,8 +216,54 @@ class _HistoryPageState extends State<HistoryPage> {
     );
     if (picked != null) {
       setState(() {
-        _selectedDate1 = DateFormat('yMd').format(picked);
+        _selectedDate1 = DateFormat('yyyy-MM-dd').format(picked);
         _dateController1.text = _selectedDate1;
+      });
+    }
+  }
+
+  TextEditingController _dateController2 = TextEditingController();
+  late String _selectedDate2;
+
+  Future<void> _selectDate2(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2022),
+      lastDate: DateTime(2025),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: darkBlue,
+              secondary: lightBlue,
+              onSecondary: Colors.white,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: darkBlue,
+              ),
+            ),
+            textTheme: const TextTheme(
+              headline4: TextStyle(
+                fontFamily: "NexaBold",
+              ),
+              overline: TextStyle(
+                fontFamily: "NexaBold",
+              ),
+              button: TextStyle(
+                fontFamily: "NexaBold",
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      setState(() {
+        _selectedDate2 = DateFormat('yyyy-MM-dd').format(picked);
+        _dateController2.text = _selectedDate2;
       });
     }
   }
@@ -279,10 +275,11 @@ class _HistoryPageState extends State<HistoryPage> {
     });
 
     super.initState();
-    if (_selectedDate1 == null) {
-      _selectedDate1 = DateFormat('yMd').format(DateTime.now());
-      _dateController1.text = _selectedDate1;
-    }
+
+    _selectedDate1 = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    _dateController1.text = _selectedDate1;
+    _selectedDate2 = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    _dateController2.text = _selectedDate2;
   }
 
   @override
@@ -344,9 +341,9 @@ class _HistoryPageState extends State<HistoryPage> {
                       right: screenSize.width * 0.06,
                     ),
                     child: TextFormField(
-                      controller: _dateController,
+                      controller: _dateController2,
                       readOnly: true,
-                      onTap: () => _selectDate(context),
+                      onTap: () => _selectDate2(context),
                       decoration: InputDecoration(
                         labelText: "To",
                         labelStyle: const TextStyle(

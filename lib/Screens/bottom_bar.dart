@@ -19,6 +19,25 @@ class BottomBar extends StatefulWidget {
 
   get result => null;
 
+//     static String? status;
+// SharedPreferences.getInstance().then((prefs) async {
+//       await getSessionVariables(prefs);
+//     });
+// Future<void> getSessionVariables(SharedPreferences prefs) async {
+//     SharedPreferences prefs = await SharedPreferences.getInstance();
+//     status = prefs.getString('status');
+//   }
+// static Future<Widget> getPage() async {
+//     if (status == "checkOut") {
+//       return ScanPage();
+//     } else {
+//       final cameras = await availableCameras();
+//       return CameraPage(
+//         cameras: cameras,
+//       );
+//     }
+//   }
+
   @override
   State<BottomBar> createState() => _BottomBarState();
 }
