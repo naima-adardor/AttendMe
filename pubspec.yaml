@@ -76,6 +76,8 @@ dependencies:
   fluttertoast: ^8.2.1
   provider: ^6.0.5
   http: ^0.13.5
+  permission_handler: ^10.2.0
+  path: ^1.8.2
   
   
 
@@ -128,6 +130,7 @@ flutter:
     - assets/close.png
     - assets/qr_code_gene.png
     - assets/user.png
+    - assets/DefaultQR.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

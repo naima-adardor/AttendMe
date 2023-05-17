@@ -13,7 +13,6 @@ import '../constants/constants.dart';
 import '../models/api-response.dart';
 import '../services/user-services.dart';
 import 'Login_page.dart';
-import 'package:qr/src/qr_image.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';

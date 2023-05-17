@@ -3,7 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,6 +38,36 @@ class _GeneratedCodePageSuccess extends State<GeneratedCodePageSuccess> {
     setState(() {
       ID = prefs.getInt('IDP');
     });
+  }
+
+  // Function to retrieve the gallery path on the device
+// Function to retrieve the gallery path on the device
+  Future<String?> _getGalleryPath() async {
+    try {
+      final galleryDir = await getExternalStorageDirectory();
+      return galleryDir!.path;
+    } on PlatformException catch (e) {
+      print('Error getting gallery path: $e');
+      return null;
+    }
+  }
+
+// Function to save the image to the device's gallery
+  Future<String?> _saveImageToGallery(
+      File imageFile, String galleryPath) async {
+    try {
+      final currentDate = DateTime.now();
+      final formattedDate = DateFormat('yyyy-MM-dd HH:mm').format(currentDate);
+      final imageName = 'QrCode_$formattedDate.png';
+      final savedImagePath = '$galleryPath/$imageName';
+
+      await imageFile.copy(savedImagePath);
+
+      return savedImagePath;
+    } catch (e) {
+      print('Error saving image to gallery: $e');
+      return null;
+    }
   }
 
 // Get presence by ID
@@ -226,42 +259,30 @@ class _GeneratedCodePageSuccess extends State<GeneratedCodePageSuccess> {
                     child: IconButton(
                       onPressed: () async {
                         try {
-                          // Fetch the image data from the network URL
                           final response =
                               await http.get(Uri.parse(presence!.qrcode!));
-                          if (response.statusCode == 200) {
-                            final bytes = response.bodyBytes;
+                          final bytes = response.bodyBytes;
 
-                            // Get the directory for saving images
-                            final directory =
-                                await getApplicationDocumentsDirectory();
-                            final imagePath =
-                                '${directory.path}/QrCodesPresence/1684350047.png';
+                          final tempDir = await getTemporaryDirectory();
+                          final tempPath = tempDir.path;
+                          final tempFile = File('$tempPath/image.png');
+                          await tempFile.writeAsBytes(bytes);
 
-                            // Create the directory if it doesn't exist
-                            await Directory('${directory.path}/QrCodesPresence')
-                                .create(recursive: true);
+                          final galleryPath = await _getGalleryPath();
+                          final savedImagePath =
+                              await _saveImageToGallery(tempFile, galleryPath!);
 
-                            // Save the image to the device's gallery
-                            final File imageFile = File(imagePath);
-                            await imageFile.writeAsBytes(bytes);
-
-                            final result =
-                                await ImageGallerySaver.saveFile(imagePath);
-
-                            if (result != null) {
-                              print('Image saved to gallery.');
-                              Fluttertoast.showToast(
-                                msg: 'Image saved!',
-                                gravity: ToastGravity.BOTTOM,
-                                toastLength: Toast.LENGTH_SHORT,
-                              );
-                            } else {
-                              print('Error saving image to gallery.');
-                            }
-                          } else {
+                          if (savedImagePath != null) {
                             print(
-                                'Failed to download image. StatusCode: ${response.statusCode}');
+                                'Image saved to gallery. Path: $savedImagePath');
+
+                            Fluttertoast.showToast(
+                              msg: 'Image saved!',
+                              gravity: ToastGravity.BOTTOM,
+                              toastLength: Toast.LENGTH_SHORT,
+                            );
+                          } else {
+                            print('Error saving image to gallery.');
                           }
                         } catch (e) {
                           print('Error: $e');
