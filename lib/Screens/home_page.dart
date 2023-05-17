@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/constants.dart';
 import '../models/User.dart';
@@ -20,6 +21,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String fullName = "";
   User? user;
+  String? statusCheckIn;
+  String? statusCheckOut;
+  String? checkIn;
+  String? checkOut;
 
 //User Information
   void getUser() async {
@@ -52,6 +57,18 @@ class _HomeScreenState extends State<HomeScreen> {
       getUser();
     });
     super.initState();
+    SharedPreferences.getInstance().then((prefs) async {
+      await getSessionVariables(prefs);
+    });
+  }
+
+  Future<void> getSessionVariables(SharedPreferences prefs) async {
+    setState(() {
+      statusCheckIn = prefs.getString('setCheckIn');
+      statusCheckOut = prefs.getString('setCheckOut');
+      checkIn = prefs.getString('check_in');
+      checkOut = prefs.getString('check_out');
+    });
   }
 
   @override
@@ -145,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 left: screenSize.width * 0,
               ),
               child: Text(
-                "Today's Status",
+                "Latest Session",
                 style: TextStyle(
                   fontFamily: "NexaBold",
                   fontSize: screenSize.width * 0.05,
@@ -259,7 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          "09:00",
+                          statusCheckIn == "yes" ? checkIn! : "--/--",
                           style: TextStyle(
                             fontFamily: "NexaBold",
                             fontSize: screenSize.width * 0.05,
@@ -284,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          "--/--",
+                          statusCheckOut == "yes" ? checkOut! : "--/--",
                           style: TextStyle(
                             fontFamily: "NexaBold",
                             fontSize: screenSize.width * 0.05,

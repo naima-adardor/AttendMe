@@ -118,6 +118,7 @@ class _SuccessPresencePageState extends State<SuccessPresencePage> {
     await prefs.setString(
         'check_out', DateFormat('HH:mm').format(DateTime.now()).toString());
     prefs.setString('status', "checkIn");
+    prefs.setString('setCheckOut', "yes");
   }
 
   @override

@@ -62,6 +62,7 @@ class _SucessCheckinPage extends State<SucessCheckinPage> {
     final List<String> codeParts = widget.code.split('QR Code ID: ');
     final String idQrCode = codeParts.length > 1 ? codeParts[1] : '';
     await prefs.setInt('qr_code_id', int.parse(idQrCode));
+    await prefs.setString('setCheckIn', "yes");
     await prefs.setString(
         'check_in', DateFormat('HH:mm').format(DateTime.now()).toString());
     await prefs.setString('attendance_day',
