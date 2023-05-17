@@ -27,7 +27,8 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   int _selectedIndex = 0;
   String? status;
-  String? Status;
+  String? YN;
+  // String? Status;
   List<Widget> _widgetOptions = [];
 
   @override
@@ -39,7 +40,21 @@ class _BottomBarState extends State<BottomBar> {
 
     _widgetOptions = [
       const HomeScreen(),
-      const QrCodeGeneratedPage(),
+      FutureBuilder<Widget>(
+        future: getPage2(),
+        builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Return a placeholder widget while the future is loading
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            // Handle any errors that occurred while resolving the future
+            return Text('Error: ${snapshot.error}');
+          } else {
+            // Return the resolved widget
+            return snapshot.data!;
+          }
+        },
+      ),
       FutureBuilder<Widget>(
         future: getPage(),
         builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
@@ -61,19 +76,21 @@ class _BottomBarState extends State<BottomBar> {
 
     SharedPreferences.getInstance().then((prefs) async {
       await getSessionVariables(prefs);
-      setState(() {
-        Status = status;
-        // Call setState to trigger a rebuild after getting the session variables
-      });
+      // setState(() {
+      //   // Status = status;
+      //   // Call setState to trigger a rebuild after getting the session variables
+      // });
     });
   }
 
   Future<void> getSessionVariables(SharedPreferences prefs) async {
     setState(() {
       status = prefs.getString('status');
+      YN = prefs.getString('getQrCode');
     });
   }
 
+  // for Scan
   Future<Widget> getPage() async {
     final prefs = await SharedPreferences.getInstance();
     await getSessionVariables(prefs);
@@ -85,6 +102,18 @@ class _BottomBarState extends State<BottomBar> {
       return CameraPage(
         cameras: cameras,
       );
+    }
+  }
+
+  // for qr code
+  Future<Widget> getPage2() async {
+    final prefs = await SharedPreferences.getInstance();
+    await getSessionVariables(prefs);
+    print(YN);
+    if (YN == "no") {
+      return QrCodeGeneratedPage();
+    } else {
+      return GeneratedCodePageSuccess();
     }
   }
 

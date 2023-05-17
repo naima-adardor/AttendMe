@@ -121,7 +121,7 @@ class _ScanPageState extends State<ScanPage> {
                         status = prefs.getString('status');
 
                         if (status == "checkIn") {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => SucessCheckinPage(

@@ -13,6 +13,8 @@ import '../constants/constants.dart';
 import '../models/api-response.dart';
 import '../services/user-services.dart';
 import 'Login_page.dart';
+import 'package:qr/src/qr_image.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -193,9 +195,10 @@ class _SucessCheckinPage extends State<SucessCheckinPage> {
               height: screenSize.height * 0.02,
             ),
             QrImage(
-                data: widget.code,
-                size: screenSize.width * 0.4,
-                version: QrVersions.auto),
+              data: widget.code,
+              size: screenSize.width * 0.4,
+              version: QrVersions.auto,
+            ),
             Container(
               margin: EdgeInsets.only(
                   top: screenSize.height * 0.06,
@@ -232,7 +235,7 @@ class _SucessCheckinPage extends State<SucessCheckinPage> {
                 alignment: Alignment.centerRight,
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const ScanPage(),
