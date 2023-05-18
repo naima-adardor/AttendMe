@@ -13,6 +13,7 @@ import '../constants/constants.dart';
 import '../models/api-response.dart';
 import '../services/user-services.dart';
 import 'Login_page.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -61,6 +62,7 @@ class _SucessCheckinPage extends State<SucessCheckinPage> {
     final List<String> codeParts = widget.code.split('QR Code ID: ');
     final String idQrCode = codeParts.length > 1 ? codeParts[1] : '';
     await prefs.setInt('qr_code_id', int.parse(idQrCode));
+    await prefs.setString('setCheckIn', "yes");
     await prefs.setString(
         'check_in', DateFormat('HH:mm').format(DateTime.now()).toString());
     await prefs.setString('attendance_day',
@@ -193,9 +195,10 @@ class _SucessCheckinPage extends State<SucessCheckinPage> {
               height: screenSize.height * 0.02,
             ),
             QrImage(
-                data: widget.code,
-                size: screenSize.width * 0.4,
-                version: QrVersions.auto),
+              data: widget.code,
+              size: screenSize.width * 0.4,
+              version: QrVersions.auto,
+            ),
             Container(
               margin: EdgeInsets.only(
                   top: screenSize.height * 0.06,
@@ -232,7 +235,7 @@ class _SucessCheckinPage extends State<SucessCheckinPage> {
                 alignment: Alignment.centerRight,
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const ScanPage(),

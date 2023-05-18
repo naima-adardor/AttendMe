@@ -39,6 +39,9 @@ class _SuccessPresencePageState extends State<SuccessPresencePage> {
           presence = response.data as Presence; // Get the response data
           ID = presence!.id_presence;
           print(ID);
+          SharedPreferences.getInstance().then((prefs) {
+            prefs.setInt('IDP', ID!);
+          });
           updatePresence();
         });
       } else {
@@ -95,6 +98,7 @@ class _SuccessPresencePageState extends State<SuccessPresencePage> {
   void initState() {
     SharedPreferences.getInstance().then((prefs) {
       prefs.setString('status', "checkIn");
+      prefs.setString('getQrCode', "yes");
     });
     super.initState();
     SharedPreferences.getInstance().then((prefs) async {
@@ -114,6 +118,7 @@ class _SuccessPresencePageState extends State<SuccessPresencePage> {
     await prefs.setString(
         'check_out', DateFormat('HH:mm').format(DateTime.now()).toString());
     prefs.setString('status', "checkIn");
+    prefs.setString('setCheckOut', "yes");
   }
 
   @override

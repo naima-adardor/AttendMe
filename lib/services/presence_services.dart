@@ -9,7 +9,7 @@ import '../models/Assignment.dart';
 import '../models/api-response.dart';
 import 'package:http/http.dart' as http;
 
-//get Assignment
+//get Presences
 Future<ApiResponse> getPresences(int id_employee) async {
   ApiResponse apiResponse = ApiResponse();
   try {
@@ -45,6 +45,50 @@ Future<ApiResponse> getPresences(int id_employee) async {
   } catch (e) {
     print(e);
 
+    apiResponse.error = serverError;
+  }
+  return apiResponse;
+}
+
+//get Presence by ID
+Future<ApiResponse> getPresenceById(String idPresence) async {
+  print("start");
+  ApiResponse apiResponse = ApiResponse();
+  try {
+    print("try");
+    String token = await getToken();
+    Map<String, dynamic> requestBody = {
+      'id_presence': idPresence,
+    };
+    print("pass map");
+
+    final response = await http.post(
+      Uri.parse(PresenceIDURL),
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: requestBody,
+    );
+
+    print("pass post");
+
+    switch (response.statusCode) {
+      case 200:
+        print(200);
+        apiResponse.data = Presence.fromJson(jsonDecode(response.body));
+        print(apiResponse.data);
+        break;
+      case 401:
+        apiResponse.error = unauthorized;
+        break;
+      default:
+        print(response.statusCode);
+        apiResponse.error = somethingWentWrong;
+        break;
+    }
+  } catch (e) {
+    print(e);
     apiResponse.error = serverError;
   }
   return apiResponse;

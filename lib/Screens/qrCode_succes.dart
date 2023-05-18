@@ -2,13 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/constants.dart';
+import '../models/Presence.dart';
 import '../models/User.dart';
 import '../models/api-response.dart';
+import '../services/presence_services.dart';
 import '../services/user-services.dart';
 import 'Login_page.dart';
+
+import 'dart:io';
 
 class GeneratedCodePageSuccess extends StatefulWidget {
   const GeneratedCodePageSuccess({super.key});
@@ -20,8 +31,107 @@ class GeneratedCodePageSuccess extends StatefulWidget {
 class _GeneratedCodePageSuccess extends State<GeneratedCodePageSuccess> {
   String fullName = "";
   User? user;
+  int? ID;
+  Presence? presence;
 
-//User Information
+  Future<void> getSessionVariables(SharedPreferences prefs) async {
+    setState(() {
+      ID = prefs.getInt('IDP');
+    });
+  }
+
+  // Function to retrieve the gallery path on the device
+// Function to retrieve the gallery path on the device
+  Future<String?> _getGalleryPath() async {
+    try {
+      final galleryDir = await getExternalStorageDirectory();
+      return galleryDir!.path;
+    } on PlatformException catch (e) {
+      print('Error getting gallery path: $e');
+      return null;
+    }
+  }
+
+// Function to save the image to the device's gallery
+  Future<String?> _saveImageToGallery(
+      File imageFile, String galleryPath) async {
+    try {
+      final currentDate = DateTime.now();
+      final formattedDate = DateFormat('yyyy-MM-dd HH:mm').format(currentDate);
+      final imageName = 'QrCode_$formattedDate.png';
+      final savedImagePath = '$galleryPath/$imageName';
+
+      await imageFile.copy(savedImagePath);
+
+      return savedImagePath;
+    } catch (e) {
+      print('Error saving image to gallery: $e');
+      return null;
+    }
+  }
+
+// Get presence by ID
+  void getPByID() async {
+    final prefs = await SharedPreferences.getInstance();
+    await getSessionVariables(prefs);
+    SharedPreferences.getInstance().then((prefs) {
+      int? id = prefs.getInt('IDP');
+      print(id);
+      setState(() {
+        ID = id;
+      });
+    });
+    print('ID value: $ID');
+    print("enter");
+    ApiResponse response;
+    try {
+      print("first try");
+      response = await getPresenceById(ID.toString());
+      print("response: $response");
+      print("pass the try");
+    } catch (e) {
+      print("catch the try");
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error retrieving presence data')),
+      );
+      return;
+    }
+    print(response.data);
+    if (response.error == null) {
+      if (response.data != null) {
+        setState(() {
+          presence = response.data as Presence; // Get the response data
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Invalid presence data')),
+        );
+      }
+    } else if (response.error == unauthorized) {
+      logout().then((value) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => LoginPage()),
+          (route) => false,
+        );
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${response.error}')),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    print("user");
+    getUser();
+    super.initState();
+    print("myFunction");
+    getPByID();
+  }
+
+  //User Information
   void getUser() async {
     ApiResponse response = await getUserDetail();
     if (response.error == null && mounted) {
@@ -47,17 +157,8 @@ class _GeneratedCodePageSuccess extends State<GeneratedCodePageSuccess> {
   }
 
   @override
-  void initState() {
-    setState(() {
-      getUser();
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    const path = "assets/qr_code_gene.png";
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
@@ -122,7 +223,7 @@ class _GeneratedCodePageSuccess extends State<GeneratedCodePageSuccess> {
               Gap(screenSize.height * 0.04),
               Center(
                 child: Text(
-                  "Download your QR code to share your attendance for today's session",
+                  "Download your QR code to share your attendance for latest session",
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: screenSize.width * 0.05,
@@ -131,10 +232,19 @@ class _GeneratedCodePageSuccess extends State<GeneratedCodePageSuccess> {
                 ),
               ),
               Gap(screenSize.height * 0.05),
-              SizedBox(
+              Container(
+                width: screenSize.height * 0.29,
                 height: screenSize.height * 0.29,
-                child: Image.asset(
-                  path,
+                decoration: BoxDecoration(
+                  image: presence != null && presence!.qrcode != null
+                      ? DecorationImage(
+                          image: NetworkImage(presence!.qrcode!),
+                          fit: BoxFit.cover,
+                        )
+                      : const DecorationImage(
+                          image: AssetImage('assets/DefaultQR.png'),
+                          fit: BoxFit.cover,
+                        ),
                 ),
               ),
               SizedBox(
@@ -149,16 +259,23 @@ class _GeneratedCodePageSuccess extends State<GeneratedCodePageSuccess> {
                     child: IconButton(
                       onPressed: () async {
                         try {
-                          // Load the image file from the assets folder
-                          final data = await rootBundle.load(path);
-                          final bytes = data.buffer.asUint8List();
+                          final response =
+                              await http.get(Uri.parse(presence!.qrcode!));
+                          final bytes = response.bodyBytes;
 
-                          // Save the image to the device's gallery
-                          final result =
-                              await ImageGallerySaver.saveImage(bytes);
+                          final tempDir = await getTemporaryDirectory();
+                          final tempPath = tempDir.path;
+                          final tempFile = File('$tempPath/image.png');
+                          await tempFile.writeAsBytes(bytes);
 
-                          if (result != null) {
-                            print('Image saved to gallery.');
+                          final galleryPath = await _getGalleryPath();
+                          final savedImagePath =
+                              await _saveImageToGallery(tempFile, galleryPath!);
+
+                          if (savedImagePath != null) {
+                            print(
+                                'Image saved to gallery. Path: $savedImagePath');
+
                             Fluttertoast.showToast(
                               msg: 'Image saved!',
                               gravity: ToastGravity.BOTTOM,

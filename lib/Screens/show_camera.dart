@@ -59,6 +59,8 @@ class _CameraPageState extends State<CameraPage> {
           prefs.setInt('user_id', user!.id!);
           prefs.setString('status', "checkIn");
           prefs.setString('getQrCode', "no");
+          prefs.setString('setCheckIn', "no");
+          prefs.setString('setCheckOut', "no");
         });
       });
 
