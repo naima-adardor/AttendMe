@@ -115,6 +115,7 @@ class _HistoryPageState extends State<HistoryPage> {
       setState(() {
         _selectedDate1 = DateFormat('yyyy-MM-dd').format(picked);
         _dateController1.text = _selectedDate1;
+        filterPresenceListByDate(_selectedDate1);
       });
     }
   }
@@ -126,9 +127,17 @@ class _HistoryPageState extends State<HistoryPage> {
     });
 
     super.initState();
+    // _selectedDate1 = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    // _dateController1.text = _selectedDate1;
+    _dateController1.text = "yyyy-MM-dd";
+  }
 
-    _selectedDate1 = DateFormat('yyyy-MM-dd').format(DateTime.now());
-    _dateController1.text = _selectedDate1;
+  void filterPresenceListByDate(String selectedDate) {
+    setState(() {
+      filteredPresenceList = presenceList
+          .where((presence) => presence['day'] == selectedDate)
+          .toList();
+    });
   }
 
   @override
@@ -154,7 +163,11 @@ class _HistoryPageState extends State<HistoryPage> {
                     child: TextFormField(
                       controller: _dateController1,
                       readOnly: true,
-                      onTap: () => _selectDate1(context),
+                      onTap: () {
+                        setState(() {
+                          _selectDate1(context);
+                        });
+                      },
                       decoration: InputDecoration(
                         labelText: "Date",
                         labelStyle: const TextStyle(
