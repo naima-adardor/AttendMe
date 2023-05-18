@@ -1,5 +1,6 @@
 import 'package:attend_me/Screens/qr_scanner_overlay.dart';
 import 'package:attend_me/Screens/success_checkin_page.dart';
+import 'package:attend_me/Screens/success_presence_page.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 //import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -7,6 +8,7 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:gap/gap.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/colors.dart';
 
 class ScanPage extends StatefulWidget {
@@ -23,7 +25,6 @@ class _ScanPageState extends State<ScanPage> {
   }
 
   bool isFlashOn = false;
-  bool isFrontCamera = false;
   MobileScannerController controller = MobileScannerController();
   @override
   Widget build(BuildContext context) {
@@ -45,18 +46,6 @@ class _ScanPageState extends State<ScanPage> {
               icon: Icon(
                 Icons.flash_on,
                 color: isFlashOn ? maincolor : Colors.grey,
-              )),
-          IconButton(
-              onPressed: () {
-                setState(() {
-                  isFrontCamera = !isFrontCamera;
-                });
-
-                controller.switchCamera();
-              },
-              icon: Icon(
-                Icons.camera_front,
-                color: isFrontCamera ? maincolor : Colors.grey,
               )),
         ],
         iconTheme: const IconThemeData(color: Colors.black),
@@ -120,16 +109,53 @@ class _ScanPageState extends State<ScanPage> {
                   MobileScanner(
                     controller: controller,
                     allowDuplicates: true,
-                    onDetect: (Barcode, args) {
+                    onDetect: (Barcode, args) async {
                       if (!isScanCompleted) {
                         String code = Barcode.rawValue ?? '---';
                         isScanCompleted = true;
+                        String? status;
 
-                        Navigator.push(
+                        // Retrieve the value of 'status' from SharedPreferences
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        status = prefs.getString('status');
+
+                        if (status == "checkIn") {
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SucessCheckinPage(
-                                    code: code, closeScreen: closeScreen)));
+                              builder: (context) => SucessCheckinPage(
+                                  code: code, closeScreen: closeScreen),
+                            ),
+                          );
+                        } else if (status == "checkOut") {
+                          int? qrCodeIdOld;
+
+                          // Retrieve the value of 'qr_code_id' from SharedPreferences
+                          qrCodeIdOld = prefs.getInt('qr_code_id');
+
+                          final List<String> codeParts =
+                              code.split('QR Code ID: ');
+                          final String idQrCode =
+                              codeParts.length > 1 ? codeParts[1] : '';
+                          int? qrCodeIdNew = int.tryParse(idQrCode);
+
+                          if (qrCodeIdNew != null &&
+                              qrCodeIdOld == qrCodeIdNew) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const SuccessPresencePage(),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  'Please scan the same QR Code that you scanned at check-in.'),
+                            ));
+                          }
+                        }
                       }
                     },
                   ),

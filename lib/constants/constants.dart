@@ -1,6 +1,5 @@
 // ----- STRINGS ------
 import 'package:flutter/material.dart';
-
 const baseURL = 'http://192.168.43.239:8000/api';
 const loginURL = baseURL + '/login';
 const registerURL = baseURL + '/register';
@@ -12,6 +11,12 @@ const addAttIssuesURL = baseURL + '/addAttIssues';
 const addSanitaryURL = baseURL + '/addSanitary';
 const sendOtpURL = baseURL + '/sendOTP';
 const verifyOtpURL = baseURL + '/verifyOTP';
+const assignmentURL = baseURL + '/getAssignmentElevator';
+const PresenceURL = baseURL + '/getPresence';
+const PresenceIDURL = baseURL + '/getPresenceById';
+const addPresence = baseURL + '/addPresence';
+const updatePresence = baseURL + '/updatePresence';
+const getIdPresence = baseURL + '/getIdPresence';
 
 // ----- Errors -----
 const serverError = 'Server error';

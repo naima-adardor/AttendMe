@@ -11,6 +11,7 @@ import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:attend_me/Screens/change_password2.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key, this.initialIndex});
@@ -25,21 +26,96 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   int _selectedIndex = 0;
+  String? status;
+  String? YN;
+  // String? Status;
+  List<Widget> _widgetOptions = [];
+
   @override
   void initState() {
     super.initState();
     if (widget.initialIndex != null) {
       _selectedIndex = widget.initialIndex!;
     }
+
+    _widgetOptions = [
+      const HomeScreen(),
+      FutureBuilder<Widget>(
+        future: getPage2(),
+        builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Return a placeholder widget while the future is loading
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            // Handle any errors that occurred while resolving the future
+            return Text('Error: ${snapshot.error}');
+          } else {
+            // Return the resolved widget
+            return snapshot.data!;
+          }
+        },
+      ),
+      FutureBuilder<Widget>(
+        future: getPage(),
+        builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Return a placeholder widget while the future is loading
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            // Handle any errors that occurred while resolving the future
+            return Text('Error: ${snapshot.error}');
+          } else {
+            // Return the resolved widget
+            return snapshot.data!;
+          }
+        },
+      ),
+      const HistoryPage(),
+      const ProfilePage(),
+    ];
+
+    SharedPreferences.getInstance().then((prefs) async {
+      await getSessionVariables(prefs);
+      // setState(() {
+      //   // Status = status;
+      //   // Call setState to trigger a rebuild after getting the session variables
+      // });
+    });
   }
 
-  static final List<Widget> _widgetOptions = <Widget>[
-    const HomeScreen(),
-    const QrCodeGeneratedPage(),
-    const ScanPage(),
-    const HistoryPage(),
-    const ProfilePage(),
-  ];
+  Future<void> getSessionVariables(SharedPreferences prefs) async {
+    setState(() {
+      status = prefs.getString('status');
+      YN = prefs.getString('getQrCode');
+    });
+  }
+
+  // for Scan
+  Future<Widget> getPage() async {
+    final prefs = await SharedPreferences.getInstance();
+    await getSessionVariables(prefs);
+    print(status);
+    if (status == "checkOut") {
+      return ScanPage();
+    } else {
+      final cameras = await availableCameras();
+      return CameraPage(
+        cameras: cameras,
+      );
+    }
+  }
+
+  // for qr code
+  Future<Widget> getPage2() async {
+    final prefs = await SharedPreferences.getInstance();
+    await getSessionVariables(prefs);
+    print(YN);
+    if (YN == "no") {
+      return QrCodeGeneratedPage();
+    } else {
+      return GeneratedCodePageSuccess();
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -96,16 +172,25 @@ class _BottomBarState extends State<BottomBar> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await availableCameras().then(
-            (value) => Navigator.push(
+          if (status == "checkOut") {
+            Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CameraPage(
-                  cameras: value,
+                builder: (context) => ScanPage(),
+              ),
+            );
+          } else {
+            await availableCameras().then(
+              (value) => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CameraPage(
+                    cameras: value,
+                  ),
                 ),
               ),
-            ),
-          );
+            );
+          }
         },
         child: Icon(Icons.qr_code_scanner),
         backgroundColor: const Color(0xFF6096B4),

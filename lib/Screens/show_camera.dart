@@ -6,6 +6,13 @@ import 'package:attend_me/Screens/scan_page.dart';
 import 'package:attend_me/constants/colors.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../constants/constants.dart';
+import '../models/User.dart';
+import '../models/api-response.dart';
+import '../services/user-services.dart';
+import 'Login_page.dart';
 
 class CameraPage extends StatefulWidget {
   final List<CameraDescription>? cameras;
@@ -21,6 +28,7 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   void initState() {
+    getUser();
     super.initState();
     final frontCamera = widget.cameras!.firstWhere(
       (camera) => camera.lensDirection == CameraLensDirection.front,
@@ -37,6 +45,41 @@ class _CameraPageState extends State<CameraPage> {
       }
       setState(() {});
     });
+  }
+
+  User? user;
+
+  //User Information
+  void getUser() async {
+    ApiResponse response = await getUserDetail();
+    if (response.error == null) {
+      setState(() {
+        user = response.data as User;
+        SharedPreferences.getInstance().then((prefs) {
+          prefs.setInt('user_id', user!.id!);
+          prefs.setString('status', "checkIn");
+          prefs.setString('getQrCode', "no");
+          prefs.setString('setCheckIn', "no");
+          prefs.setString('setCheckOut', "no");
+        });
+      });
+
+      SharedPreferences.getInstance().then((prefs) {
+        int? userId = prefs.getInt('user_id');
+        // String? status = prefs.getString('status');
+        // print(userId);
+        // print(status);
+      });
+    } else if (response.error == unauthorized) {
+      logout().then((value) => {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => LoginPage()),
+                (route) => false)
+          });
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('${response.error}')));
+    }
   }
 
   @override
@@ -135,9 +178,13 @@ class _CameraPageState extends State<CameraPage> {
                   child: GestureDetector(
                     onTap: () async {
                       pictureFile = await controller.takePicture();
-                      setState(() {});
+                      setState(() {
+                        SharedPreferences.getInstance().then((prefs) {
+                          prefs.setString('image', pictureFile!.path);
+                        });
+                      });
 
-                      Navigator.of(context).push(
+                      Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) => ScanPage()));
                     },
                     child: Image.asset(
