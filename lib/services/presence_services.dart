@@ -144,6 +144,47 @@ String? getStringImage(File? file) {
   return base64Encode(file.readAsBytesSync());
 }
 
+//fetch presence
+Future<List<Map<String, dynamic>>> getPresenceByIdEmp(int idEmployee) async {
+  ApiResponse apiResponse = ApiResponse();
+  String token = await getToken();
+  Map<String, dynamic> requestBody;
+  requestBody = {
+    'id_employee': idEmployee.toString(),
+  };
+  final response = await http.post(
+    Uri.parse(getPreById),
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    },
+    body: requestBody,
+  );
+
+  if (response.statusCode == 200) {
+    final data = json.decode(response.body);
+    List<Map<String, dynamic>> presenceList = [];
+
+    for (var presenceData in data) {
+      presenceList.add({
+        'day': presenceData['day'],
+        'status': presenceData['status'],
+        'employee': presenceData['employee'],
+        'id_employee': presenceData['id_employee'],
+        'check_in': presenceData['check_in'],
+        'check_out': presenceData['check_out'],
+        'selfie': presenceData['selfie'],
+        'qrcode': presenceData['qrcode'],
+        'elevator': presenceData['elevator'],
+      });
+    }
+
+    return presenceList;
+  } else {
+    throw Exception('Failed to fetch presence');
+  }
+}
+
 // add Presence
 Future<ApiResponse> addPres(
   String id_elevator,
