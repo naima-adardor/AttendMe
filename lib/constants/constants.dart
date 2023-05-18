@@ -17,6 +17,7 @@ const PresenceIDURL = baseURL + '/getPresenceById';
 const addPresence = baseURL + '/addPresence';
 const updatePresence = baseURL + '/updatePresence';
 const getIdPresence = baseURL + '/getIdPresence';
+const getPreById = baseURL + '/getPresenceByIdEmp';
 
 // ----- Errors -----
 const serverError = 'Server error';
