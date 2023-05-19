@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/constants.dart';
 import '../models/User.dart';
 import '../models/api-response.dart';
+import '../services/presence_services.dart';
 import '../services/user-services.dart';
 import 'Login_page.dart';
 
@@ -34,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
         user = response.data as User;
         fullName = "${user!.first_name}" + " " + "${user!.last_name}";
       });
+      fetchData();
     } else if (response.error == unauthorized) {
       logout().then((value) => {
             if (mounted)
@@ -48,6 +50,24 @@ class _HomeScreenState extends State<HomeScreen> {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('${response.error}')));
       }
+    }
+  }
+
+  List<Map<String, dynamic>> counts = [];
+
+  Future<void> fetchData() async {
+    try {
+      List<Map<String, dynamic>> fetchedPresenceList =
+          await getPresenceByIdEmpDashboard(user!.id!);
+
+      setState(() {
+        counts = fetchedPresenceList;
+        print(counts[0]['late']);
+        print(counts[0]['absent']);
+        print(counts[0]['onTime']);
+      });
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -139,18 +159,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   IconButton(
                     alignment: Alignment.topCenter,
                     icon: Icon(
-                      Icons.notifications_none,
-                      color: const Color.fromARGB(255, 24, 94, 133),
-                      size: screenSize.height * 0.05,
+                      Icons.fiber_manual_record,
+                      color: Color.fromARGB(255, 57, 206, 11),
+                      size: screenSize.height * 0.034,
                     ),
-                    onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => NotificationScreen(),
-                      //   ),
-                      // );
-                    },
+                    onPressed: () {},
                   )
                 ],
               ),
@@ -335,82 +348,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: screenSize.height * 0.205,
                   width: screenSize.height * 0.2,
                   child: Card(
-                    color: const Color.fromARGB(255, 78, 146, 163),
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const BottomBar(
-                              initialIndex: 3,
-                            ),
-                          ),
-                        );
-                      },
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Gap(screenSize.height * 0.01),
-                              Image.asset("assets/late.png"),
-                              SizedBox(
-                                height: screenSize.height * 0.01,
-                              ),
-                              Text(
-                                "Late",
-                                style: GoogleFonts.openSans(
-                                  textStyle: TextStyle(
-                                      color: const Color.fromARGB(
-                                          255, 255, 255, 255),
-                                      fontSize: screenSize.width * 0.04,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ),
-                              SizedBox(
-                                height: screenSize.height * 0.003,
-                              ),
-                              Text(
-                                "12 times",
-                                style: GoogleFonts.openSans(
-                                  textStyle: TextStyle(
-                                      color: const Color.fromARGB(
-                                          255, 207, 196, 196),
-                                      fontSize: screenSize.width * 0.04,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: screenSize.height * 0.205,
-                  width: screenSize.height * 0.2,
-                  child: Card(
                     color: const Color.fromARGB(255, 199, 34, 136),
                     elevation: 2,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const BottomBar(
-                              initialIndex: 3,
-                            ),
-                          ),
-                        );
-                      },
+                      onTap: () {},
                       child: Center(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -439,7 +383,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: screenSize.height * 0.003,
                               ),
                               Text(
-                                "2 times",
+                                counts.isNotEmpty
+                                    ? counts[0]['absent'].toString()
+                                    : 'N/A',
                                 style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       color: const Color.fromARGB(
@@ -465,16 +411,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const BottomBar(
-                              initialIndex: 3,
-                            ),
-                          ),
-                        );
-                      },
+                      onTap: () {},
                       child: Center(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -490,7 +427,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: screenSize.height * 0.01,
                               ),
                               Text(
-                                "Working Hours",
+                                "All Presences",
                                 style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       color: const Color.fromARGB(
@@ -503,7 +440,62 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: screenSize.height * 0.003,
                               ),
                               Text(
-                                "20:45:00",
+                                counts.isNotEmpty
+                                    ? '${counts[0]['late'] + counts[0]['onTime']}'
+                                    : 'N/A',
+                                style: GoogleFonts.openSans(
+                                  textStyle: TextStyle(
+                                      color: const Color.fromARGB(
+                                          255, 207, 196, 196),
+                                      fontSize: screenSize.width * 0.04,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: screenSize.height * 0.205,
+                  width: screenSize.height * 0.2,
+                  child: Card(
+                    color: const Color.fromARGB(255, 78, 146, 163),
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Gap(screenSize.height * 0.01),
+                              Image.asset("assets/late.png"),
+                              SizedBox(
+                                height: screenSize.height * 0.01,
+                              ),
+                              Text(
+                                "Late",
+                                style: GoogleFonts.openSans(
+                                  textStyle: TextStyle(
+                                      color: const Color.fromARGB(
+                                          255, 255, 255, 255),
+                                      fontSize: screenSize.width * 0.04,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                              SizedBox(
+                                height: screenSize.height * 0.003,
+                              ),
+                              Text(
+                                counts.isNotEmpty
+                                    ? counts[0]['late'].toString()
+                                    : 'N/A',
                                 style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       color: const Color.fromARGB(
@@ -529,16 +521,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const BottomBar(
-                              initialIndex: 3,
-                            ),
-                          ),
-                        );
-                      },
+                      onTap: () {},
                       child: Center(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -567,7 +550,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: screenSize.height * 0.003,
                               ),
                               Text(
-                                "19 times",
+                                counts.isNotEmpty
+                                    ? counts[0]['onTime'].toString()
+                                    : 'N/A',
                                 style: GoogleFonts.openSans(
                                   textStyle: TextStyle(
                                       color: const Color.fromARGB(

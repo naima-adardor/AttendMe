@@ -189,6 +189,41 @@ Future<List<Map<String, dynamic>>> getPresenceByIdEmp(int idEmployee) async {
   }
 }
 
+// status
+Future<List<Map<String, dynamic>>> getPresenceByIdEmpDashboard(
+    int idEmployee) async {
+  ApiResponse apiResponse = ApiResponse();
+  String token = await getToken();
+  Map<String, dynamic> requestBody = {
+    'id_employee': idEmployee.toString(),
+  };
+
+  final response = await http.post(
+    Uri.parse(getPreByIdDashboard),
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json', // Add Content-Type header
+    },
+    body: json.encode(requestBody), // Encode the request body as JSON
+  );
+
+  if (response.statusCode == 200) {
+    final data = json.decode(response.body);
+    List<Map<String, dynamic>> statusCount = [];
+
+    statusCount.add({
+      'late': data['Late'], // Access status counts directly
+      'onTime': data['On Time'], // without iterating over the data
+      'absent': data['Absent'],
+    });
+
+    return statusCount;
+  } else {
+    throw Exception('Failed to fetch presence');
+  }
+}
+
 // add Presence
 Future<ApiResponse> addPres(
   String id_elevator,
