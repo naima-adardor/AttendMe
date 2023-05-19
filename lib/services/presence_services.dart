@@ -176,6 +176,10 @@ Future<List<Map<String, dynamic>>> getPresenceByIdEmp(int idEmployee) async {
         'selfie': presenceData['selfie'],
         'qrcode': presenceData['qrcode'],
         'elevator': presenceData['elevator'],
+        'longitude': presenceData['longitude'],
+        'latitude': presenceData['latitude'],
+        'id_presence': presenceData['latitude'],
+        'lateTime': presenceData['lateTime']
       });
     }
 
