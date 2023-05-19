@@ -326,10 +326,34 @@ class _HistoryPageState extends State<HistoryPage> {
                   return GestureDetector(
                     onTap: () {
                       // Navigate to another screen
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => MapSample()),
-                      );
+                      if (presence['status'] == "On Time") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MapSample(
+                              checkIn: presence['check_in'],
+                              checkOut: presence['check_out'],
+                              status: presence['status'],
+                              longitude: presence['longitude'],
+                              latitude: presence['latitude'],
+                            ),
+                          ),
+                        );
+                      } else if (presence['status'] == "Late") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MapSample(
+                              checkIn: presence['check_in'],
+                              checkOut: presence['check_out'],
+                              status: presence['status'],
+                              longitude: presence['longitude'],
+                              latitude: presence['latitude'],
+                              lateTime: presence['lateTime'].toString(),
+                            ),
+                          ),
+                        );
+                      }
                     },
                     child: Container(
                       height: screenSize.height * 0.11,
