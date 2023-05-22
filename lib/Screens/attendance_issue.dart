@@ -160,7 +160,7 @@ class _ForgotPageState extends State<ForgotPage> {
 
   List<String> _items = [
     'Forgot to punch',
-    'Network issue',
+    'Technical Problems',
   ];
 
   @override
