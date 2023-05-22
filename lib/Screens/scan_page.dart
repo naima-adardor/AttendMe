@@ -26,6 +26,9 @@ class _ScanPageState extends State<ScanPage> {
   MobileScannerController controller = MobileScannerController();
 
   void showAlert(BuildContext context) {
+    if (context == null) {
+      return;
+    }
     showDialog(
       context: context,
       builder: (BuildContext context) {
