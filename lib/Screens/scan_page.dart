@@ -1,12 +1,9 @@
+import 'dart:async';
+
 import 'package:attend_me/Screens/qr_scanner_overlay.dart';
 import 'package:attend_me/Screens/success_checkin_page.dart';
 import 'package:attend_me/Screens/success_presence_page.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-//import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:barcode_widget/barcode_widget.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:gap/gap.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/colors.dart';
@@ -20,6 +17,7 @@ class ScanPage extends StatefulWidget {
 
 class _ScanPageState extends State<ScanPage> {
   bool isScanCompleted = false;
+  Timer? scanDelayTimer; // Timer variable to introduce a delay
   void closeScreen() {
     isScanCompleted = false;
   }
@@ -47,12 +45,26 @@ class _ScanPageState extends State<ScanPage> {
               child: Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
+                isScanCompleted =
+                    true; // Set isScanCompleted to true immediately
+
+                scanDelayTimer?.cancel(); // Cancel any existing timer
+                scanDelayTimer = Timer(const Duration(seconds: 5), () {
+                  // After a delay of 2 seconds, reset the isScanCompleted flag
+                  resetScan();
+                });
               },
             ),
           ],
         );
       },
     );
+  }
+
+  void resetScan() {
+    setState(() {
+      isScanCompleted = false;
+    });
   }
 
   @override
