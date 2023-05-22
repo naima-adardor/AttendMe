@@ -26,6 +26,35 @@ class _ScanPageState extends State<ScanPage> {
 
   bool isFlashOn = false;
   MobileScannerController controller = MobileScannerController();
+
+  void showAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Attention !',
+            style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          content:
+              Text('Please Scan the same Qr Code as the checkin\'s Qr Code'),
+          actions: [
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -150,10 +179,7 @@ class _ScanPageState extends State<ScanPage> {
                               ),
                             );
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                  'Please scan the same QR Code that you scanned at check-in.'),
-                            ));
+                            showAlert(context);
                           }
                         }
                       }

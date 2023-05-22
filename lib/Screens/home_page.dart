@@ -111,20 +111,29 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  ClipOval(
-                    child: Container(
-                      width: screenSize.width * 0.16,
-                      height: screenSize.height * 0.08,
-                      decoration: BoxDecoration(
-                        image: user?.avatar != null
-                            ? DecorationImage(
-                                image: NetworkImage('${user!.avatar}'),
-                                fit: BoxFit.cover,
-                              )
-                            : const DecorationImage(
-                                image: AssetImage('assets/user.png'),
-                                fit: BoxFit.cover,
-                              ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const BottomBar(initialIndex: 4)),
+                      );
+                    },
+                    child: ClipOval(
+                      child: Container(
+                        width: screenSize.width * 0.16,
+                        height: screenSize.height * 0.08,
+                        decoration: BoxDecoration(
+                          image: user?.avatar != null
+                              ? DecorationImage(
+                                  image: NetworkImage('${user!.avatar}'),
+                                  fit: BoxFit.cover,
+                                )
+                              : const DecorationImage(
+                                  image: AssetImage('assets/user.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
                       ),
                     ),
                   ),
