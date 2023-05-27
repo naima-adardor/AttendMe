@@ -244,13 +244,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           children: [
                             Gap(screenSize.height * 0),
                             Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: const Color.fromARGB(255, 24, 94, 133),
-                                  width: 5,
-                                ),
-                              ),
                               child: Stack(
                                 children: [
                                   GestureDetector(
